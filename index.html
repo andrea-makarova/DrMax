@@ -4,80 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Minimal Header</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#0d0d0d",
+            muted: "#5a5a5a",
+            border: "#e6e6e6"
+          },
+          fontFamily: {
+            sans: ["Figtree", "Helvetica Neue", "Arial", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
   <style>
     :root {
-      --bg: #ffffff;
-      --text: #0d0d0d;
+      --ink: #0d0d0d;
       --muted: #5a5a5a;
       --border: #e6e6e6;
-    }
-    * {
-      box-sizing: border-box;
     }
     body {
       margin: 0;
       font-family: "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: #ffffff;
+      color: var(--ink);
     }
-    header {
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 10;
-    }
-    .nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .brand {
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text);
-      font-size: 0.95rem;
-      letter-spacing: 0.02em;
+    .link-underline {
       position: relative;
-      transition: color 0.15s ease;
+      text-decoration: none;
     }
-    .nav-links a::after {
+    .link-underline::after {
       content: "";
       position: absolute;
       left: 0;
       bottom: -6px;
       width: 100%;
       height: 1px;
-      background: var(--text);
+      background: var(--ink);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.18s ease;
       opacity: 0.7;
     }
-    .nav-links a:hover {
+    .link-underline:hover {
       color: var(--muted);
     }
-    .nav-links a:hover::after {
+    .link-underline:hover::after {
       transform: scaleX(1);
     }
     .menu-toggle {
-      display: none;
       background: none;
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -92,7 +77,7 @@
       display: block;
       width: 18px;
       height: 2px;
-      background: var(--text);
+      background: var(--ink);
       position: relative;
     }
     .menu-toggle span::before,
@@ -102,7 +87,7 @@
       left: 0;
       width: 18px;
       height: 2px;
-      background: var(--text);
+      background: var(--ink);
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
     .menu-toggle span::before {
@@ -120,60 +105,41 @@
     .menu-toggle[aria-expanded="true"] span::after {
       transform: translateY(-6px) rotate(-45deg);
     }
-    @media (max-width: 768px) {
-      .nav {
-        padding: 14px 16px;
-      }
-      .nav-links {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 16px 20px;
-        gap: 16px;
-        border-bottom: 1px solid var(--border);
-        display: none;
-      }
-      .nav-links.open {
-        display: flex;
-      }
-      .menu-toggle {
-        display: inline-flex;
-      }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
-    main {
-      max-width: 1100px;
-      margin: 48px auto;
-      padding: 0 20px;
-      line-height: 1.6;
-      color: var(--muted);
+    .nav-links.open {
+      display: flex;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
-<body>
-  <header>
-    <nav class="nav" aria-label="Main navigation">
-      <div class="brand">DrMax</div>
-      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+<body class="bg-white text-ink font-sans">
+  <header class="sticky top-0 z-10 bg-white border-b border-border">
+    <nav class="relative mx-auto flex max-w-5xl items-center justify-between gap-5 px-5 py-4 md:px-6" aria-label="Main navigation">
+      <div class="font-bold tracking-[0.08em] uppercase">DrMax</div>
+      <button class="menu-toggle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border md:hidden" aria-label="Toggle menu" aria-expanded="false">
         <span aria-hidden="true"></span>
       </button>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#">Idea One</a></li>
-        <li><a href="#">Idea Two</a></li>
-        <li><a href="#">Idea Three</a></li>
-        <li><a href="#">Idea Four</a></li>
-        <li><a href="#">Idea Five</a></li>
+      <ul class="nav-links absolute left-0 right-0 top-[72px] hidden flex-col gap-4 border-b border-border bg-white px-5 py-4 md:static md:flex md:flex-row md:items-center md:gap-7 md:border-none md:bg-transparent md:px-0 md:py-0" id="nav-links">
+        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-lightbulb text-sm" aria-hidden="true"></i><span>Idea One</span></a></li>
+        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-compass text-sm" aria-hidden="true"></i><span>Idea Two</span></a></li>
+        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-flask text-sm" aria-hidden="true"></i><span>Idea Three</span></a></li>
+        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-rocket text-sm" aria-hidden="true"></i><span>Idea Four</span></a></li>
+        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-chart-line text-sm" aria-hidden="true"></i><span>Idea Five</span></a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <h1>Minimal Black &amp; White Header</h1>
-    <p>Resize the viewport to see the navigation collapse into a clean burger menu on smaller screens. The layout sticks to black and white for a straightforward, modern feel.</p>
-  </main>
+  <main class="mx-auto mt-12 max-w-5xl px-5 md:px-6"></main>
 
   <script>
     const toggle = document.querySelector(".menu-toggle");
