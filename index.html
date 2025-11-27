@@ -3,152 +3,341 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minimal Header</title>
+  <title>Move &amp; Mind</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-  <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://kit.fontawesome.com/2c7f1c6cae.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: "#0d0d0d",
-            muted: "#5a5a5a",
-            border: "#e6e6e6"
-          },
-          fontFamily: {
-            sans: ["Figtree", "Helvetica Neue", "Arial", "sans-serif"]
-          }
-        }
-      }
-    };
-  </script>
+  <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     :root {
-      --ink: #0d0d0d;
-      --muted: #5a5a5a;
-      --border: #e6e6e6;
+      --blue-25: #f5f8fd;
+      --blue-50: #e5f1fe;
+      --blue-200: #95ccfe;
+      --blue-400: #3997dd;
+      --blue-500: #0d77ba;
+      --gray-50: #f1f1f1;
+      --gray-100: #e2e2e2;
+      --gray-300: #ababab;
+      --gray-400: #919191;
+      --gray-900: #1b1b1b;
+      --green-300: #78be20;
+      --green-500: #47850a;
+      --red-500: #e4002b;
     }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #ffffff;
-      color: var(--ink);
+      min-height: 100vh;
+      background: var(--blue-25);
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
     }
-    .link-underline {
-      position: relative;
-      text-decoration: none;
+    .font-sans {
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif !important;
     }
-    .link-underline::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100%;
-      height: 1px;
-      background: var(--ink);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.18s ease;
-      opacity: 0.7;
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
     }
-    .link-underline:hover {
-      color: var(--muted);
+    .glass {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(10px);
     }
-    .link-underline:hover::after {
-      transform: scaleX(1);
+    .card { padding: 20px; }
+    .section-title { font-size: 20px; font-weight: 700; margin: 0; color: var(--gray-900); }
+    .muted { color: var(--gray-400); font-size: 14px; }
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--blue-50);
+      overflow: hidden;
     }
-    .menu-toggle {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      cursor: pointer;
-      width: 44px;
-      height: 44px;
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--green-300), var(--green-500));
+    }
+    .tag {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--blue-50);
+      color: var(--gray-900);
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--gray-100);
     }
-    .menu-toggle span {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background: var(--ink);
-      position: relative;
-    }
-    .menu-toggle span::before,
-    .menu-toggle span::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 18px;
-      height: 2px;
-      background: var(--ink);
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    .menu-toggle span::before {
-      top: -6px;
-    }
-    .menu-toggle span::after {
-      top: 6px;
-    }
-    .menu-toggle[aria-expanded="true"] span {
-      background: transparent;
-    }
-    .menu-toggle[aria-expanded="true"] span::before {
-      transform: translateY(6px) rotate(45deg);
-    }
-    .menu-toggle[aria-expanded="true"] span::after {
-      transform: translateY(-6px) rotate(-45deg);
-    }
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .nav-links.open {
-      display: flex;
-    }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-direction: column;
-        gap: 16px;
-        align-items: flex-start;
-      }
+    @keyframes breathe {
+      0% { transform: scale(0.9); opacity: 0.7; }
+      50% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.7; }
     }
   </style>
 </head>
-<body class="bg-white text-ink font-sans">
-  <header class="sticky top-0 z-10 bg-white border-b border-border">
-    <nav class="relative mx-auto flex max-w-5xl items-center justify-between gap-5 px-5 py-4 md:px-6" aria-label="Main navigation">
-      <div class="font-bold tracking-[0.08em] uppercase">DrMax</div>
-      <button class="menu-toggle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border md:hidden" aria-label="Toggle menu" aria-expanded="false">
-        <span aria-hidden="true"></span>
-      </button>
-      <ul class="nav-links absolute left-0 right-0 top-[72px] hidden flex-col gap-4 border-b border-border bg-white px-5 py-4 md:static md:flex md:flex-row md:items-center md:gap-7 md:border-none md:bg-transparent md:px-0 md:py-0" id="nav-links">
-        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-lightbulb text-sm" aria-hidden="true"></i><span>Idea One</span></a></li>
-        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-compass text-sm" aria-hidden="true"></i><span>Idea Two</span></a></li>
-        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-flask text-sm" aria-hidden="true"></i><span>Idea Three</span></a></li>
-        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-rocket text-sm" aria-hidden="true"></i><span>Idea Four</span></a></li>
-        <li><a class="link-underline inline-flex items-center gap-2 text-[0.95rem] tracking-[0.02em] text-ink transition-colors duration-150 hover:text-muted" href="#"><i class="fa-solid fa-chart-line text-sm" aria-hidden="true"></i><span>Idea Five</span></a></li>
-      </ul>
-    </nav>
-  </header>
+<body>
+  <main class="page">
+    <section class="mb-16">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2 class="section-title" style="font-size:22px;">Challenges</h2>
+        <a href="#" class="muted" style="text-decoration:none;">View all</a>
+      </div>
+        <!-- Card 1: Two Weeks Moving -->
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Big Challenge</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Two Weeks Moving</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+              Be active (at least 30 min) for 14 days in a row and get a 10% discount on your entire purchase.
+            </p>
+          </div>
 
-  <main class="mx-auto mt-12 max-w-5xl px-5 md:px-6"></main>
+          <div class="relative h-[230px] overflow-hidden">
+            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78.57" style="overflow: visible;">
+              <defs>
+                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#95DA39" />
+                  <stop offset="1" stop-color="#5DA20A" />
+                </linearGradient>
+                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E4002B" />
+                  <stop offset="1" stop-color="#FD5553" />
+                </linearGradient>
+              </defs>
+              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="24" />
+              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="24" pathLength="100" stroke-dasharray="0 100" />
+              <circle class="arc-knob" r="24" fill="#E4002B" opacity="1" stroke="white" stroke-width="5"></circle>
+              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">14</text>
+              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+            </svg>
+            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
+              <div class="text-center">
+                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">11 / 14</p>
+                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">days of activity</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: 14-Day 7k Steps -->
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Big Challenge</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">14-Day 7k Steps</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+              Hit at least 7,000 steps every day for 2 weeks to unlock a reward.
+            </p>
+          </div>
+          <div class="relative h-[230px] overflow-hidden">
+            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78" style="overflow: visible;">
+              <defs>
+                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#95DA39" />
+                  <stop offset="1" stop-color="#5DA20A" />
+                </linearGradient>
+                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E4002B" />
+                  <stop offset="1" stop-color="#FD5553" />
+                </linearGradient>
+              </defs>
+              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="24" />
+              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="24" pathLength="100" stroke-dasharray="0 100" />
+              <circle class="arc-knob" r="24" fill="#E4002B" opacity="1" stroke="white" stroke-width="5"></circle>
+              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">14</text>
+              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+            </svg>
+            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
+              <div class="text-center">
+                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">11 / 14</p>
+                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">days at 7k+ steps</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3: Mindful Reset -->
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Mindfulness</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Mindful Reset</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+              Take a focused 5 minutes to reset.
+            </p>
+          </div>
+          <div class="relative h-[230px] overflow-hidden">
+            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="60" style="overflow: visible;">
+              <defs>
+                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#95DA39" />
+                  <stop offset="1" stop-color="#5DA20A" />
+                </linearGradient>
+                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E4002B" />
+                  <stop offset="1" stop-color="#FD5553" />
+                </linearGradient>
+              </defs>
+              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="24" />
+              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="24" pathLength="100" stroke-dasharray="0 100" />
+              <circle class="arc-knob" r="24" fill="#E4002B" opacity="1" stroke="white" stroke-width="5"></circle>
+              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">3</text>
+              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+            </svg>
+            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
+              <div class="text-center">
+                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">3 / 5</p>
+                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">rounds box breathing</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Weekly Distance -->
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Weekly Distance</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Finish by Sunday</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+              Stay on pace to hit your weekly target before the weekend ends.
+            </p>
+          </div>
+          <div class="relative h-[230px] overflow-hidden">
+            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="80" style="overflow: visible;">
+              <defs>
+                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#95DA39" />
+                  <stop offset="1" stop-color="#5DA20A" />
+                </linearGradient>
+                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E4002B" />
+                  <stop offset="1" stop-color="#FD5553" />
+                </linearGradient>
+              </defs>
+              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="24" />
+              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="24" pathLength="100" stroke-dasharray="0 100" />
+              <circle class="arc-knob" r="24" fill="#E4002B" opacity="1" stroke="white" stroke-width="5"></circle>
+              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">30</text>
+              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+            </svg>
+            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
+              <div class="text-center">
+                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">24 / 30 km</p>
+                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">Weekly distance</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section style="display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));margin-top:32px;">
+      <article class="glass card">
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gray-400);margin-bottom:10px;">
+          <i class="fa-solid fa-wind" style="color:var(--blue-500);"></i>
+          <span style="display:flex;align-items:center;gap:6px;">
+            <i class="fa-solid fa-lungs" style="color:var(--blue-400);"></i>
+            Breathing coach
+          </span>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+          <div style="width:120px;height:120px;border-radius:50%;background:var(--blue-25);display:flex;align-items:center;justify-content:center;">
+            <div style="width:90px;height:90px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;animation:breathe 6s ease-in-out infinite;">
+              <span style="font-size:14px;color:var(--gray-400);">In / Out</span>
+            </div>
+          </div>
+          <div style="flex:1;min-width:180px;">
+            <div class="muted" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <i class="fa-regular fa-circle-check" style="color:var(--blue-400);"></i>
+              4 sec inhale
+            </div>
+            <div class="muted" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <i class="fa-regular fa-circle-check" style="color:var(--blue-400);"></i>
+              4 sec hold
+            </div>
+            <div class="muted" style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+              <i class="fa-regular fa-circle-check" style="color:var(--blue-400);"></i>
+              4 sec exhale
+            </div>
+            <p class="muted" style="margin-top:8px;">Repeat for 3 rounds. Tap "Start" in challenges to track.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
 
   <script>
-    const toggle = document.querySelector(".menu-toggle");
-    const links = document.querySelector("#nav-links");
+    // Animate arc progress when the card scrolls into view
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
-    toggle.addEventListener("click", () => {
-      const isOpen = links.classList.toggle("open");
-      toggle.setAttribute("aria-expanded", String(isOpen));
+    const animateArc = (svg) => {
+      const target = Math.max(0, Math.min(100, parseFloat(svg.dataset.progress || '0')));
+      const path = svg.querySelector('.arc-progress');
+      const knob = svg.querySelector('.arc-knob');
+      if (!path || !knob || svg.dataset.animated === 'true') return;
+
+      const totalLen = path.getTotalLength();
+      const duration = 2200;
+      const start = performance.now();
+
+      const step = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeOutCubic(t);
+        const current = target * eased;
+
+        path.setAttribute('stroke-dasharray', `${current} ${100 - current}`);
+        const point = path.getPointAtLength((current / 100) * totalLen);
+        knob.setAttribute('cx', point.x);
+        knob.setAttribute('cy', point.y);
+
+        if (t < 1) {
+          requestAnimationFrame(step);
+        } else {
+          svg.dataset.animated = 'true';
+        }
+      };
+
+      // Init at zero and start
+      path.setAttribute('stroke-dasharray', `0 100`);
+      const startPoint = path.getPointAtLength(0);
+      knob.setAttribute('cx', startPoint.x);
+      knob.setAttribute('cy', startPoint.y);
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateArc(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    document.querySelectorAll('svg[data-progress]').forEach((svg) => {
+      const path = svg.querySelector('.arc-progress');
+      const knob = svg.querySelector('.arc-knob');
+      if (path && knob) {
+        // Reset to zero until animated
+        path.setAttribute('stroke-dasharray', `0 100`);
+        const startPoint = path.getPointAtLength(0);
+        knob.setAttribute('cx', startPoint.x);
+        knob.setAttribute('cy', startPoint.y);
+        observer.observe(svg);
+      }
     });
   </script>
+
+  <script src="https://kit.fontawesome.com/2c7f1c6cae.js" crossorigin="anonymous"></script>
 </body>
 </html>
