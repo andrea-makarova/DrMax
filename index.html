@@ -86,56 +86,96 @@
 </head>
 <body>
   <main class="page">
+    <section style="padding:20px 0 28px;margin-bottom:24px;">
+      
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;">
+        <div style="width:120px;height:120px;position:relative;flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88" fill="none">
+<path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="url(#paint0_linear_49145_52454)"/>
+<path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="url(#paint1_linear_49145_52454)"/>
+<defs>
+<linearGradient id="paint0_linear_49145_52454" x1="44.9279" y1="59.5715" x2="85.5371" y2="58.8626" gradientUnits="userSpaceOnUse">
+<stop stop-color="#E4002B"/>
+<stop offset="1" stop-color="#FD5553"/>
+</linearGradient>
+<linearGradient id="paint1_linear_49145_52454" x1="39.4817" y1="6.13915" x2="40.6188" y2="71.2831" gradientUnits="userSpaceOnUse">
+<stop stop-color="#95DA39"/>
+<stop offset="1" stop-color="#5DA20A"/>
+</linearGradient>
+</defs>
+</svg>
+        </div>
+        <div>
+          <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome back. Keep on moving.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="section-title" style="font-size:22px;margin-bottom:16px;">Your Rewards</h2>
+      <div class="rewards-carousel" style="overflow-x:auto; overflow-y:visible; display:flex; gap:12px; padding:0 2px 12px; scroll-snap-type:x mandatory;">
+        <div class="reward-card font-sans" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-person-walking" style="font-size:28px;color:#2f6f0a;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p style="margin:0 0 2px 0; font-size:20px; font-weight:700; line-height:24px;">Daily Steps Challenge</p>
+            <p style="margin:0; font-size:16px; font-weight:600; line-height:20px;">Completed</p>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.12);min-width:170px;text-align:center;">Redeem Reward</button>
+          </div>
+        </div>
+        <div class="reward-card font-sans" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-location-dot" style="font-size:28px;color:#2f6f0a;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p style="margin:0 0 2px 0; font-size:20px; font-weight:700; line-height:24px;">Weekly Distance</p>
+            <p style="margin:0; font-size:16px; font-weight:600; line-height:20px;">Completed</p>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.12);min-width:170px;text-align:center;">Redeem Reward</button>
+          </div>
+        </div>
+        <div class="reward-card font-sans" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-leaf" style="font-size:28px;color:#2f6f0a;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p style="margin:0 0 2px 0; font-size:20px; font-weight:700; line-height:24px;">Mindful Reset</p>
+            <p style="margin:0; font-size:16px; font-weight:600; line-height:20px;">Completed</p>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,0.12);min-width:170px;text-align:center;">Redeem Reward</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="mb-16">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
         <h2 class="section-title" style="font-size:22px;">Challenges</h2>
         <a href="#" class="muted" style="text-decoration:none;">View all</a>
       </div>
-        <!-- Card 1: Two Weeks Moving -->
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
-            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Big Challenge</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Two Weeks Moving</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-              Be active (at least 30 min) for 14 days in a row and get a 10% discount on your entire purchase.
-            </p>
-          </div>
-
-          <div class="relative h-[230px] overflow-hidden">
-            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78.57" style="overflow: visible;">
-              <defs>
-                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#95DA39" />
-                  <stop offset="1" stop-color="#5DA20A" />
-                </linearGradient>
-                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#E4002B" />
-                  <stop offset="1" stop-color="#FD5553" />
-                </linearGradient>
-              </defs>
-              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="24" />
-              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="24" pathLength="100" stroke-dasharray="0 100" />
-              <circle class="arc-knob" r="24" fill="#E4002B" opacity="1" stroke="white" stroke-width="5"></circle>
-              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">14</text>
-              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-            </svg>
-            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">11 / 14</p>
-                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">days of activity</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
         <!-- Card 2: 14-Day 7k Steps -->
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3 relative">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Big Challenge</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">14-Day 7k Steps</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
               Hit at least 7,000 steps every day for 2 weeks to unlock a reward.
             </p>
+            <span class="tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+              <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
+              Reward: 10% off daily vitamins
+            </span>
           </div>
           <div class="relative h-[230px] overflow-hidden">
             <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78" style="overflow: visible;">
@@ -166,12 +206,22 @@
 
         <!-- Card 3: Mindful Reset -->
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3 relative">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Mindfulness</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Mindful Reset</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
               Take a focused 5 minutes to reset.
             </p>
+            <div style="padding:8px 0 4px;">
+              <a href="/breathing-coach" style="display:inline-flex;align-items:center;gap:6px; background:transparent; color:#2f6f0a; border:1px solid #2f6f0a; border-radius:999px; padding:8px 14px; font-size:14px; font-weight:700; text-decoration:none;">
+                <i class="fa-solid fa-wind" style="font-size:14px;color:#2f6f0a;"></i>
+                Open Breathing Coach
+              </a>
+            </div>
+            <span class="tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+              <i class="fa-solid fa-mug-hot" style="color:#2f6f0a;font-size:13px;"></i>
+              Reward: free herbal tea sachet
+            </span>
           </div>
           <div class="relative h-[230px] overflow-hidden">
             <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="60" style="overflow: visible;">
@@ -202,12 +252,16 @@
 
         <!-- Card 4: Weekly Distance -->
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3 relative">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Weekly Distance</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Finish by Sunday</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
               Stay on pace to hit your weekly target before the weekend ends.
             </p>
+            <span class="tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+              <i class="fa-solid fa-truck-fast" style="color:#2f6f0a;font-size:13px;"></i>
+              Reward: free express delivery
+            </span>
           </div>
           <div class="relative h-[230px] overflow-hidden">
             <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="80" style="overflow: visible;">
@@ -237,6 +291,8 @@
         </article>
       </div>
     </section>
+
+    
 
     <section style="display:grid;gap:24px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));margin-top:32px;">
       <article class="glass card">
