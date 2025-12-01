@@ -236,7 +236,7 @@
             </span>
           </div>
           <div class="relative h-[230px] overflow-hidden">
-            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78" style="overflow: visible;">
+            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="78" style="overflow: visible; width:100%;">
               <defs>
                 <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
                   <stop stop-color="#95DA39" />
@@ -253,9 +253,9 @@
               <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">14</text>
               <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
             </svg>
-            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">11 / 14</p>
+            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none" style="width:100%;">
+              <div class="text-left">
+                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">11 / 14 days</p>
                 <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">days at 7k+ steps</p>
               </div>
             </div>
@@ -281,29 +281,14 @@
               Reward: free herbal tea sachet
             </span>
           </div>
-          <div class="relative h-[230px] overflow-hidden">
-            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="60" style="overflow: visible;">
-              <defs>
-                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#95DA39" />
-                  <stop offset="1" stop-color="#5DA20A" />
-                </linearGradient>
-                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#E4002B" />
-                  <stop offset="1" stop-color="#FD5553" />
-                </linearGradient>
-              </defs>
-              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="20" />
-              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="20" pathLength="100" stroke-dasharray="0 100" />
-              <circle class="arc-knob" r="20" fill="#E4002B" opacity="1" stroke="white" stroke-width="5" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));"></circle>
-              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">3</text>
-              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-            </svg>
-            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">3 / 5</p>
-                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">rounds box breathing</p>
-              </div>
+          <div style="padding:20px 24px 24px;">
+            <div class="mobility-progress" data-progress="60" style="position:relative;height:20px;border-radius:999px;background:#f2f2f7;overflow:visible;">
+              <div class="mobility-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg, #95DA39 0%, #5DA20A 100%);border-radius:999px;"></div>
+              <div class="mobility-progress-dot" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#E4002B;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.18);"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;color:#6e6e73;">
+              <span class="font-sans">3 / 5 mins</span>
+              <span class="font-sans font-semibold text-[#3a3a3c]">60%</span>
             </div>
           </div>
         </article>
@@ -321,36 +306,21 @@
               Reward: free express delivery
             </span>
           </div>
-          <div class="relative h-[230px] overflow-hidden">
-            <svg class="absolute right-0 top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="80" style="overflow: visible;">
-              <defs>
-                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#95DA39" />
-                  <stop offset="1" stop-color="#5DA20A" />
-                </linearGradient>
-                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#E4002B" />
-                  <stop offset="1" stop-color="#FD5553" />
-                </linearGradient>
-              </defs>
-              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="20" />
-              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="20" pathLength="100" stroke-dasharray="0 100" />
-              <circle class="arc-knob" r="20" fill="#E4002B" opacity="1" stroke="white" stroke-width="5" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));"></circle>
-              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">30</text>
-              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-            </svg>
-            <div class="absolute right-0 top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none">
-              <div class="text-center">
-                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">24 / 30 km</p>
-                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">Weekly distance</p>
-              </div>
+          <div style="padding:20px 24px 24px;">
+            <div class="mobility-progress" data-progress="80" style="position:relative;height:20px;border-radius:999px;background:#f2f2f7;overflow:visible;">
+              <div class="mobility-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg, #95DA39 0%, #5DA20A 100%);border-radius:999px;"></div>
+              <div class="mobility-progress-dot" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#E4002B;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.18);"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;color:#6e6e73;">
+              <span class="font-sans">24 / 30 km</span>
+              <span class="font-sans font-semibold text-[#3a3a3c]">80%</span>
             </div>
           </div>
         </article>
 
         <!-- Card 5: Mobility Minutes -->
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-4 relative">
+          <div class="flex flex-col gap-1 pl-6 pr-0 pt-6 pb-3 relative">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Mobility</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">20-Min Mobility</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
@@ -360,12 +330,13 @@
               <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
               Reward: free foam roller
             </span>
-            <div style="margin:40px 0 10px;">
+          </div>
+            <div style="padding:20px 24px 24px;">
               <div class="mobility-progress" data-progress="65" style="position:relative;height:20px;border-radius:999px;background:#f2f2f7;overflow:visible;">
                 <div class="mobility-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg, #95DA39 0%, #5DA20A 100%);border-radius:999px;"></div>
                 <div class="mobility-progress-dot" style="position:absolute;left:0%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#E4002B;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.18);"></div>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:#6e6e73;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;color:#6e6e73;">
                 <span class="font-sans">13 / 20 mins</span>
                 <span class="font-sans font-semibold text-[#3a3a3c]">65%</span>
               </div>
