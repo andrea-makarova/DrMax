@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Max App - Home</title>
+  <style>
+    :root {
+      --blue-25: #f5f8fd;
+      --blue-50: #e5f1fe;
+      --blue-200: #95ccfe;
+      --blue-400: #3997dd;
+      --blue-500: #0d77ba;
+      --gray-50: #f1f1f1;
+      --gray-100: #e2e2e2;
+      --gray-300: #ababab;
+      --gray-400: #919191;
+      --gray-900: #1b1b1b;
+      --green-300: #78be20;
+      --green-500: #47850a;
+      --red-500: #e4002b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--blue-25);
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
+      display: block;
+    }
+    .phone {
+      width: 100%;
+      max-width: none;
+      min-height: 100vh;
+      background: #ffffff;
+      box-shadow: none;
+      padding: 30px 14px 90px;
+      position: relative;
+    }
+    .logo-pill {
+      width: 170px;
+      height: 64px;
+      border-radius: 22px;
+      border: 1px solid var(--gray-200);
+      background: #fff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .logo-pill img {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+    }
+    .search {
+      margin: 14px 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 9999px;
+      background: #fff;
+      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.06);
+      outline: 1px solid #e5e5ea;
+      outline-offset: -1px;
+      padding: 14px 16px;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 500;
+      color: #6e6e73;
+    }
+    .search svg { flex-shrink: 0; }
+    .announce {
+      margin: 0 0 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background-image:
+        url("images/person-walking.svg"),
+        linear-gradient(151deg, #95da39 0%, #5da20a 100%);
+      background-size: 35px, cover;
+      background-repeat: no-repeat;
+      background-position: right 0% center, center;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: announcePulse 2.8s ease-in-out infinite;
+    }
+    .announce span { color: #ffffff; }
+    .announce:hover { filter: brightness(0.98); }
+    .announce-cta {
+      margin-left: auto;
+      background: #ffffff;
+      color: #0d6fb8;
+      border: 1px solid #d5e8b2;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    @keyframes announcePulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(93, 162, 10, 0.14); }
+      50% { transform: scale(1.005); box-shadow: 0 0 0 6px rgba(93, 162, 10, 0.12); }
+    }
+    .promo-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      overflow-y: visible;
+      padding: 6px 28px 40px 16px;
+      margin: 0 -14px 16px;
+
+      scrollbar-width: none;
+    }
+    .promo-row::-webkit-scrollbar {
+      display: none;
+    }
+    .promo-card {
+      flex: 0 0 74%;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      scroll-snap-align: start;
+      background: #ddd;
+      min-height: 200px;
+    }
+    .promo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .journey-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 20;
+    }
+    .journey-drawer {
+      position: relative;
+      width: 100%;
+      max-width: none;
+      padding: 24px 28px 32px;
+      border-radius: 24px 24px 0 0;
+      min-height: 46vh;
+      background-image:
+        url("images/person-walking.svg"),
+        linear-gradient(151deg, #95da39 0%, #5da20a 100%);
+      background-size: clamp(240px, 58vw, 520px), cover;
+      background-repeat: no-repeat;
+      background-position: right 0% bottom 50%, center;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: drawerSlideUp 520ms ease-out both;
+      z-index: 9;
+    }
+    .journey-drawer h3 {
+      margin: 32px 0 16px;
+      font-size: 24px;
+      line-height: 30px;
+      font-weight: 800;
+    }
+    .journey-drawer p {
+      margin: 0 24px 32px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #f8f8f8;
+    }
+    .journey-cta {
+      background: #ffffff;
+      color: #09629d;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+    .journey-cta:active { transform: translateY(1px); }
+    .journey-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    @keyframes drawerSlideUp {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes drawerSlideDown {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+    .journey-drawer.closing {
+      animation: drawerSlideDown 420ms ease-in forwards;
+    }
+    .menu-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: #f3f3f3;
+    }
+    .menu-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .menu-text {
+      flex: 1;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--gray-900);
+    }
+    .chevron {
+      color: #c7c7cc;
+      font-size: 32px;
+    }
+    .loyalty {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 86px;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      z-index: 10;
+    }
+    .loyalty button {
+      background:#47850a;
+      color:#ffffff;
+      border:1px solid #47850a;
+      border-radius:999px;
+      padding:12px 20px;
+      font-size:15px;
+      font-weight:700;
+      line-height: 18px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 8px 18px rgba(53,107,9,0.25);
+      pointer-events:auto;
+    }
+    .loyalty button:active { transform: translateY(1px); }
+    .tabbar {
+      position: fixed;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #ededed;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      padding: 16px 8px 16px;
+      box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.05);
+    }
+    .tab {
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      font-size: 12px;
+      color: #8e8e93;
+      text-decoration: none;
+    }
+    .tab-icon {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: grayscale(1) brightness(0.8);
+    }
+    .tab.active { color: var(--green-500); font-weight: 700; }
+    .tab:not(.active) { color: #8e8e93; }
+    .tab.active .tab-icon img { filter: none; }
+    .tab.menu-badge .tab-icon {
+      position: relative;
+    }
+    .tab.menu-badge .tab-icon::after {
+      content: "";
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--red-500);
+      box-shadow: 0 0 0 2px #fff;
+    }
+    @media (max-width: 480px) {
+      .phone { padding-bottom: 180px; }
+      .loyalty { bottom: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    
+      <img src="images/Logo-drmax.svg" alt="Dr. Max">
+   
+
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="5" stroke="#6e6e73" stroke-width="1.5"></circle>
+        <path d="M10.8 10.8L14.5 14.5" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
+      <span>Search</span>
+    </div>
+
+    <a class="announce" href="index.html">
+      <span>Health Journey is officially launched</span>
+      <button class="announce-cta" type="button">Explore</button>
+    </a>
+
+    <div class="promo-row">
+      <div class="promo-card">
+        <img src="images/Mobile Banner-1.png" alt="Promo 1">
+      </div>
+      <div class="promo-card">
+        <img src="images/Mobile Banner-2.png" alt="Promo 2">
+      </div>
+      <div class="promo-card">
+        <img src="images/Mobile Banner-3.png" alt="Promo 3">
+      </div>
+      <div class="promo-card">
+        <img src="images/Mobile Banner-4.png" alt="Promo 4">
+      </div>
+      <div class="promo-card">
+        <img src="images/Mobile Banner.png" alt="Promo 5">
+      </div>
+    </div>
+
+    <ul class="menu-list">
+      <li class="menu-item">
+        <div class="menu-icon" style="background:#ffe5e5;"><img src="images/sales-red.webp" alt="Sales & Discounts"></div>
+        <span class="menu-text">Sales & Discounts</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon" style="background:#e9f7dc;"><img src="images/drmax.webp" alt="Dr. Max Products"></div>
+        <span class="menu-text">Dr. Max Products</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/detska-kosmetika.webp" alt="Mother & Child"></div>
+        <span class="menu-text">Mother & Child</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/liceni.webp" alt="Beauty & Care"></div>
+        <span class="menu-text">Beauty & Care</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/zdrava-vyziva.webp" alt="Healthy Food"></div>
+        <span class="menu-text">Healthy Food</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/pro-sportovce.webp" alt="For Athletes"></div>
+        <span class="menu-text">For Athletes</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/zdravotnicke-pomucky.webp" alt="Medical Supplies"></div>
+        <span class="menu-text">Medical Supplies</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/pro-zvirata.webp" alt="For Pets"></div>
+        <span class="menu-text">For Pets</span>
+        <span class="chevron">›</span>
+      </li>
+      <li class="menu-item">
+        <div class="menu-icon"><img src="images/drogerie.webp" alt="Home Care"></div>
+        <span class="menu-text">Home Care</span>
+        <span class="chevron">›</span>
+      </li>
+    </ul>
+
+    <div class="loyalty">
+      <button>
+        <img src="images/Loyality Card.svg" alt="" style="height:18px;width:auto;">
+        Loyalty card
+      </button>
+    </div>
+  </div>
+
+  <nav class="tabbar">
+    <a class="tab active" href="#">
+      <div class="tab-icon"><img src="images/Home.svg" alt=""></div>
+      <span>E-shop</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Rx.svg" alt=""></div>
+      <span>Prescription</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Cart.svg" alt=""></div>
+      <span>Cart</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
+      <span>Purchases</span>
+    </a>
+    <a class="tab menu-badge" href="#">
+      <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
+      <span>Menu</span>
+    </a>
+  </nav>
+
+  <div class="journey-overlay" role="dialog" aria-labelledby="journey-title" style="display:none;">
+    <div class="journey-drawer">
+      <button class="journey-close" id="journey-close" aria-label="Close health journey drawer">×</button>
+      <h3 id="journey-title">Health journey</h3>
+      <p>
+        Daily movement brings real benefits—now it brings rewards too.
+        Each time you meet your step goal, you’ll earn a badge.
+      </p>
+      <p>
+        Gather your badges and redeem them for exclusive offers that support your health journey.
+      </p>
+      <button class="journey-cta" id="journey-cta">Begin Your Journey</button>
+    </div>
+  </div>
+  <script>
+    (() => {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+
+      const overlay = document.querySelector('.journey-overlay');
+      const drawer = overlay?.querySelector('.journey-drawer');
+      const closeBtn = document.getElementById('journey-close');
+      const ctaBtn = document.getElementById('journey-cta');
+      let shown = false;
+      let revealTimer = null;
+
+      const hideDrawer = () => {
+        if (!overlay || !drawer) return;
+        drawer.classList.add('closing');
+        const handleEnd = () => {
+          overlay.style.display = 'none';
+          drawer.classList.remove('closing');
+          drawer.removeEventListener('animationend', handleEnd);
+        };
+        drawer.addEventListener('animationend', handleEnd);
+      };
+
+      const showDrawer = () => {
+        if (!overlay || shown) return;
+        overlay.style.display = 'flex';
+        requestAnimationFrame(() => overlay.classList.add('open'));
+        shown = true;
+        if (revealTimer) {
+          clearTimeout(revealTimer);
+          revealTimer = null;
+        }
+        window.removeEventListener('scroll', handleScroll);
+      };
+
+      closeBtn?.addEventListener('click', hideDrawer);
+      ctaBtn?.addEventListener('click', () => {
+        window.location.href = 'index.html';
+      });
+
+      const handleScroll = () => {
+        if (shown) return;
+        if (revealTimer) return;
+        revealTimer = setTimeout(showDrawer, 2000);
+      };
+      if (overlay) overlay.style.display = 'none';
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>

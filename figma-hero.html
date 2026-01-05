@@ -19,24 +19,28 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #f5f7fb;
+      background: var(--green-light);
       font-family: "Figtree", "Proxima Nova", system-ui, -apple-system, sans-serif;
+      overflow: hidden;
     }
     .frame {
       position: relative;
-      width: 390px;
-      height: 750px;
-      box-shadow: 0 14px 21px rgba(0, 0, 0, 0.1);
+      width: 100vw;
+      height: 100vh;
+      box-shadow: none;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 0;
       background: var(--green-light);
     }
     .gradient {
       position: absolute;
       inset: 0;
-      background: linear-gradient(151deg, var(--green-light) 0%, var(--green-dark) 100%);
+      background-image:
+        url("images/person-walking.svg"),
+        linear-gradient(151deg, var(--green-light) 0%, var(--green-dark) 100%);
+      background-size: clamp(460px, 64vw, 950px), cover;
+      background-repeat: no-repeat;
+      background-position: right 5% bottom -8%, center;
       overflow: hidden;
     }
     .pillars {
@@ -67,47 +71,72 @@
     .content {
       position: absolute;
       left: 0;
-      top: 159px;
+      top: clamp(120px, 18vh, 220px);
       width: 100%;
-      padding: 0 60px;
+      padding: 0 clamp(32px, 8vw, 140px);
       display: grid;
-      gap: 30px;
+      gap: 12px;
       color: var(--white);
       z-index: 2;
     }
     .title {
       margin: 0;
-      font-size: 59px;
-      line-height: 62px;
+      font-size: clamp(60px, 9vw, 104px);
+      line-height: 1.02;
       font-weight: 700;
       font-family: "Figtree", "Proxima Nova", sans-serif;
       white-space: pre-line;
     }
     .subtitle {
       margin: 0;
-      font-size: 26px;
-      line-height: 27px;
+      font-size: clamp(20px, 2.9vw, 30px);
+      line-height: 1.2;
       font-weight: 500;
     }
     .cta {
       justify-self: start;
-      padding: 8px 20px;
+      padding: 16px 24px;
+      margin-top: clamp(24px, 4vw, 36px);
       border-radius: 999px;
       border: none;
       background: var(--white);
       color: var(--blue-cta);
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       font-family: "Figtree", "Proxima Nova", sans-serif;
       box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.06);
       cursor: pointer;
     }
     .cta:active { transform: translateY(1px); }
+    .challenge {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(13, 119, 186, 0.06);
+      border: 1px solid #e5f1fe;
+      color: #0d6fb8;
+      font-size: 16px;
+      line-height: 22px;
+      max-width: 460px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+    }
+    .challenge button {
+      margin-top: 10px;
+      background:#47850a;
+      color:#ffffff;
+      border:1px solid #47850a;
+      border-radius:999px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(53,107,9,0.18);
+    }
+    .challenge button:active { transform: translateY(1px); }
     .top-bar {
       position: absolute;
       inset: 0 auto auto 0;
       width: 100%;
-      height: 92px;
+      height: 12vh;
       z-index: 3;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0.32) 0%, rgba(0, 0, 0, 0) 100%);
     }
@@ -116,7 +145,7 @@
       inset: 0;
       display: flex;
       align-items: center;
-      padding: 34px 16px 0;
+      padding: 3vh 16px 0;
       gap: 12px;
       color: var(--white);
       font-size: 14.6px;
@@ -130,33 +159,51 @@
       background: url("https://placehold.co/40x40") center/cover;
       flex-shrink: 0;
     }
+    .logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
     .menu-dots {
       margin-left: auto;
-      width: 33px;
-      height: 33px;
+      width: 28px;
+      height: 28px;
       display: grid;
       place-items: center;
+      position: relative;
     }
     .menu-dots::before,
     .menu-dots::after {
       content: "";
-      width: 20px;
-      height: 20px;
+      position: absolute;
+      width: 18px;
+      height: 2px;
       background: var(--white);
-      display: block;
+      border-radius: 2px;
+      transform-origin: center;
+    }
+    .menu-dots::before { transform: rotate(45deg); }
+    .menu-dots::after { transform: rotate(-45deg); }
+    .signals {
+      position: absolute;
+      top: 1.6vh;
+      left: 50%;
+      transform: translateX(-50%);
+      display: grid;
+      grid-auto-flow: column;
+      gap: 8px;
+      align-items: center;
     }
     .signal {
-      position: absolute;
-      top: 15px;
-      left: 8px;
-      width: 176px;
+      position: relative;
+      width: 45vw;
       height: 3px;
       background: var(--white);
       border-radius: 2px;
     }
     .signal.secondary {
-      left: 188px;
-      width: 179px;
+      width: 45vw;
       background: rgba(255, 255, 255, 0.4);
     }
   </style>
@@ -164,20 +211,22 @@
 <body>
   <div class="frame">
     <div class="gradient"></div>
-    <div class="pillars">
-      <div class="pillar p1"></div>
-      <div class="pillar p2"></div>
-    </div>
+
     <div class="content">
-      <h1 class="title">Walk.\nEarn.\nSave.</h1>
-      <p class="subtitle">Track your movement and unlock exclusive prizes.</p>
-      <button class="cta">Find out more</button>
+      <h1 class="title">Walk.</h1>
+      <h1 class="title">Earn.</h1>
+      <h1 class="title">Save.</h1>
+      <p class="subtitle">Track your movement and unlock coupon codes and special prizes.</p>
+      <button class="cta" onclick="window.location.href='app-home.html'">Start your health journey</button>
+      
     </div>
     <div class="top-bar">
-      <div class="signal"></div>
-      <div class="signal secondary"></div>
+      <div class="signals">
+        <div class="signal"></div>
+        <div class="signal secondary"></div>
+      </div>
       <div class="top-bar-inner">
-        <div class="avatar" aria-hidden="true"></div>
+        <img class="logo" src="images/logo.png" alt="Dr. Max logo">
         <span aria-label="Brand">Dr. Max</span>
         <div class="menu-dots" aria-hidden="true"></div>
       </div>

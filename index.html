@@ -42,8 +42,26 @@
     .page {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 40px 24px 60px;
+      padding: 40px 24px 140px;
     }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 12px;
+    }
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid #e5e5ea;
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+      cursor: pointer;
+    }
+    .back-btn:active { transform: translateY(1px); }
     .glass {
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.8);
@@ -123,9 +141,10 @@
     .rewards-carousel {
       display: flex;
       gap: 12px;
-      padding: 0 14px 16px;
+      padding: 0 24px 16px;
+      margin: 0 -24px;
       scroll-snap-type: x mandatory;
-      scroll-padding: 0 14px;
+      scroll-padding: 0 24px;
       overflow-x: auto;
       overflow-y: visible;
       position: relative;
@@ -308,6 +327,44 @@
       0% { transform: scale(0.9); opacity: 0.7; }
       100% { transform: scale(1.1); opacity: 0; }
     }
+    .tabbar {
+      position: fixed;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #ededed;
+      display: grid;
+  grid-template-columns: repeat(5, 1fr);
+      padding: 16px 8px 16px;
+      box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.05);
+      z-index: 999;
+    }
+    .tab {
+      display: grid;
+      place-items: center;
+      gap: 2px;
+      font-size: 12px;
+      color: #8e8e93;
+      text-decoration: none;
+    }
+    .tab-icon {
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tab-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: grayscale(1) brightness(0.8);
+    }
+    .tab.active { color: var(--green-500); font-weight: 700; }
+    .tab:not(.active) { color: #8e8e93; }
+    .tab.active .tab-icon img { filter: none; }
     .section-title { font-size: 20px; font-weight: 700; margin: 0; color: var(--gray-900); }
     .muted { color: var(--gray-400); font-size: 14px; }
     .bar {
@@ -333,7 +390,44 @@
       font-weight: 600;
       border: 1px solid var(--gray-100);
     }
+    .challenge {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(13, 119, 186, 0.06);
+      border: 1px solid #e5f1fe;
+      color: #0d6fb8;
+      font-size: 16px;
+      line-height: 22px;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+      max-width: 520px;
+      width: 100%;
+    }
+    .challenge strong { color: #0d6fb8; }
+    .challenge button {
+      margin-top: 10px;
+      background:#47850a;
+      color:#ffffff;
+      border:1px solid #47850a;
+      border-radius:999px;
+      padding:10px 16px;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(53,107,9,0.18);
+    }
+    .challenge button:active { transform: translateY(1px); }
     .card-header-safe { position: relative; }
+    .main-half-lock {
+      position: absolute;
+      inset: 35% 0 0 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(8px);
+      pointer-events: all;
+      padding: 16px 24px 18px;
+    }
     @media (max-width: 400px) {
       .card-tag {
         position: static !important;
@@ -350,6 +444,13 @@
 </head>
 <body>
   <main class="page">
+    <div class="top-nav">
+      <button class="back-btn" onclick="window.location.href='app-home.html'" aria-label="Back">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M14.5 5L8.5 11.5L14.5 18" stroke="#1b1b1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;">
@@ -513,8 +614,27 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
         <h2 class="section-title" style="font-size:20px;">Main Challenge</h2>
       </div>
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;">
+          <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Allow activity permissions</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+              Grant permissions to unlock your first 3 stamps instantly.
+            </p>
+            <span class="tag card-tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+              <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
+              3 stamps
+            </span>
+          </div>
+          <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
+            <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); const lock=document.getElementById('main-challenge-lock'); if(lock){lock.remove();}">
+              <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
+              Give permissions
+            </button>
+          </div>
+        </article>
         <!-- Card 2: Daily 5k Steps -->
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card">
           <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Daily Challenge</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Hit 5,000 steps</p>
@@ -523,7 +643,7 @@
             </p>
             <span class="tag card-tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
               <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-              Stamp reward
+              1 stamp
             </span>
           </div>
           <div class="relative h-[230px] overflow-hidden">
@@ -550,6 +670,12 @@
                 <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
               </div>
             </div>
+          </div>
+          <div class="main-half-lock" id="main-challenge-lock">
+            <button style="margin-bottom:8px;background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); document.getElementById('main-challenge-lock')?.remove();">
+              <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
+              Start challenge
+            </button>
           </div>
         </article>
 
@@ -591,6 +717,29 @@
     </section>
 
   </main>
+
+  <nav class="tabbar">
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Home.svg" alt=""></div>
+      <span>E-shop</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Rx.svg" alt=""></div>
+      <span>Prescription</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Cart.svg" alt=""></div>
+      <span>Cart</span>
+    </a>
+    <a class="tab" href="#">
+      <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
+      <span>Purchases</span>
+    </a>
+    <a class="tab" href="app-home.html">
+      <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
+      <span>Home</span>
+    </a>
+  </nav>
 
   <div id="bonus-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title" aria-describedby="bonus-modal-desc">
     <div id="bonus-modal-overlay" class="bonus-modal__overlay"></div>
@@ -1153,9 +1302,12 @@
       }, 320);
     };
 
+    let lastScrollY = 0;
+
     const openBonusModal = () => {
       const modal = document.getElementById('bonus-modal');
       if (!modal || modal.dataset.open === 'true') return;
+      lastScrollY = window.scrollY || 0;
       modal.dataset.open = 'true';
       modal.classList.add('visible');
       document.body.classList.add('modal-open');
@@ -1171,6 +1323,11 @@
       if (carousel) carousel.scrollLeft = 0;
       setTimeout(() => addBonusCard(true), 800);
       resetStamps();
+      requestAnimationFrame(() => {
+        if (typeof lastScrollY === 'number') {
+          window.scrollTo(0, lastScrollY);
+        }
+      });
     };
 
     document.getElementById('bonus-modal-close')?.addEventListener('click', closeBonusModal);
