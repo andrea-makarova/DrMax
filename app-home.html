@@ -52,6 +52,43 @@
       width: auto;
       object-fit: contain;
     }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid #e5e5ea;
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .back-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #3a3a3c;
+    }
+    .how-works-btn {
+      margin-left: auto;
+      background: #ffffff;
+      color: var(--blue-500);
+      border: 1px solid #d7e6f6;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    }
+    .how-works-btn:active,
+    .back-btn:active { transform: translateY(1px); }
     .search {
       margin: 14px 0 18px;
       display: flex;
@@ -352,8 +389,8 @@
 </head>
 <body>
   <div class="phone">
-    
-      <img src="images/Logo-drmax.svg" alt="Dr. Max">
+  
+    <img src="images/Logo-drmax.svg" alt="Dr. Max">
    
 
     <div class="search">
@@ -444,7 +481,7 @@
   </div>
 
   <nav class="tabbar">
-    <a class="tab active" href="#">
+    <a class="tab active" href="app-home.html">
       <div class="tab-icon"><img src="images/Home.svg" alt=""></div>
       <span>E-shop</span>
     </a>
@@ -460,7 +497,7 @@
       <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
       <span>Purchases</span>
     </a>
-    <a class="tab menu-badge" href="#">
+    <a class="tab menu-badge" href="index.html">
       <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
       <span>Menu</span>
     </a>

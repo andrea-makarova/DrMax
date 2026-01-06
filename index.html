@@ -62,6 +62,79 @@
       cursor: pointer;
     }
     .back-btn:active { transform: translateY(1px); }
+    .how-works-btn {
+      margin-left: auto;
+      background: #ffffff;
+      color: var(--blue-500);
+      border: 1px solid #d7e6f6;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .how-works-btn:active { transform: translateY(1px); }
+    .permissions-toggle {
+      background: #ffffff;
+      color: #1f2937;
+      border: 1px solid #e1e5ea;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .permissions-toggle:active { transform: translateY(1px); }
+    .redeem-btn {
+      background: #ffffff;
+      color: #0d6fb8;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 170px;
+      text-align: center;
+      transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    .redeem-btn[disabled] {
+      background: #eef0f4;
+      color: #6b7280;
+      border: 1px solid #e1e5ea;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    .btn-disabled {
+      background: #eef0f4;
+      color: #6b7280;
+      border: 1px solid #e1e5ea;
+      box-shadow: none;
+      cursor: not-allowed;
+      transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+    .btn-disabled i { color: currentColor; }
+    .reward-card {
+      transition: background 260ms ease, color 260ms ease;
+    }
+    .enable-pop {
+      animation: enablePop 650ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    }
+    @keyframes enablePop {
+      0% { filter: brightness(0.97); }
+      45% { filter: brightness(1.04); }
+      100% { filter: brightness(1); }
+    }
     .glass {
       background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.8);
@@ -77,7 +150,7 @@
       padding: 16px;
       min-height: 170px;
       border: 1px solid #e5e5ea;
-      border-radius: 18px;
+      border-radius: 24px;
       background: #ffffff;
       box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
     }
@@ -172,7 +245,7 @@
       padding: 16px;
       min-height: 170px;
       border: 1px solid #e5e5ea;
-      border-radius: 18px;
+      border-radius: 24px;
       background: #ffffff;
       box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
       transform-style: preserve-3d;
@@ -450,6 +523,17 @@
           <path d="M14.5 5L8.5 11.5L14.5 18" stroke="#1b1b1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
+      <button class="how-works-btn" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" stroke="#0d77ba" stroke-width="1.6"/>
+          <path d="M9.75 9a2.25 2.25 0 1 1 3.6 1.8c-.9.6-1.35 1.05-1.35 2.2" stroke="#0d77ba" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="16.8" r="0.9" fill="#0d77ba"/>
+        </svg>
+        How it works
+      </button>
+      <button class="permissions-toggle" type="button" id="permissions-toggle">
+        Permissions: Off
+      </button>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       
@@ -494,116 +578,46 @@
       <h2 class="section-title" style="font-size:20px;margin-bottom:16px;">Your Rewards</h2>
       <div class="rewards-carousel">
         <!-- Daily steps stamp rewards -->
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 18" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 18" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
             <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
             </div>
           </div>
           <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 18</p>
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
           </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
+          <div class="reward-actions" style="display:flex;justify-content:center;">
+            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
           </div>
         </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 17" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 17" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
             <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
             </div>
           </div>
           <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 17</p>
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
           </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
+          <div class="reward-actions" style="display:flex;justify-content:center;">
+            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
           </div>
         </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 16" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 16" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
             <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
             </div>
           </div>
           <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 16</p>
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
           </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 15" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 15</p>
-          </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 14" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 14</p>
-          </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 13" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 13</p>
-          </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 12" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 12</p>
-          </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 11" data-reward-code="MOVE10" style="flex:0 0 240px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 24px; padding: 22px 18px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-shoe-prints reward-main-icon" style="font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Daily Steps</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Apr 11</p>
-          </div>
-          <div style="display:flex;justify-content:center;">
-            <button style="background:#ffffff;color:#0d6fb8;border:none;border-radius:999px;padding:10px 22px;font-size:16px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;">Redeem stamp</button>
+          <div class="reward-actions" style="display:flex;justify-content:center;">
+            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
           </div>
         </div>
       </div>
@@ -614,7 +628,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
         <h2 class="section-title" style="font-size:20px;">Main Challenge</h2>
       </div>
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;">
+        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
           <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
             <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Allow activity permissions</p>
@@ -627,7 +641,7 @@
             </span>
           </div>
           <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
-            <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); const lock=document.getElementById('main-challenge-lock'); if(lock){lock.remove();}">
+            <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="window.location.href='permissions.html'">
               <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
               Give permissions
             </button>
@@ -672,8 +686,8 @@
             </div>
           </div>
           <div class="main-half-lock" id="main-challenge-lock">
-            <button style="margin-bottom:8px;background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); document.getElementById('main-challenge-lock')?.remove();">
-              <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
+            <button class="btn-disabled challenge-btn" style="margin-bottom:8px;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); document.getElementById('main-challenge-lock')?.remove();" disabled>
+              <i class="fa-solid fa-check" style="font-size:14px;color:currentColor;"></i>
               Start challenge
             </button>
           </div>
@@ -707,9 +721,9 @@
             </div>
           </div>
           <div class="join-overlay" style="position:absolute;left:0;right:0;bottom:0;top:55%;display:flex;align-items:center;justify-content:flex-start;gap:12px;background:rgba(255,255,255,0.35);backdrop-filter:blur(4px);padding:12px 24px 24px;transition:opacity 0.35s ease;z-index:3;pointer-events:none;">
-            <button class="join-overlay-btn" style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 20px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);pointer-events:auto;">
-              <i class="fa-solid fa-plus" style="font-size:14px;color:#ffffff;"></i>
-              Join challenge
+            <button class="join-overlay-btn btn-disabled challenge-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;pointer-events:auto;" disabled>
+              <i class="fa-solid fa-check" style="font-size:14px;"></i>
+              Start challenge
             </button>
           </div>
         </article>
@@ -719,7 +733,7 @@
   </main>
 
   <nav class="tabbar">
-    <a class="tab" href="#">
+    <a class="tab" href="app-home.html">
       <div class="tab-icon"><img src="images/Home.svg" alt=""></div>
       <span>E-shop</span>
     </a>
@@ -735,9 +749,9 @@
       <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
       <span>Purchases</span>
     </a>
-    <a class="tab" href="app-home.html">
+    <a class="tab active" href="app-home.html">
       <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
-      <span>Home</span>
+      <span>Menu</span>
     </a>
   </nav>
 
@@ -944,82 +958,86 @@
     };
 
     // Convert a reward card to claimed state when its button is clicked
-    document.querySelectorAll('.reward-card button').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const card = btn.closest('.reward-card');
-        if (!card || card.dataset.claimed === 'true') return;
+    const handleRewardClaim = (btn) => {
+      const card = btn.closest('.reward-card');
+      if (!card || card.dataset.claimed === 'true' || btn.disabled) return;
 
-        card.dataset.claimed = 'true';
-        card.style.background = '#ffffff';
-        card.style.border = '1px solid #e5e5ea';
-        card.style.color = '#3a3a3c';
-        card.style.transition = 'all 0.35s ease';
-        card.animate(
-          [
-            { transform: 'scale(1)', boxShadow: card.style.boxShadow || 'none' },
-            { transform: 'scale(1.03)', boxShadow: '0 8px 20px rgba(0,0,0,0.08)' },
-            { transform: 'scale(1)', boxShadow: '0 6px 14px rgba(0,0,0,0.06)' }
-          ],
-          { duration: 320, easing: 'ease-out' }
-        );
+      card.dataset.claimed = 'true';
+      card.style.background = '#ffffff';
+      card.style.border = '1px solid #e5e5ea';
+      card.style.color = '#3a3a3c';
+      card.style.transition = 'all 0.35s ease';
+      card.animate(
+        [
+          { transform: 'scale(1)', boxShadow: card.style.boxShadow || 'none' },
+          { transform: 'scale(1)', boxShadow: '0 8px 20px rgba(0,0,0,0.08)' },
+          { transform: 'scale(1)', boxShadow: '0 6px 14px rgba(0,0,0,0.06)' }
+        ],
+        { duration: 320, easing: 'ease-out' }
+      );
 
-        const actions = btn.parentElement;
-        if (actions) {
-          const type = card.dataset.rewardType || 'code';
-          if (type === 'product') {
-            const productName = card.dataset.productName || 'Reward';
-            actions.innerHTML = `
-              <button class="add-to-cart-btn" style="background:#ffffff;color:#0d6fb8;border:1px solid #e5e5ea;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
-                <i class="fa-solid fa-cart-plus" style="color:#0d6fb8;font-size:14px;"></i>
-                Add to cart
+      const actions = btn.closest('.reward-actions') || btn.parentElement;
+      if (actions) {
+        const type = card.dataset.rewardType || 'code';
+        if (type === 'product') {
+          const productName = card.dataset.productName || 'Reward';
+          actions.innerHTML = `
+            <button class="add-to-cart-btn" style="background:#ffffff;color:#0d6fb8;border:1px solid #e5e5ea;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
+              <i class="fa-solid fa-cart-plus" style="color:#0d6fb8;font-size:14px;"></i>
+              Add to cart
+            </button>
+          `;
+        } else if (type === 'stamp') {
+          const stampDate = card.dataset.stampDate ? ` ${card.dataset.stampDate}` : '';
+          actions.innerHTML = `
+            <button style="background:#eaf6dc;color:#2f6f0a;border:1px solid #d5e8b2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:default;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
+              <i class="fa-solid fa-circle-check" style="font-size:14px;color:#2f6f0a;"></i>
+              Claimed${stampDate ? ' - ' + stampDate : ''}
+            </button>
+          `;
+        } else {
+          const code = card.dataset.rewardCode || 'THANKS10';
+          actions.innerHTML = `
+            <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
+              <span style="letter-spacing:0.6px;">${code}</span>
+              <button class="copy-code" data-code="${code}" aria-label="Copy code" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
+                <i class="fa-solid fa-copy" style="font-size:14px;"></i>
               </button>
-            `;
-          } else if (type === 'stamp') {
-            const stampDate = card.dataset.stampDate ? ` ${card.dataset.stampDate}` : '';
-            actions.innerHTML = `
-              <button style="background:#eaf6dc;color:#2f6f0a;border:1px solid #d5e8b2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:default;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
-                <i class="fa-solid fa-circle-check" style="font-size:14px;color:#2f6f0a;"></i>
-                Claimed${stampDate ? ' - ' + stampDate : ''}
-              </button>
-            `;
-          } else {
-            const code = card.dataset.rewardCode || 'THANKS10';
-            actions.innerHTML = `
-              <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
-                <span style="letter-spacing:0.6px;">${code}</span>
-                <button class="copy-code" data-code="${code}" aria-label="Copy code" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
-                  <i class="fa-solid fa-copy" style="font-size:14px;"></i>
-                </button>
-              </span>
-            `;
-          }
-
-          const pill = actions.querySelector('span,button');
-          if (pill) {
-            pill.style.opacity = '0';
-            pill.style.transition = 'opacity 0.35s ease';
-            requestAnimationFrame(() => {
-              pill.style.opacity = '1';
-            });
-          }
-
-          wireRewardActions(actions);
+            </span>
+          `;
         }
 
-        const icon = card.querySelector('.reward-main-icon');
-        if (icon) {
-          // keep same icon but invert styling: green gradient background, white icon
-          icon.style.background = 'none';
-          icon.style.webkitTextFillColor = '#ffffff';
-          icon.style.color = '#ffffff';
-          icon.style.fontSize = '26px';
-          const iconWrap = icon.parentElement;
+        const pill = actions.querySelector('span,button');
+        if (pill) {
+          pill.style.opacity = '0';
+          pill.style.transition = 'opacity 0.35s ease';
+          requestAnimationFrame(() => {
+            pill.style.opacity = '1';
+          });
+        }
+
+        wireRewardActions(actions);
+      }
+
+      const icon = card.querySelector('.reward-main-icon');
+      if (icon) {
+        // keep same icon but invert styling: green gradient background, white icon
+        icon.style.background = 'none';
+        icon.style.webkitTextFillColor = '#ffffff';
+        icon.style.color = '#ffffff';
+        icon.style.fontSize = '26px';
+        const iconWrap = icon.parentElement;
         if (iconWrap) iconWrap.style.background = 'linear-gradient(180deg, #95DA39 0%, #5DA20A 100%)';
-        }
+      }
 
-        addStamp();
-      });
+      addStamp();
+    };
+
+    document.addEventListener('click', (event) => {
+      const btn = event.target.closest('.reward-card button');
+      if (!btn) return;
+      event.preventDefault();
+      handleRewardClaim(btn);
     });
 
     // Breathing coach start handler with 4-4-4-4 timing and matching bubble scales
@@ -1349,6 +1367,129 @@
         }
       });
     });
+
+    let lastPermissionsState = null;
+    document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
+      const actions = card.querySelector('.reward-actions');
+      if (actions && !card.dataset.inactiveActions) {
+        card.dataset.inactiveActions = actions.innerHTML;
+      }
+    });
+
+    const applyPermissionsState = (granted) => {
+      const permissionCard = document.getElementById('entry-permission-card');
+      const permissionToggle = document.getElementById('permissions-toggle');
+
+      if (permissionCard) {
+        permissionCard.style.display = granted ? 'none' : '';
+      }
+      if (permissionToggle) {
+        permissionToggle.textContent = granted ? 'Permissions: On' : 'Permissions: Off';
+      }
+
+      const setButtonState = (btn, enabled) => {
+        if (!btn) return;
+        btn.disabled = !enabled;
+        btn.classList.toggle('btn-disabled', !enabled);
+        if (enabled) {
+          btn.style.background = '#47850a';
+          btn.style.color = '#ffffff';
+          btn.style.border = '1px solid #47850a';
+          btn.style.boxShadow = '0 8px 18px rgba(53,107,9,0.25)';
+          btn.style.cursor = 'pointer';
+        } else {
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.border = '';
+          btn.style.boxShadow = '';
+          btn.style.cursor = '';
+        }
+        btn.querySelectorAll('i').forEach((icon) => {
+          icon.style.color = enabled ? '#ffffff' : 'currentColor';
+        });
+      };
+
+      document.querySelectorAll('.challenge-btn').forEach((btn) => {
+        setButtonState(btn, granted);
+        if (granted && lastPermissionsState === false) {
+          btn.classList.remove('enable-pop');
+          void btn.offsetWidth;
+          btn.classList.add('enable-pop');
+        }
+      });
+
+      document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
+        const title = granted ? card.dataset.activeTitle : (card.dataset.inactiveTitle || 'Permission needed');
+        const desc = granted ? card.dataset.activeDesc : (card.dataset.inactiveDesc || 'Grant access to unlock stamps');
+        const icon = granted ? card.dataset.activeIcon : (card.dataset.inactiveIcon || 'fa-lock');
+
+        card.style.background = granted
+          ? 'linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%)'
+          : '#cfd3dc';
+        card.style.color = granted ? '#ffffff' : '#6e6e73';
+
+        const titleEl = card.querySelector('.reward-title');
+        const descEl = card.querySelector('.reward-description');
+        if (titleEl && title) titleEl.textContent = title;
+        if (descEl && desc) descEl.textContent = desc;
+
+        const iconEl = card.querySelector('.reward-main-icon');
+        if (iconEl && icon) {
+          iconEl.className = `fa-solid ${icon} reward-main-icon`;
+          if (granted) {
+            iconEl.setAttribute('style', 'font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;');
+          } else {
+            iconEl.setAttribute('style', 'font-size:26px;color:#8e8e93;');
+            iconEl.style.webkitTextFillColor = '';
+            const iconWrap = iconEl.parentElement;
+            if (iconWrap) iconWrap.style.background = '#ffffff';
+          }
+        }
+
+        const btn = card.querySelector('.redeem-btn');
+        if (btn) {
+          btn.disabled = !granted;
+          if (granted) {
+            btn.removeAttribute('disabled');
+          }
+        }
+        if (!granted) {
+          card.dataset.claimed = '';
+          const actions = card.querySelector('.reward-actions');
+          if (actions && card.dataset.inactiveActions) {
+            actions.innerHTML = card.dataset.inactiveActions;
+          }
+          const disabledBtn = card.querySelector('.redeem-btn');
+          if (disabledBtn) {
+            disabledBtn.disabled = true;
+          }
+        }
+        if (granted && lastPermissionsState === false) {
+          card.classList.remove('enable-pop');
+          void card.offsetWidth;
+          card.classList.add('enable-pop');
+        }
+      });
+      if (!granted) {
+        resetStamps();
+      }
+      lastPermissionsState = granted;
+    };
+
+    const permissionsToggle = document.getElementById('permissions-toggle');
+    const syncPermissionsState = () => {
+      const granted = localStorage.getItem('permissionsGranted') === 'true';
+      applyPermissionsState(granted);
+    };
+
+    permissionsToggle?.addEventListener('click', () => {
+      const granted = localStorage.getItem('permissionsGranted') === 'true';
+      localStorage.setItem('permissionsGranted', granted ? 'false' : 'true');
+      syncPermissionsState();
+    });
+
+    syncPermissionsState();
+
   </script>
 
   <script src="https://kit.fontawesome.com/2c7f1c6cae.js" crossorigin="anonymous"></script>
