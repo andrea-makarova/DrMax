@@ -1095,7 +1095,14 @@
       const section = document.getElementById('seasonal-section');
       if (!section) return;
       const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      section.classList.toggle('is-hidden', filledCount < 4);
+      const started = localStorage.getItem('seasonalStarted') === 'true';
+      const unlocked = started || filledCount >= 4;
+      if (unlocked) {
+        localStorage.setItem('seasonalUnlocked', 'true');
+      } else {
+        localStorage.removeItem('seasonalUnlocked');
+      }
+      section.classList.toggle('is-hidden', !unlocked);
       updateSeasonalStickyImmediate();
     }
 
@@ -1698,6 +1705,12 @@
         }
       });
       if (!granted) {
+        localStorage.removeItem('seasonalUnlocked');
+        localStorage.removeItem('seasonalStarted');
+        const seasonalSection = document.getElementById('seasonal-section');
+        if (seasonalSection) {
+          seasonalSection.classList.add('is-hidden');
+        }
         resetStamps();
       }
       updateStampReadyState();
@@ -1725,6 +1738,10 @@
     };
     const updateSeasonalStickyImmediate = () => {
       if (!seasonalSticky || !seasonalSection) return;
+      if (localStorage.getItem('seasonalStarted') === 'true') {
+        setSeasonalStickyVisible(false);
+        return;
+      }
       if (seasonalSection.classList.contains('is-hidden')) {
         setSeasonalStickyVisible(false);
         return;
@@ -1749,6 +1766,10 @@
     let seasonalObserver = null;
     if (seasonalSection && seasonalSticky) {
       seasonalObserver = new IntersectionObserver((entries) => {
+        if (localStorage.getItem('seasonalStarted') === 'true') {
+          setSeasonalStickyVisible(false);
+          return;
+        }
         if (seasonalSection.classList.contains('is-hidden')) {
           setSeasonalStickyVisible(false);
           return;
@@ -1864,7 +1885,11 @@
       if (seasonalBtn) {
         seasonalBtn.remove();
       }
+      localStorage.setItem('seasonalStarted', 'true');
       setSeasonalStickyVisible(false);
+      if (seasonalSticky) {
+        seasonalSticky.classList.add('is-hidden');
+      }
     };
 
     document.getElementById('seasonal-start-btn')?.addEventListener('click', startSeasonalChallenge);
