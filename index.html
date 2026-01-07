@@ -852,15 +852,24 @@
               <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
                 Walk 25km this season with Nuance to unlock a Nuance cream reward.
               </p>
-              <span class="tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a; white-space:nowrap;">
-                <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
-                Nuance cream
-              </span>
-              <div style="margin-top:14px;">
-                <button class="btn-disabled challenge-btn" style="border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
-                  <i class="fa-solid fa-check" style="font-size:14px;"></i>
-                  Start challenge
-                </button>
+            <span class="tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a; white-space:nowrap;">
+              <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
+              Nuance cream
+            </span>
+            <div id="seasonal-progress" class="challenge-progress is-hidden" style="margin-top:14px;">
+              <div class="bar" style="height:14px;">
+                <div class="bar-fill" id="seasonal-progress-fill" style="width:0%;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:#6e6e73;">
+                <span class="font-sans" id="seasonal-progress-label">0 / 25 km</span>
+                <span class="font-sans font-semibold" id="seasonal-progress-percent" style="color:#3a3a3c;">0%</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;">
+              <button class="btn-disabled challenge-btn" id="seasonal-start-card" style="border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
+                <i class="fa-solid fa-check" style="font-size:14px;"></i>
+                Start challenge
+              </button>
               </div>
             </div>
           </article>
@@ -1590,6 +1599,11 @@
         const started = dailyProgress.dataset.started === 'true';
         dailyProgress.classList.toggle('is-hidden', !started);
       }
+      const seasonalProgress = document.getElementById('seasonal-progress');
+      if (seasonalProgress) {
+        const started = seasonalProgress.dataset.started === 'true';
+        seasonalProgress.classList.toggle('is-hidden', !started);
+      }
       if (sticky && granted) {
         sticky.style.display = 'none';
       }
@@ -1804,7 +1818,7 @@
       updateStampReadyState();
     });
 
-    document.getElementById('daily-start-btn')?.addEventListener('click', () => {
+    const startDailyChallenge = () => {
       const dailyProgress = document.getElementById('daily-progress');
       if (dailyProgress) {
         dailyProgress.dataset.started = 'true';
@@ -1830,11 +1844,31 @@
         dot.setAttribute('cx', '340');
         dot.setAttribute('cy', '198');
       }
-    });
+    };
 
-    document.getElementById('seasonal-start-btn')?.addEventListener('click', () => {
+    document.getElementById('daily-start-btn')?.addEventListener('click', startDailyChallenge);
+
+    const startSeasonalChallenge = () => {
+      const seasonalBtn = document.getElementById('seasonal-start-card');
+      const seasonalProgress = document.getElementById('seasonal-progress');
+      const seasonalLabel = document.getElementById('seasonal-progress-label');
+      const seasonalPercent = document.getElementById('seasonal-progress-percent');
+      const seasonalFill = document.getElementById('seasonal-progress-fill');
+      if (seasonalProgress) {
+        seasonalProgress.dataset.started = 'true';
+        seasonalProgress.classList.remove('is-hidden');
+      }
+      if (seasonalLabel) seasonalLabel.textContent = '0 / 25 km';
+      if (seasonalPercent) seasonalPercent.textContent = '0%';
+      if (seasonalFill) seasonalFill.style.width = '0%';
+      if (seasonalBtn) {
+        seasonalBtn.remove();
+      }
       setSeasonalStickyVisible(false);
-    });
+    };
+
+    document.getElementById('seasonal-start-btn')?.addEventListener('click', startSeasonalChallenge);
+    document.getElementById('seasonal-start-card')?.addEventListener('click', startSeasonalChallenge);
 
   </script>
 
