@@ -49,7 +49,11 @@
       align-items: center;
       gap: 12px;
       padding-bottom: 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .top-nav::-webkit-scrollbar { display: none; }
     .back-btn {
       width: 40px;
       height: 40px;
@@ -60,6 +64,7 @@
       place-items: center;
       box-shadow: 0 6px 14px rgba(0,0,0,0.06);
       cursor: pointer;
+      flex-shrink: 0;
     }
     .back-btn:active { transform: translateY(1px); }
     .how-works-btn {
@@ -95,6 +100,22 @@
       white-space: nowrap;
     }
     .permissions-toggle:active { transform: translateY(1px); }
+    .generate-stamps-btn {
+      background: #ffffff;
+      color: #1f2937;
+      border: 1px solid #e1e5ea;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .generate-stamps-btn:active { transform: translateY(1px); }
     .redeem-btn {
       background: #ffffff;
       color: #0d6fb8;
@@ -126,6 +147,30 @@
     .btn-disabled i { color: currentColor; }
     .reward-card {
       transition: background 260ms ease, color 260ms ease;
+      box-shadow: none;
+    }
+    .reward-card:hover { box-shadow: none; }
+    .reward-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .perm-cta {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0d77ba;
+      text-decoration: none;
+      background: #ffffff;
+      border: 1px solid #d7e6f6;
+      border-radius: 999px;
+      padding: 10px 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 170px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
     }
     .enable-pop {
       animation: enablePop 650ms cubic-bezier(0.2, 0.75, 0.25, 1);
@@ -153,6 +198,36 @@
       border-radius: 24px;
       background: #ffffff;
       box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+    }
+    .stamps-card.ready {
+      border-color: #bfe3a2;
+      box-shadow: 0 8px 18px rgba(93, 162, 10, 0.18);
+    }
+    .stamp-ready-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eaf6dc;
+      color: #2f6f0a;
+      font-size: 12px;
+      font-weight: 700;
+      margin-left: auto;
+    }
+    .claim-all-btn {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      color: #0d77ba;
+      border: 1px solid #d7e6f6;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
     }
     .stamps-title {
       font-size: 14px;
@@ -193,6 +268,12 @@
       background: linear-gradient(180deg, #eaf6dc 0%, #d8efbb 100%);
       box-shadow: 0 6px 14px rgba(93, 162, 10, 0.25);
       color: #2f6f0a;
+    }
+    .stamp-dot-ready {
+      border-style: solid;
+      border-color: #2f6f0a;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(93, 162, 10, 0.18);
     }
     .stamp-dot-disabled {
       border-style: solid;
@@ -440,6 +521,48 @@
     .tab.active .tab-icon img { filter: none; }
     .section-title { font-size: 20px; font-weight: 700; margin: 0; color: var(--gray-900); }
     .muted { color: var(--gray-400); font-size: 14px; }
+    .entry-sticky {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 92px;
+      background: linear-gradient(151deg, #95da39 0%, #5da20a 100%);
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      padding: 12px 14px;
+      z-index: 18;
+      display: none;
+      align-items: center;
+      gap: 12px;
+    }
+    .entry-sticky-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      flex: 1;
+    }
+    .entry-sticky-btn {
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #ffffff;
+      color: #0d77ba;
+      border: 1px solid #ffffff;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .seasonal-sticky {
+      bottom: 92px;
+    }
     .bar {
       height: 10px;
       border-radius: 999px;
@@ -463,6 +586,12 @@
       font-weight: 600;
       border: 1px solid var(--gray-100);
     }
+    .challenge-tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+    .is-hidden { display: none !important; }
     .challenge {
       margin-top: 18px;
       padding: 14px 16px;
@@ -534,6 +663,9 @@
       <button class="permissions-toggle" type="button" id="permissions-toggle">
         Permissions: Off
       </button>
+      <button class="generate-stamps-btn" type="button" id="generate-stamps">
+        Generate 5 stamps
+      </button>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       
@@ -558,7 +690,11 @@
           <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome back. Keep on moving.</p>
         </div>
       </div>
-      <div class="stamps-card" style="margin-top:40px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:40px 4px 12px;">
+        <h2 style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Your stamps</h2>
+        <button id="stamp-ready-cta" class="claim-all-btn is-hidden" type="button">Claim 0 stamps</button>
+      </div>
+      <div class="stamps-card" style="margin-top:0;">
         <div class="stamps-row" aria-label="Stamp progress">
           <span class="stamp-dot"></span>
           <span class="stamp-dot"></span>
@@ -572,56 +708,68 @@
           </span>
         </div>
       </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="section-title" style="font-size:20px;margin-bottom:16px;">Your Rewards</h2>
-      <div class="rewards-carousel">
-        <!-- Daily steps stamp rewards -->
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 18" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
+      <div class="reward-card font-sans" style="background:#ffffff;border:1px solid #e5e5ea;border-radius:24px;padding:16px 18px;color:#3a3a3c;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(180deg,#95DA39 0%,#5DA20A 100%);display:flex;align-items:center;justify-content:center;color:#ffffff;">
+            <i class="fa-solid fa-gift" style="font-size:18px;"></i>
           </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
-          </div>
-          <div class="reward-actions" style="display:flex;justify-content:center;">
-            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 17" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
-          </div>
-          <div class="reward-actions" style="display:flex;justify-content:center;">
-            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 16" data-reward-code="MOVE10" data-active-title="Permissions granted" data-active-desc="Stamps unlocked" data-active-icon="fa-check" data-inactive-title="Permission needed" data-inactive-desc="Grant access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 240px; background: #cfd3dc; border-radius: 24px; padding: 22px 18px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Permission needed</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Grant access to unlock stamps</p>
-          </div>
-          <div class="reward-actions" style="display:flex;justify-content:center;">
-            <button class="redeem-btn" type="button" disabled>Redeem stamp</button>
+          <div>
+            <p style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Bonus Reward</p>
+            <p class="muted" style="margin:2px 0 0;">Collect all stamps to unlock 10% off.</p>
           </div>
         </div>
       </div>
+    </section>
 
+    <section class="mb-12">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <h2 class="section-title" style="font-size:20px;margin-bottom:0;">Your Rewards</h2>
+      </div>
+      <div class="rewards-carousel">
+        <!-- Daily steps stamp rewards -->
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 18" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Apple Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Apple Health</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
+          </div>
+          <div class="reward-actions">
+            <a class="perm-cta" href="permissions.html">Connect health data</a>
+          </div>
+        </div>
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 17" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Apple Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Apple Health</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
+          </div>
+          <div class="reward-actions">
+            <a class="perm-cta" href="permissions.html">Connect health data</a>
+          </div>
+        </div>
+        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 16" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Apple Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:18px;">
+            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Apple Health</p>
+            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
+          </div>
+          <div class="reward-actions">
+            <a class="perm-cta" href="permissions.html">Connect health data</a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="mb-16">
@@ -631,11 +779,11 @@
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
           <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Allow activity permissions</p>
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Connect Apple Health</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-              Grant permissions to unlock your first 3 stamps instantly.
+              Allow step access to unlock your first 3 stamps instantly.
             </p>
-            <span class="tag card-tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
               <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
               3 stamps
             </span>
@@ -643,7 +791,7 @@
           <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
             <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="window.location.href='permissions.html'">
               <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
-              Give permissions
+              Connect health data
             </button>
           </div>
         </article>
@@ -655,12 +803,12 @@
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
               Track your steps toward a 5,000-step daily goal to earn today's stamp.
             </p>
-            <span class="tag card-tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
               <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
               1 stamp
             </span>
           </div>
-          <div class="relative h-[230px] overflow-hidden">
+          <div class="relative h-[230px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
             <svg class="absolute top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:380px; right:0;">
               <defs>
                 <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
@@ -678,59 +826,60 @@
               <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">5k</text>
               <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
             </svg>
-            <div class="absolute top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none" style="right:0;">
-              <div class="text-center">
-                <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0">3,200 / 5,000</p>
-                <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
-              </div>
+          <div class="absolute top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none" style="right:0;">
+            <div class="text-center">
+              <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0" id="daily-steps-count">3,200 / 5,000</p>
+              <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
             </div>
           </div>
-          <div class="main-half-lock" id="main-challenge-lock">
-            <button class="btn-disabled challenge-btn" style="margin-bottom:8px;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" onclick="alert('Permissions requested. You will receive your first 3 stamps after granting access.'); document.getElementById('main-challenge-lock')?.remove();" disabled>
+          </div>
+          <div style="padding:0 24px 24px;">
+            <button class="btn-disabled challenge-btn" id="daily-start-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
               <i class="fa-solid fa-check" style="font-size:14px;color:currentColor;"></i>
               Start challenge
             </button>
           </div>
         </article>
 
-        <h3 class="section-title" style="font-size:18px;margin:0 0 12px 0;">Seasonal Challenges</h3>
+        <div id="seasonal-section" class="is-hidden">
+          <h3 class="section-title" style="font-size:18px;margin:0 0 12px 0;">Seasonal Challenges</h3>
 
-        <!-- Card 6: Seasonal Nuance Steps -->
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-          <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative">
-            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Seasonal · Nuance</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Nuance Spring Stride</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-              Walk 25km this season with Nuance to unlock a Nuance cream reward.
-            </p>
-            <span class="tag" style="position:absolute; top:16px; right:16px; border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a; white-space:nowrap;">
-              <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
-              Nuance cream
-            </span>
-          </div>
-          <div style="padding:20px 24px 24px; position:relative;">
-              <div class="mobility-progress" data-progress="18" style="position:relative;height:20px;border-radius:999px;background:#f2f2f7;">
-              <div class="mobility-progress-fill" style="height:100%;width:0%;background:linear-gradient(90deg, #95DA39 0%, #5DA20A 100%);border-radius:999px;"></div>
-              <div class="mobility-progress-dot" style="position:absolute;left:4%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#E4002B;border:4px solid #ffffff;box-shadow:0 4px 12px rgba(0,0,0,0.18);z-index:1;"></div>
-              <span class="font-sans" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:12px;color:#6e6e73;z-index:0;">0</span>
-              <span class="font-sans" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:12px;color:#6e6e73;">25km</span>
+          <!-- Card 6: Seasonal Nuance Steps -->
+          <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
+            <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-5 relative">
+              <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Seasonal · Nuance</p>
+              <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Nuance Spring Stride</p>
+              <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+                Walk 25km this season with Nuance to unlock a Nuance cream reward.
+              </p>
+              <span class="tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a; white-space:nowrap;">
+                <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
+                Nuance cream
+              </span>
+              <div style="margin-top:14px;">
+                <button class="btn-disabled challenge-btn" style="border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
+                  <i class="fa-solid fa-check" style="font-size:14px;"></i>
+                  Start challenge
+                </button>
+              </div>
             </div>
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:13px;color:#6e6e73;">
-              <span class="font-sans">4.5 / 25 km</span>
-              <span class="font-sans font-semibold" style="color:#3a3a3c;">18%</span>
-            </div>
-          </div>
-          <div class="join-overlay" style="position:absolute;left:0;right:0;bottom:0;top:55%;display:flex;align-items:center;justify-content:flex-start;gap:12px;background:rgba(255,255,255,0.35);backdrop-filter:blur(4px);padding:12px 24px 24px;transition:opacity 0.35s ease;z-index:3;pointer-events:none;">
-            <button class="join-overlay-btn btn-disabled challenge-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;pointer-events:auto;" disabled>
-              <i class="fa-solid fa-check" style="font-size:14px;"></i>
-              Start challenge
-            </button>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 
   </main>
+
+  <div class="entry-sticky" id="entry-challenge-sticky" aria-live="polite">
+    <p class="entry-sticky-title">Sync Apple Health and you’ll get 3 stamps toward your voucher</p>
+    <a class="entry-sticky-btn" href="permissions.html">
+      Sync
+    </a>
+  </div>
+  <div class="entry-sticky seasonal-sticky" id="seasonal-challenge-sticky" aria-live="polite">
+    <p class="entry-sticky-title">Seasonal challenge unlocked</p>
+    <button class="entry-sticky-btn" id="seasonal-start-btn" type="button">Start challenge</button>
+  </div>
 
   <nav class="tabbar">
     <a class="tab" href="app-home.html">
@@ -762,7 +911,7 @@
         <i class="fa-solid fa-gift" style="font-size:30px;color:#ffffff;"></i>
       </div>
       <h3 id="bonus-modal-title">You did it!</h3>
-      <p id="bonus-modal-desc">8 daily stamps collected. Enjoy a bonus reward for keeping your streak.</p>
+      <p id="bonus-modal-desc">8 stamps collected. Your bonus reward is 10% off.</p>
       <div style="margin-bottom:8px;">
         <span class="bonus-code">
           MOVE10
@@ -933,6 +1082,50 @@
     };
 
 
+    function updateSeasonalVisibility() {
+      const section = document.getElementById('seasonal-section');
+      if (!section) return;
+      const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+      section.classList.toggle('is-hidden', filledCount < 4);
+      updateSeasonalStickyImmediate();
+    }
+
+    const updateStampReadyState = () => {
+      const stampsCard = document.querySelector('.stamps-card');
+      const stampCta = document.getElementById('stamp-ready-cta');
+      const claimAllBtn = document.getElementById('claim-all-stamps');
+      const hasClaimable = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).some((card) => {
+        const btn = card.querySelector('.redeem-btn');
+        return btn && !btn.disabled && card.dataset.claimed !== 'true';
+      });
+      if (stampsCard) stampsCard.classList.toggle('ready', hasClaimable);
+
+      const claimableCount = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).filter((card) => {
+        const btn = card.querySelector('.redeem-btn');
+        return btn && !btn.disabled && card.dataset.claimed !== 'true';
+      }).length;
+
+      if (stampCta) {
+        stampCta.textContent = `Claim ${claimableCount} stamp${claimableCount === 1 ? '' : 's'}`;
+        stampCta.classList.toggle('is-hidden', claimableCount === 0);
+        stampCta.disabled = claimableCount === 0;
+      }
+      if (claimAllBtn) {
+        claimAllBtn.classList.add('is-hidden');
+        claimAllBtn.disabled = true;
+      }
+
+      const stamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
+      stamps.forEach((stamp) => stamp.classList.remove('stamp-dot-ready'));
+      const unfilled = stamps.filter((stamp) => stamp.dataset.filled !== 'true');
+      unfilled.slice(0, claimableCount).forEach((stamp) => stamp.classList.add('stamp-dot-ready'));
+      const giftStamp = document.querySelector('.stamps-row .stamp-dot-disabled');
+      if (giftStamp) {
+        const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+        giftStamp.classList.toggle('stamp-dot-ready', (filledCount + claimableCount) >= 7);
+      }
+    };
+
     const addStamp = () => {
       const stamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
       const next = stamps.find((stamp) => stamp && stamp.dataset.filled !== 'true');
@@ -943,6 +1136,7 @@
           gift.querySelector('i')?.setAttribute('style', 'font-size:18px;color:#ffffff;');
         }
         unlockBonusReward();
+        updateSeasonalVisibility();
         return;
       }
       next.dataset.filled = 'true';
@@ -955,6 +1149,8 @@
       next.classList.add('stamp-pop');
       setTimeout(() => next.classList.remove('stamp-pop'), 600);
       unlockBonusReward();
+      updateSeasonalVisibility();
+      updateStampReadyState();
     };
 
     // Convert a reward card to claimed state when its button is clicked
@@ -1021,7 +1217,6 @@
 
       const icon = card.querySelector('.reward-main-icon');
       if (icon) {
-        // keep same icon but invert styling: green gradient background, white icon
         icon.style.background = 'none';
         icon.style.webkitTextFillColor = '#ffffff';
         icon.style.color = '#ffffff';
@@ -1031,6 +1226,7 @@
       }
 
       addStamp();
+      updateStampReadyState();
     };
 
     document.addEventListener('click', (event) => {
@@ -1039,6 +1235,16 @@
       event.preventDefault();
       handleRewardClaim(btn);
     });
+
+    const claimAllHandler = () => {
+      const buttons = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"] .redeem-btn'))
+        .filter((btn) => btn && !btn.disabled);
+      buttons.forEach((btn) => handleRewardClaim(btn));
+      updateStampReadyState();
+    };
+
+    document.getElementById('claim-all-stamps')?.addEventListener('click', claimAllHandler);
+    document.getElementById('stamp-ready-cta')?.addEventListener('click', claimAllHandler);
 
     // Breathing coach start handler with 4-4-4-4 timing and matching bubble scales
     const breathPhases = [
@@ -1317,6 +1523,8 @@
             if (giftIcon) giftIcon.setAttribute('style', 'font-size:18px;color:#c0c4ce;');
           }
         });
+        updateSeasonalVisibility();
+        updateStampReadyState();
       }, 320);
     };
 
@@ -1351,23 +1559,6 @@
     document.getElementById('bonus-modal-close')?.addEventListener('click', closeBonusModal);
     document.getElementById('bonus-modal-overlay')?.addEventListener('click', closeBonusModal);
 
-    // Handle join overlay dismissal with animation
-    document.querySelectorAll('.join-overlay-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const overlay = btn.closest('.join-overlay');
-        if (overlay) {
-          overlay.style.transition = 'transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease';
-          overlay.style.transform = 'translateY(30px) scale(0.96)';
-          overlay.style.opacity = '0';
-          overlay.style.filter = 'blur(2px)';
-          setTimeout(() => {
-            overlay.remove();
-          }, 450);
-        }
-      });
-    });
-
     let lastPermissionsState = null;
     document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
       const actions = card.querySelector('.reward-actions');
@@ -1375,16 +1566,32 @@
         card.dataset.inactiveActions = actions.innerHTML;
       }
     });
+    const rewardsCarousel = document.querySelector('.rewards-carousel');
+    if (rewardsCarousel && !rewardsCarousel.dataset.baseStampCards) {
+      rewardsCarousel.dataset.baseStampCards = Array.from(
+        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="stamp"]')
+      ).map((card) => card.outerHTML).join('');
+    }
 
     const applyPermissionsState = (granted) => {
       const permissionCard = document.getElementById('entry-permission-card');
       const permissionToggle = document.getElementById('permissions-toggle');
+      const sticky = document.getElementById('entry-challenge-sticky');
+      const entryCard = document.getElementById('entry-permission-card');
 
       if (permissionCard) {
         permissionCard.style.display = granted ? 'none' : '';
       }
       if (permissionToggle) {
         permissionToggle.textContent = granted ? 'Permissions: On' : 'Permissions: Off';
+      }
+      const dailyProgress = document.getElementById('daily-progress');
+      if (dailyProgress) {
+        const started = dailyProgress.dataset.started === 'true';
+        dailyProgress.classList.toggle('is-hidden', !started);
+      }
+      if (sticky && granted) {
+        sticky.style.display = 'none';
       }
 
       const setButtonState = (btn, enabled) => {
@@ -1418,15 +1625,24 @@
         }
       });
 
-      document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
+      if (!granted && rewardsCarousel?.dataset.baseStampCards) {
+        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="stamp"]').forEach((card) => card.remove());
+        rewardsCarousel.insertAdjacentHTML('beforeend', rewardsCarousel.dataset.baseStampCards);
+        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="code"]').forEach((card) => card.remove());
+        rewardsCarousel.dataset.bonusAdded = '';
+        document.body.dataset.bonusPending = '';
+      }
+
+      document.querySelectorAll('.rewards-carousel .reward-card[data-reward-type="stamp"]').forEach((card) => {
         const title = granted ? card.dataset.activeTitle : (card.dataset.inactiveTitle || 'Permission needed');
         const desc = granted ? card.dataset.activeDesc : (card.dataset.inactiveDesc || 'Grant access to unlock stamps');
         const icon = granted ? card.dataset.activeIcon : (card.dataset.inactiveIcon || 'fa-lock');
 
+        const isClaimed = card.dataset.claimed === 'true';
         card.style.background = granted
-          ? 'linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%)'
+          ? (isClaimed ? '#ffffff' : 'linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%)')
           : '#cfd3dc';
-        card.style.color = granted ? '#ffffff' : '#6e6e73';
+        card.style.color = granted ? (isClaimed ? '#3a3a3c' : '#ffffff') : '#6e6e73';
 
         const titleEl = card.querySelector('.reward-title');
         const descEl = card.querySelector('.reward-description');
@@ -1434,35 +1650,32 @@
         if (descEl && desc) descEl.textContent = desc;
 
         const iconEl = card.querySelector('.reward-main-icon');
-        if (iconEl && icon) {
+        if (iconEl && icon && card.dataset.claimed !== 'true') {
           iconEl.className = `fa-solid ${icon} reward-main-icon`;
           if (granted) {
             iconEl.setAttribute('style', 'font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;');
           } else {
             iconEl.setAttribute('style', 'font-size:26px;color:#8e8e93;');
             iconEl.style.webkitTextFillColor = '';
-            const iconWrap = iconEl.parentElement;
-            if (iconWrap) iconWrap.style.background = '#ffffff';
           }
         }
+        const iconWrap = iconEl?.parentElement;
+        if (iconWrap) {
+          iconWrap.style.background = card.dataset.claimed === 'true'
+            ? 'linear-gradient(180deg, #95DA39 0%, #5DA20A 100%)'
+            : '#ffffff';
+        }
 
-        const btn = card.querySelector('.redeem-btn');
-        if (btn) {
-          btn.disabled = !granted;
-          if (granted) {
-            btn.removeAttribute('disabled');
+        const actions = card.querySelector('.reward-actions');
+        if (actions) {
+          if (!granted) {
+            actions.innerHTML = '<a class="perm-cta" href="permissions.html">Connect health data</a>';
+          } else if (card.dataset.claimed !== 'true') {
+            actions.innerHTML = '<button class="redeem-btn" type="button">Redeem stamp</button>';
           }
         }
         if (!granted) {
           card.dataset.claimed = '';
-          const actions = card.querySelector('.reward-actions');
-          if (actions && card.dataset.inactiveActions) {
-            actions.innerHTML = card.dataset.inactiveActions;
-          }
-          const disabledBtn = card.querySelector('.redeem-btn');
-          if (disabledBtn) {
-            disabledBtn.disabled = true;
-          }
         }
         if (granted && lastPermissionsState === false) {
           card.classList.remove('enable-pop');
@@ -1473,13 +1686,74 @@
       if (!granted) {
         resetStamps();
       }
+      updateStampReadyState();
       lastPermissionsState = granted;
     };
+
+    const sticky = document.getElementById('entry-challenge-sticky');
+    const entryCard = document.getElementById('entry-permission-card');
+    const seasonalSticky = document.getElementById('seasonal-challenge-sticky');
+    const seasonalSection = document.getElementById('seasonal-section');
+    const setStickyVisible = (visible) => {
+      if (!sticky) return;
+      sticky.style.display = visible ? 'flex' : 'none';
+    };
+    const setSeasonalStickyVisible = (visible) => {
+      if (!seasonalSticky) return;
+      seasonalSticky.style.display = visible ? 'flex' : 'none';
+    };
+
+    const updateStickyImmediate = () => {
+      if (!sticky || !entryCard) return;
+      const rect = entryCard.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      setStickyVisible(!inView);
+    };
+    const updateSeasonalStickyImmediate = () => {
+      if (!seasonalSticky || !seasonalSection) return;
+      if (seasonalSection.classList.contains('is-hidden')) {
+        setSeasonalStickyVisible(false);
+        return;
+      }
+      const rect = seasonalSection.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      setSeasonalStickyVisible(!inView);
+    };
+
+    let stickyObserver = null;
+    if (entryCard && sticky) {
+      stickyObserver = new IntersectionObserver((entries) => {
+        const granted = localStorage.getItem('permissionsGranted') === 'true';
+        if (granted) {
+          setStickyVisible(false);
+          return;
+        }
+        setStickyVisible(!entries[0].isIntersecting);
+      }, { threshold: 0.15 });
+      stickyObserver.observe(entryCard);
+    }
+    let seasonalObserver = null;
+    if (seasonalSection && seasonalSticky) {
+      seasonalObserver = new IntersectionObserver((entries) => {
+        if (seasonalSection.classList.contains('is-hidden')) {
+          setSeasonalStickyVisible(false);
+          return;
+        }
+        setSeasonalStickyVisible(!entries[0].isIntersecting);
+      }, { threshold: 0.15 });
+      seasonalObserver.observe(seasonalSection);
+    }
 
     const permissionsToggle = document.getElementById('permissions-toggle');
     const syncPermissionsState = () => {
       const granted = localStorage.getItem('permissionsGranted') === 'true';
       applyPermissionsState(granted);
+      if (!granted) {
+        updateStickyImmediate();
+      } else {
+        setStickyVisible(false);
+      }
+      updateSeasonalStickyImmediate();
     };
 
     permissionsToggle?.addEventListener('click', () => {
@@ -1489,6 +1763,78 @@
     });
 
     syncPermissionsState();
+    updateSeasonalVisibility();
+    updateStampReadyState();
+    updateSeasonalStickyImmediate();
+
+    document.getElementById('generate-stamps')?.addEventListener('click', () => {
+      localStorage.setItem('permissionsGranted', 'true');
+      syncPermissionsState();
+      const carousel = document.querySelector('.rewards-carousel');
+      if (carousel) {
+        const insertBefore = carousel.querySelector('.reward-card');
+        for (let i = 1; i <= 5; i += 1) {
+          const card = document.createElement('div');
+          card.className = 'reward-card font-sans';
+          card.dataset.rewardType = 'stamp';
+          card.dataset.rewardCode = 'MOVE10';
+          card.style.cssText = 'flex:0 0 220px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 22px; padding: 18px 16px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;';
+          card.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+                <i class="fa-solid fa-check reward-main-icon" style="font-size:26px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+              </div>
+            </div>
+            <div style="text-align:center; margin-bottom:18px;">
+              <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Daily challenge done</p>
+              <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Stamp earned</p>
+            </div>
+            <div class="reward-actions">
+              <button class="redeem-btn" type="button">Redeem stamp</button>
+            </div>
+          `;
+          if (insertBefore) {
+            carousel.insertBefore(card, insertBefore);
+          } else {
+            carousel.appendChild(card);
+          }
+        }
+      }
+      applyPermissionsState(true);
+      updateStampReadyState();
+    });
+
+    document.getElementById('daily-start-btn')?.addEventListener('click', () => {
+      const dailyProgress = document.getElementById('daily-progress');
+      if (dailyProgress) {
+        dailyProgress.dataset.started = 'true';
+        dailyProgress.classList.remove('is-hidden');
+      }
+      const dailyBtn = document.getElementById('daily-start-btn');
+      if (dailyBtn) {
+        dailyBtn.remove();
+      }
+      const stepsLabel = document.getElementById('daily-steps-count');
+      if (stepsLabel) {
+        stepsLabel.textContent = '0 / 5,000';
+      }
+      const svg = document.querySelector('#daily-progress svg[data-progress]');
+      const arc = document.querySelector('#daily-progress .arc-progress');
+      const dot = document.querySelector('#daily-progress .arc-knob');
+      if (svg) {
+        svg.dataset.progress = '0';
+        svg.dataset.animated = 'true';
+      }
+      if (arc && dot) {
+        arc.setAttribute('stroke-dasharray', '5 95');
+        dot.setAttribute('cx', '340');
+        dot.setAttribute('cy', '198');
+      }
+    });
+
+    document.getElementById('seasonal-start-btn')?.addEventListener('click', () => {
+      setSeasonalStickyVisible(false);
+    });
 
   </script>
 
