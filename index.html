@@ -395,6 +395,41 @@
       font-size: 14px;
       line-height: 20px;
     }
+    .daily-modal-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .daily-option {
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 15px;
+      font-weight: 700;
+      color: #3a3a3c;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      text-align: left;
+    }
+    .daily-option:hover {
+      border-color: #b8d98b;
+      box-shadow: 0 8px 18px rgba(53, 107, 9, 0.12);
+      transform: translateY(-1px);
+    }
+    .daily-option-badge {
+      background: #e8f6db;
+      color: #2f6f0a;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
     .bonus-close {
       margin-top: 16px;
       background: #e5f1fe;
@@ -492,7 +527,13 @@
   grid-template-columns: repeat(5, 1fr);
       padding: 16px 8px 16px;
       box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.05);
-      z-index: 999;
+      z-index: 10010;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+    .modal-open .tabbar {
+      pointer-events: none;
     }
     .tab {
       display: grid;
@@ -566,8 +607,21 @@
     .bar {
       height: 10px;
       border-radius: 999px;
-      background: var(--blue-50);
-      overflow: hidden;
+      background: #f2f2f7;
+      overflow: visible;
+      position: relative;
+    }
+    .bar-dot {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: #E4002B;
+      border: 5px solid #ffffff;
+      top: 50%;
+      left: 10px;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     }
     .bar-fill {
       height: 100%;
@@ -687,7 +741,7 @@
 </svg>
         </div>
         <div>
-          <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome back. Keep on moving.</p>
+          <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome to health journey. Keep on moving.</p>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin:40px 4px 12px;">
@@ -799,8 +853,8 @@
         <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card">
           <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
             <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Daily Challenge</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Hit 5,000 steps</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Hit 5,000 steps</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
               Track your steps toward a 5,000-step daily goal to earn today's stamp.
             </p>
             <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
@@ -823,7 +877,7 @@
               <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="20" />
               <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="20" pathLength="100" stroke-dasharray="0 100" />
               <circle class="arc-knob" r="20" fill="#E4002B" opacity="1" stroke="white" stroke-width="5" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));"></circle>
-              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73">5k</text>
+              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73" id="daily-goal-label">5k</text>
               <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
             </svg>
           <div class="absolute top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none" style="right:0;">
@@ -858,9 +912,10 @@
             </span>
             <div id="seasonal-progress" class="challenge-progress is-hidden" style="margin-top:14px;">
               <div class="bar" style="height:14px;">
+                <span class="bar-dot" aria-hidden="true"></span>
                 <div class="bar-fill" id="seasonal-progress-fill" style="width:0%;"></div>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:13px;color:#6e6e73;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:13px;color:#6e6e73;">
                 <span class="font-sans" id="seasonal-progress-label">0 / 25 km</span>
                 <span class="font-sans font-semibold" id="seasonal-progress-percent" style="color:#3a3a3c;">0%</span>
               </div>
@@ -912,6 +967,33 @@
       <span>Menu</span>
     </a>
   </nav>
+
+  <div id="daily-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="daily-modal-title" aria-describedby="daily-modal-desc">
+    <div id="daily-modal-overlay" class="bonus-modal__overlay"></div>
+    <div class="bonus-modal__content glass">
+      <h3 id="daily-modal-title">Choose your daily goal</h3>
+      <p id="daily-modal-desc">Your recent average is about 4,200 steps/day.</p>
+      <p class="muted" style="margin:0 0 6px;"><strong>Step 1:</strong> Pick a goal.</p>
+      <p class="muted" style="margin:0 0 6px;"><strong>Step 2:</strong> Hit it to earn 1 stamp.</p>
+      <p class="muted" style="margin:0 0 12px;"><strong>Step 3:</strong> Collect 8 stamps to unlock your voucher — the % shows the discount.</p>
+      <div class="daily-modal-options">
+        <button class="daily-option" type="button" data-steps="3000" data-discount="5">
+          <span>3,000 steps</span>
+          <span class="daily-option-badge">5% off</span>
+        </button>
+        <button class="daily-option" type="button" data-steps="5000" data-discount="10">
+          <span>5,000 steps</span>
+          <span class="daily-option-badge">10% off</span>
+        </button>
+        <button class="daily-option" type="button" data-steps="10000" data-discount="15">
+          <span>10,000 steps</span>
+          <span class="daily-option-badge">15% off</span>
+        </button>
+      </div>
+      <p class="muted" style="margin:0 0 8px;">Discount vouchers unlock when 8 stamps are collected.</p>
+      <button id="daily-modal-close" class="bonus-close" type="button">Maybe later</button>
+    </div>
+  </div>
 
   <div id="bonus-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title" aria-describedby="bonus-modal-desc">
     <div id="bonus-modal-overlay" class="bonus-modal__overlay"></div>
@@ -1445,6 +1527,19 @@
       }
     };
 
+    function scrollCarouselToStart(carousel) {
+      if (!carousel) return;
+      if (Math.abs(carousel.scrollLeft) < 1) return;
+      const prevSnap = carousel.style.scrollSnapType;
+      carousel.style.scrollSnapType = 'none';
+      carousel.classList.add('scrolling-to-start');
+      carousel.scrollTo({ left: 0, behavior: 'smooth' });
+      setTimeout(() => {
+        carousel.style.scrollSnapType = prevSnap;
+        carousel.classList.remove('scrolling-to-start');
+      }, 900);
+    }
+
     const addBonusCard = (withAnimation = true) => {
       const carousel = document.querySelector('.rewards-carousel');
       if (!carousel || carousel.dataset.bonusAdded === 'true') return;
@@ -1481,6 +1576,7 @@
       } else {
         carousel.appendChild(card);
       }
+      requestAnimationFrame(() => scrollCarouselToStart(carousel));
       if (withAnimation) {
         card.style.opacity = '0';
         card.style.transform = 'translateY(16px) scale(0.97)';
@@ -1496,28 +1592,6 @@
         });
       }
       wireRewardActions(carousel);
-    };
-
-    const scrollCarouselToStart = (carousel) => {
-      if (!carousel) return;
-      const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
-      const start = Math.min(maxScroll, Math.max(carousel.scrollLeft, Math.min(maxScroll, 480)));
-      carousel.scrollLeft = start;
-      const duration = 2000;
-      const begin = performance.now();
-      const ease = (t) => 1 - Math.cos((t * Math.PI) / 2);
-      carousel.classList.add('scrolling-to-start');
-      const step = (now) => {
-        const t = Math.min(1, (now - begin) / duration);
-        const eased = ease(t);
-        carousel.scrollLeft = start + (0 - start) * eased;
-        if (t < 1) {
-          requestAnimationFrame(step);
-        } else {
-          carousel.classList.remove('scrolling-to-start');
-        }
-      };
-      requestAnimationFrame(step);
     };
 
     const resetStamps = () => {
@@ -1544,12 +1618,9 @@
       }, 320);
     };
 
-    let lastScrollY = 0;
-
     const openBonusModal = () => {
       const modal = document.getElementById('bonus-modal');
       if (!modal || modal.dataset.open === 'true') return;
-      lastScrollY = window.scrollY || 0;
       modal.dataset.open = 'true';
       modal.classList.add('visible');
       document.body.classList.add('modal-open');
@@ -1561,19 +1632,63 @@
       modal.dataset.open = 'false';
       modal.classList.remove('visible');
       document.body.classList.remove('modal-open');
-      const carousel = document.querySelector('.rewards-carousel');
-      if (carousel) carousel.scrollLeft = 0;
       setTimeout(() => addBonusCard(true), 800);
       resetStamps();
-      requestAnimationFrame(() => {
-        if (typeof lastScrollY === 'number') {
-          window.scrollTo(0, lastScrollY);
-        }
-      });
     };
 
     document.getElementById('bonus-modal-close')?.addEventListener('click', closeBonusModal);
     document.getElementById('bonus-modal-overlay')?.addEventListener('click', closeBonusModal);
+
+    const formatSteps = (value) => Number(value || 0).toLocaleString('en-US');
+
+    const openDailyModal = () => {
+      const modal = document.getElementById('daily-modal');
+      if (!modal || modal.dataset.open === 'true') return;
+      modal.dataset.open = 'true';
+      modal.classList.add('visible');
+      document.body.classList.add('modal-open');
+    };
+
+    const closeDailyModal = () => {
+      const modal = document.getElementById('daily-modal');
+      if (!modal || modal.dataset.open !== 'true') return;
+      modal.dataset.open = 'false';
+      modal.classList.remove('visible');
+      document.body.classList.remove('modal-open');
+    };
+
+    document.getElementById('daily-modal-close')?.addEventListener('click', closeDailyModal);
+    document.getElementById('daily-modal-overlay')?.addEventListener('click', closeDailyModal);
+
+    const applyDailyGoal = (steps, discount) => {
+      const target = Number(steps) || 5000;
+      const discountValue = Number(discount) || 10;
+      const title = document.getElementById('daily-title');
+      const desc = document.getElementById('daily-desc');
+      const goalLabel = document.getElementById('daily-goal-label');
+      const dailyProgress = document.getElementById('daily-progress');
+      if (title) title.textContent = `Hit ${formatSteps(target)} steps`;
+      if (desc) {
+        desc.textContent = `Complete ${formatSteps(target)} steps today to earn a ${discountValue}% discount and today's stamp.`;
+      }
+      if (goalLabel) {
+        const label = target >= 1000 ? `${Math.round(target / 1000)}k` : `${target}`;
+        goalLabel.textContent = label;
+      }
+      if (dailyProgress) {
+        dailyProgress.dataset.target = `${target}`;
+      }
+    };
+
+    document.querySelectorAll('#daily-modal .daily-option').forEach((option) => {
+      option.addEventListener('click', () => {
+        const steps = option.dataset.steps || '5000';
+        const discount = option.dataset.discount || '10';
+        applyDailyGoal(steps, discount);
+        closeDailyModal();
+        startDailyChallenge(Number(steps));
+      });
+    });
 
     let lastPermissionsState = null;
     document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
@@ -1711,6 +1826,10 @@
         if (seasonalSection) {
           seasonalSection.classList.add('is-hidden');
         }
+        if (seasonalSticky) {
+          seasonalSticky.style.display = 'none';
+          seasonalSticky.classList.remove('is-hidden');
+        }
         resetStamps();
       }
       updateStampReadyState();
@@ -1742,6 +1861,7 @@
         setSeasonalStickyVisible(false);
         return;
       }
+      seasonalSticky.classList.remove('is-hidden');
       if (seasonalSection.classList.contains('is-hidden')) {
         setSeasonalStickyVisible(false);
         return;
@@ -1797,6 +1917,11 @@
       syncPermissionsState();
     });
 
+    const cameFromHome = document.referrer && document.referrer.includes('app-home.html');
+    if (cameFromHome) {
+      localStorage.setItem('permissionsGranted', 'false');
+    }
+
     syncPermissionsState();
     updateSeasonalVisibility();
     updateStampReadyState();
@@ -1839,7 +1964,8 @@
       updateStampReadyState();
     });
 
-    const startDailyChallenge = () => {
+    const startDailyChallenge = (targetOverride) => {
+      const targetSteps = Number(targetOverride) || Number(document.getElementById('daily-progress')?.dataset.target || '5000');
       const dailyProgress = document.getElementById('daily-progress');
       if (dailyProgress) {
         dailyProgress.dataset.started = 'true';
@@ -1851,7 +1977,7 @@
       }
       const stepsLabel = document.getElementById('daily-steps-count');
       if (stepsLabel) {
-        stepsLabel.textContent = '0 / 5,000';
+        stepsLabel.textContent = `0 / ${formatSteps(targetSteps)}`;
       }
       const svg = document.querySelector('#daily-progress svg[data-progress]');
       const arc = document.querySelector('#daily-progress .arc-progress');
@@ -1867,7 +1993,10 @@
       }
     };
 
-    document.getElementById('daily-start-btn')?.addEventListener('click', startDailyChallenge);
+    document.getElementById('daily-start-btn')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDailyModal();
+    });
 
     const startSeasonalChallenge = () => {
       const seasonalBtn = document.getElementById('seasonal-start-card');
