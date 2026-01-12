@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Connect Access</title>
+  <style>
+    :root {
+      --blue-500: #1b6ff5;
+      --blue-100: #dbe6ff;
+      --gray-50: #f6f6f8;
+      --gray-100: #ececf0;
+      --gray-200: #dadce0;
+      --gray-500: #6e6e73;
+      --gray-700: #3a3a3c;
+      --gray-900: #1c1c1e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffffff;
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
+    }
+    .screen {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 18px 20px 28px;
+    }
+    .hero {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .hero-icon {
+      width: 88px;
+      height: 88px;
+      border-radius: 26px;
+      background: #f4f6fb;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 16px;
+    }
+    .hero-icon img {
+      width: 64px;
+      height: 64px;
+      display: block;
+      object-fit: contain;
+    }
+    .hero h1 {
+      margin: 0 0 8px 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+    .hero p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--gray-700);
+      line-height: 20px;
+    }
+    .info-list {
+      margin: 18px 0 8px;
+      display: grid;
+      gap: 12px;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 12px;
+      align-items: center;
+      color: var(--gray-700);
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .info-row p {
+      margin: 0;
+    }
+    .info-row .line {
+      display: inline;
+    }
+    .info-row .link-inline {
+      white-space: nowrap;
+    }
+    .info-icon {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: var(--gray-700);
+    }
+    .section-label {
+      margin: 20px 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-500);
+    }
+    .permission-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 16px;
+      color: var(--gray-900);
+    }
+    .permission-row:last-child { border-bottom: none; }
+    .permission-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gray-900);
+    }
+    .perm-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--gray-700);
+    }
+    .toggle {
+      position: relative;
+      width: 54px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: #e0e2e7;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+    .toggle-track::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 6px;
+      width: 22px;
+      height: 22px;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      transition: transform 0.2s ease;
+    }
+    .toggle input:checked + .toggle-track {
+      background: var(--blue-100);
+    }
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(20px);
+      background: var(--blue-500);
+    }
+    .footer-actions {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .btn {
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--gray-200);
+      background: #ffffff;
+      color: var(--blue-500);
+    }
+    .btn-primary {
+      background: var(--blue-500);
+      border-color: var(--blue-500);
+      color: #ffffff;
+    }
+    .btn-primary[disabled] {
+      background: #c9d6f5;
+      border-color: #c9d6f5;
+      color: #ffffff;
+      cursor: not-allowed;
+    }
+    .link-text {
+      color: #1b6ff5;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <section class="hero">
+      <div class="hero-icon" aria-hidden="true">
+        <img src="images/a_health.png" alt="">
+      </div>
+      <h1>Allow Dr. Max to access Health Connect?</h1>
+      <p>Choose what this app can read or write.</p>
+    </section>
+
+    <div class="info-list">
+      <div class="info-row">
+        <span class="info-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 7H10M14 7H20M4 12H8M12 12H20M4 17H10M14 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Choose data you want this app to read or write.
+      </div>
+      <div class="info-row">
+        <span class="info-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        If you give access, the app can read new data and the past 30 days.
+      </div>
+      <div class="info-row">
+        <span class="info-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M4 20c2.2-3.5 5.4-5 8-5s5.8 1.5 8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <p>
+          <span class="line">You can learn how Dr. Max handles your data in their </span>
+          <span class="link-inline"><span class="link-text">privacy policy</span></span>
+        </p>
+      </div>
+    </div>
+
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 12h4l2-4 2 8 2-4h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Allow all
+      </div>
+      <label class="toggle" aria-label="Allow all">
+        <input type="checkbox" id="allow-all-toggle">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="section-label">Allow “Dr. Max” to read</div>
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6 17l3-6 3 3 4-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Exercise
+      </div>
+      <label class="toggle permission-toggle">
+        <input type="checkbox">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M7 8h10M7 12h10M7 16h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+        Step count
+      </div>
+      <label class="toggle permission-toggle">
+        <input type="checkbox">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="section-label">Allow “Dr. Max” to write</div>
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 4v6m0 0 3-3m-3 3-3-3M5 20h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Calories burned
+      </div>
+      <label class="toggle permission-toggle">
+        <input type="checkbox">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h14M16 8l3 4-3 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Distance
+      </div>
+      <label class="toggle permission-toggle">
+        <input type="checkbox">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="permission-row">
+      <div class="permission-item">
+        <span class="perm-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M3 13h3l2-4 3 8 2-4h3l2 4h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        Heart rate
+      </div>
+      <label class="toggle permission-toggle">
+        <input type="checkbox">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn" type="button" id="deny-permissions">Cancel</button>
+      <button class="btn btn-primary" type="button" id="allow-permissions" disabled>Allow</button>
+    </div>
+  </main>
+
+  <script>
+    const allowAll = document.getElementById('allow-all-toggle');
+    const toggles = Array.from(document.querySelectorAll('.permission-toggle input'));
+    const allowBtn = document.getElementById('allow-permissions');
+    const denyBtn = document.getElementById('deny-permissions');
+
+    const updateAllowState = () => {
+      const anyEnabled = toggles.some((toggle) => toggle.checked);
+      allowBtn.disabled = !anyEnabled;
+    };
+
+    const syncAllowAll = () => {
+      const allChecked = toggles.every((toggle) => toggle.checked);
+      allowAll.checked = allChecked;
+    };
+
+    updateAllowState();
+
+    allowAll?.addEventListener('change', () => {
+      toggles.forEach((toggle) => {
+        toggle.checked = allowAll.checked;
+      });
+      updateAllowState();
+    });
+
+    toggles.forEach((toggle) => {
+      toggle.addEventListener('change', () => {
+        syncAllowAll();
+        updateAllowState();
+      });
+    });
+
+    allowBtn?.addEventListener('click', () => {
+      if (allowBtn.disabled) return;
+      localStorage.setItem('permissionsGranted', 'true');
+      window.location.href = 'index.html';
+    });
+    denyBtn?.addEventListener('click', () => {
+      localStorage.removeItem('permissionsGranted');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
