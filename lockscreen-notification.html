@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lockscreen Notification</title>
+  <style>
+    :root {
+      --text-dark: #2b2b2b;
+      --text-muted: #6b6b6b;
+      --accent: #665beb;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --divider: rgba(102, 91, 235, 0.2);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      color: var(--text-dark);
+      background: #cfe0e6;
+    }
+    .screen {
+      min-height: 100vh;
+      background: url("images/background.png") center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 56px 18px 40px;
+    }
+    .time {
+      font-size: 72px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin: 0 0 10px;
+      color: #222222;
+      font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    }
+    .date {
+      font-size: 13px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: #2f2f2f;
+      margin: 0 0 28px;
+    }
+    .notification {
+      width: 98%;
+      max-width: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      display: inline-flex;
+      flex-direction: column;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+      font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    }
+    .notif-card {
+      width: 100%;
+      padding: 14px 16px 12px;
+      background: var(--card-bg);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .notif-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .notif-app {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+    }
+    .notif-logo {
+      width: 32px;
+      height: 11px;
+      display: block;
+    }
+    .notif-app-name {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+    }
+    .notif-time {
+      color: #595959;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 16px;
+    }
+    .notif-chevron {
+      width: 16px;
+      height: 16px;
+      display: grid;
+      place-items: center;
+      color: #a1a1a1;
+    }
+    .notif-title {
+      margin: 0;
+      color: #222222;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .notif-body {
+      margin: 0;
+      color: #686868;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 20px;
+    }
+    .notif-actions {
+      width: 100%;
+      height: 46px;
+      padding: 0 12px;
+      background: #fcfcfc;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .action {
+      flex: 1 1 0;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--accent);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: 400;
+      text-transform: capitalize;
+      line-height: 20px;
+    }
+    .action-divider {
+      width: 26px;
+      height: 0;
+      transform: rotate(90deg);
+      opacity: 0.2;
+      border-top: 1px solid var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <main class="screen" role="img" aria-label="Lockscreen notification mockup">
+    <h1 class="time">16:53</h1>
+    <p class="date">Wednesday, January 22</p>
+
+    <section class="notification" aria-label="Dr. Max notification">
+      <div class="notif-card">
+        <div class="notif-header">
+          <div class="notif-app">
+            <img class="notif-logo" src="images/Dr.Max.svg" alt="Dr. Max logo">
+            <span class="notif-app-name">Dr. Max</span>
+            <span class="notif-time">now</span>
+          </div>
+          <span class="notif-chevron" aria-hidden="true">
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 5l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <p class="notif-title">Congrats!</p>
+        <p class="notif-body">You reached your daily goal! Your stamp is waiting for you in the app.</p>
+      </div>
+      <div class="notif-actions">
+        <button class="action" type="button">Redeem stamp</button>
+        <span class="action-divider" aria-hidden="true"></span>
+        <button class="action" type="button">Dismiss</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
