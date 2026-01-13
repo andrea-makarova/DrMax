@@ -19,6 +19,7 @@
       --green-300: #78be20;
       --green-500: #47850a;
       --red-500: #e4002b;
+      --tabbar-height: 72px;
     }
     * { box-sizing: border-box; }
     body {
@@ -110,7 +111,7 @@
       margin: 0 0 12px;
       padding: 14px 16px;
       border-radius: 18px;
-      background: linear-gradient(151deg, #95da39 0%, #5da20a 100%);
+      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
       color: #ffffff;
       font-size: 14px;
       font-weight: 700;
@@ -133,6 +134,110 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
+    }
+    .health-journey-banner {
+      position: relative;
+      margin: 0 0 14px;
+      padding: 12px;
+      border-radius: 18px;
+      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
+      color: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      animation: bannerPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes bannerPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(120, 190, 32, 0.24); }
+      50% { box-shadow: 0 0 0 6px rgba(120, 190, 32, 0.42); }
+    }
+    .health-journey-banner .journey-banner-cta {
+      margin-top: 16px;
+    }
+    .journey-banner-bg {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -24px;
+      bottom: -60px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .journey-banner-bg img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      opacity: 1;
+      filter: brightness(0) saturate(100%) invert(63%) sepia(60%) saturate(484%) hue-rotate(49deg) brightness(93%) contrast(94%);
+    }
+    .health-journey-banner > *:not(.journey-banner-close):not(.journey-banner-bg) {
+      position: relative;
+      z-index: 1;
+    }
+    .journey-banner-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+      margin-bottom: 4px;
+    }
+    .journey-banner-title {
+      color: #ffffff;
+      font-size: 18px;
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      font-weight: 620;
+      line-height: 24px;
+      letter-spacing: 0.05px;
+    }
+    .journey-banner-text {
+      color: #ffffff;
+      font-size: 15px;
+      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
+      font-weight: 440;
+      line-height: 22px;
+      letter-spacing: 0.08px;
+      z-index: 1;
+      margin: 0;
+    }
+    .journey-banner-cta {
+      height: 48px;
+      min-height: 48px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #09629d;
+      font-size: 16px;
+      font-family: "Proxima Nova", "Proxima Vara", "Figtree", system-ui, -apple-system, sans-serif;
+      font-weight: 700;
+      line-height: 19px;
+      border: none;
+      cursor: pointer;
+      z-index: 1;
+      align-self: flex-start;
+      white-space: nowrap;
+    }
+    .journey-banner-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(112, 112, 116, 0.2);
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      z-index: 2;
+      font-size: 20px;
+      line-height: 1;
     }
     @keyframes announcePulse {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(93, 162, 10, 0.14); }
@@ -303,7 +408,7 @@
       position: fixed;
       left: 16px;
       right: 16px;
-      bottom: 86px;
+      bottom: calc(var(--tabbar-height) + 16px);
       display: flex;
       justify-content: center;
       margin: 0;
@@ -336,6 +441,7 @@
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       padding: 16px 8px 16px;
+      height: var(--tabbar-height);
       box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.05);
     }
     .tab {
@@ -379,7 +485,7 @@
     }
     @media (max-width: 480px) {
       .phone { padding-bottom: 180px; }
-      .loyalty { bottom: 90px; }
+      .loyalty { bottom: calc(var(--tabbar-height) + 16px); }
     }
   </style>
 </head>
@@ -397,14 +503,21 @@
       <span>Search</span>
     </div>
 
-    <a class="announce" href="index.html">
-      <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 88 88" fill="none" aria-hidden="true">
-        <path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="#ffffff"></path>
-        <path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="#ffffff"></path>
-      </svg>
-      <span>Health Journey is officially launched</span>
-      <button class="announce-cta" type="button">Explore</button>
-    </a>
+    <div class="health-journey-banner" aria-label="Health Journey">
+      <button class="journey-banner-close" type="button" aria-label="Close" id="journey-banner-close">×</button>
+      <div class="journey-banner-header">
+        <svg width="24" height="24" viewBox="0 0 88 88" fill="none" aria-hidden="true">
+          <path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="#ffffff"></path>
+          <path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="#ffffff"></path>
+        </svg>
+        <span class="journey-banner-title">Health Journey</span>
+      </div>
+      <div class="journey-banner-bg" aria-hidden="true">
+        <img src="images/MaxHealth.svg" alt="">
+      </div>
+      <p class="journey-banner-text">Walk 8000 steps for 8 days and get a 10% discount on your entire app purchase.</p>
+      <button class="journey-banner-cta" type="button" onclick="window.location.href='index.html'">Begin Your Journey</button>
+    </div>
 
     <div class="promo-row">
       <div class="promo-card">
@@ -475,7 +588,7 @@
     <div class="loyalty">
       <button>
         <img src="images/Loyality Card.svg" alt="" style="height:18px;width:auto;">
-        Loyalty card
+        loyalty card
       </button>
     </div>
   </div>
@@ -497,7 +610,7 @@
       <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
       <span>Purchases</span>
     </a>
-    <a class="tab menu-badge" href="index.html">
+    <a class="tab menu-badge" href="menu.html">
       <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
       <span>Menu</span>
     </a>
@@ -527,6 +640,8 @@
       const overlay = document.querySelector('.journey-overlay');
       const drawer = overlay?.querySelector('.journey-drawer');
       const closeBtn = document.getElementById('journey-close');
+      const bannerClose = document.getElementById('journey-banner-close');
+      const banner = document.querySelector('.health-journey-banner');
       const ctaBtn = document.getElementById('journey-cta');
       let shown = false;
       let revealTimer = null;
@@ -555,6 +670,9 @@
       };
 
       closeBtn?.addEventListener('click', hideDrawer);
+      bannerClose?.addEventListener('click', () => {
+        if (banner) banner.remove();
+      });
       ctaBtn?.addEventListener('click', () => {
         window.location.href = 'index.html';
       });
