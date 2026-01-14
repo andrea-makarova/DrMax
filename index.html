@@ -1064,11 +1064,11 @@
           <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
           <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Connect Android Health</p>
           <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-            Allow step access to unlock your first 3 stamps instantly.
+            Allow step access to unlock your first 4 stamps instantly.
           </p>
           <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
             <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-            3 stamps
+            4 stamps
           </span>
         </div>
         <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
@@ -1463,50 +1463,85 @@
       const stampsCard = document.querySelector('.stamps-card');
       const stampCta = document.getElementById('stamp-ready-cta');
       const claimAllBtn = document.getElementById('claim-all-stamps');
-      const suppressReady = document.body.dataset.suppressReady === 'true';
-      const hasClaimable = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).some((card) => {
-        const btn = card.querySelector('.redeem-btn');
-        return btn && !btn.disabled && card.dataset.claimed !== 'true';
-      });
-      if (stampsCard) stampsCard.classList.toggle('ready', hasClaimable && !suppressReady);
-
-      const claimableCount = suppressReady ? 0 : Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).filter((card) => {
-        const btn = card.querySelector('.redeem-btn');
-        return btn && !btn.disabled && card.dataset.claimed !== 'true';
-      }).length;
-
+      if (stampsCard) stampsCard.classList.remove('ready');
       if (stampCta) {
-        stampCta.textContent = `Claim ${claimableCount} stamp${claimableCount === 1 ? '' : 's'}`;
-        stampCta.classList.toggle('is-hidden', claimableCount === 0);
-        stampCta.disabled = claimableCount === 0;
+        stampCta.classList.add('is-hidden');
+        stampCta.disabled = true;
       }
       if (claimAllBtn) {
         claimAllBtn.classList.add('is-hidden');
         claimAllBtn.disabled = true;
       }
-
-      const stamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
-      stamps.forEach((stamp) => stamp.classList.remove('stamp-dot-ready'));
-      const unfilled = stamps.filter((stamp) => stamp.dataset.filled !== 'true');
-      unfilled.slice(0, claimableCount).forEach((stamp) => stamp.classList.add('stamp-dot-ready'));
-      const giftStamp = document.querySelector('.stamps-row .stamp-dot-disabled');
-      if (giftStamp) {
-        const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-        giftStamp.classList.toggle('stamp-dot-ready', (filledCount + claimableCount) >= 7);
-      }
+      document.querySelectorAll('.stamps-row .stamp-dot').forEach((stamp) => {
+        stamp.classList.remove('stamp-dot-ready');
+      });
     };
 
     const scrollToStampsCard = () => {
       const target = document.getElementById('stamps-card');
       if (!target) return;
+      const offset = 16;
+      const scrollRoot = document.scrollingElement || document.documentElement;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
       requestAnimationFrame(() => {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        window.scrollTo({ top, behavior: 'auto' });
+        scrollRoot.scrollTop = top;
       });
+      setTimeout(() => {
+        const retryTop = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: retryTop, behavior: 'auto' });
+        scrollRoot.scrollTop = retryTop;
+      }, 200);
+    };
+
+    const forceScrollToStampsCard = (behavior = 'smooth') => {
+      const target = document.getElementById('stamps-card');
+      if (!target) return;
+      const offset = 16;
+      const root = document.documentElement;
+      const body = document.body;
+      const originalBehavior = root.style.scrollBehavior;
+      const originalOverflow = body.style.overflow;
+      root.style.scrollBehavior = behavior;
+      body.style.overflow = 'auto';
+
+      const applyScroll = () => {
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior });
+        root.scrollTop = top;
+        body.scrollTop = top;
+        target.scrollIntoView({ block: 'start', behavior });
+      };
+
+      let attempts = 0;
+      const maxAttempts = 8;
+      const tryScroll = () => {
+        applyScroll();
+        const rect = target.getBoundingClientRect();
+        const inView = rect.top >= 0 && rect.top <= 40;
+        attempts += 1;
+        if (!inView && attempts < maxAttempts) {
+          setTimeout(tryScroll, 150);
+        } else {
+          root.style.scrollBehavior = originalBehavior;
+          body.style.overflow = originalOverflow;
+        }
+      };
+      tryScroll();
+      if (location.hash !== '#stamps-card') {
+        location.hash = 'stamps-card';
+        setTimeout(() => {
+          history.replaceState({}, '', window.location.pathname + window.location.search);
+        }, 200);
+      }
     };
 
     const addStamp = (options = {}) => {
       const { animate = true } = options;
-      const stamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
+      const allStamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
+      const baseline = Math.max(0, parseInt(document.body.dataset.stampBaseline || '0', 10));
+      const stamps = baseline > 0 ? allStamps.slice(baseline) : allStamps;
       const next = stamps.find((stamp) => stamp && stamp.dataset.filled !== 'true');
       if (!next) {
         const gift = document.querySelector('.stamp-dot-disabled');
@@ -1540,6 +1575,22 @@
       }
     };
 
+    const ensureMinimumStamps = (minCount) => {
+      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+      const needed = Math.max(0, minCount - filled);
+      if (needed > 0) {
+        addStampsSequential(needed, 300);
+      }
+    };
+
+    const restoreBonusStamps = (count) => {
+      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+      const needed = Math.max(0, count - filled);
+      for (let i = 0; i < needed; i += 1) {
+        addStamp({ animate: false });
+      }
+    };
+
     const permissionDrawer = document.getElementById('permission-drawer');
     const permissionDrawerCta = document.getElementById('permission-drawer-cta');
     const openPermissionDrawer = () => {
@@ -1554,8 +1605,10 @@
     };
     permissionDrawerCta?.addEventListener('click', () => {
       document.body.dataset.suppressReady = '';
+      document.body.dataset.stampBaseline = '4';
       closePermissionDrawer();
     });
+
 
     // Convert a reward card to claimed state when its button is clicked
     const handleRewardClaim = (btn, options = {}) => {
@@ -1669,11 +1722,35 @@
       document.body.dataset.notificationStampsRestored = 'true';
     };
 
+    const runNotificationFlow = () => {
+      if (localStorage.getItem('permissionsGranted') !== 'true') return;
+      document.body.dataset.suppressReady = 'true';
+      requestAnimationFrame(() => {
+        forceScrollToStampsCard();
+      });
+      setTimeout(() => {
+        if (localStorage.getItem('notificationStampPending') === 'true') {
+          addStampsSequential(1, 500);
+          document.body.dataset.suppressReady = '';
+          localStorage.removeItem('notificationFlow');
+          localStorage.removeItem('notificationStampPending');
+        }
+      }, 400);
+    };
+
     const addNotificationStamp = () => {
       const count = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
       localStorage.setItem('notificationStampCount', String(count + 1));
       if (localStorage.getItem('permissionsGranted') !== 'true') return;
-      addStamp();
+      localStorage.setItem('notificationFlow', 'true');
+      localStorage.setItem('notificationStampPending', 'true');
+      if (document.readyState === 'complete') {
+        setTimeout(runNotificationFlow, 0);
+        return;
+      }
+      window.addEventListener('load', () => {
+        setTimeout(runNotificationFlow, 0);
+      }, { once: true });
     };
 
     const autoClaimAvailableStamps = () => {
@@ -2103,7 +2180,7 @@
 
     const applyPermissionsState = (granted) => {
       const justGranted = localStorage.getItem('permissionsJustGranted') === 'true';
-      const isFreshGrant = justGranted || lastPermissionsState === false;
+      const isFreshGrant = justGranted;
       const permissionCard = document.getElementById('entry-permission-card');
       const permissionToggle = document.getElementById('permissions-toggle');
       const sticky = document.getElementById('entry-challenge-sticky');
@@ -2223,7 +2300,10 @@
         localStorage.removeItem('seasonalStarted');
         localStorage.removeItem('claimedStampCount');
         localStorage.removeItem('notificationStampCount');
+        localStorage.removeItem('permissionsBonusApplied');
+        localStorage.removeItem('permissionsBonusCount');
         document.body.dataset.suppressReady = '';
+        document.body.dataset.stampBaseline = '';
         document.body.dataset.claimsRestored = '';
         document.body.dataset.notificationStampsRestored = '';
         const seasonalSection = document.getElementById('seasonal-section');
@@ -2234,30 +2314,59 @@
           seasonalSticky.style.display = 'none';
           seasonalSticky.classList.remove('is-hidden');
         }
-        resetStamps();
+        resetStamps({ rotate: false });
       }
       updateStampReadyState();
       if (granted) {
         if (isFreshGrant) {
+          const bonusApplied = localStorage.getItem('permissionsBonusApplied') === 'true';
           document.body.dataset.suppressReady = 'true';
-          resetStamps({ rotate: false });
+          document.body.dataset.stampBaseline = '';
+          if (!bonusApplied) {
+            localStorage.setItem('permissionsBonusApplied', 'true');
+            localStorage.setItem('permissionsBonusCount', '4');
+            resetStamps({ rotate: false });
+          }
           localStorage.removeItem('claimedStampCount');
           localStorage.removeItem('notificationStampCount');
           document.body.dataset.claimsRestored = '';
           document.body.dataset.notificationStampsRestored = '';
-          scrollToStampsCard();
+          setTimeout(() => forceScrollToStampsCard(), 200);
+          setTimeout(() => forceScrollToStampsCard(), 600);
+          if (!bonusApplied) {
+            setTimeout(() => {
+              addStampsSequential(4, 500);
+              document.body.dataset.suppressReady = '';
+            }, 360);
+            setTimeout(() => {
+              ensureMinimumStamps(4);
+            }, 2400);
+          } else {
+            document.body.dataset.suppressReady = '';
+          }
           setTimeout(() => {
-            addStampsSequential(4, 500);
-          }, 360);
+            if (localStorage.getItem('notificationStampPending') === 'true') {
+              setTimeout(() => forceScrollToStampsCard(), 80);
+              setTimeout(() => {
+                addStamp();
+                localStorage.removeItem('notificationStampPending');
+              }, 300);
+            }
+          }, 2600);
           setTimeout(() => {
             openPermissionDrawer();
           }, 2600);
-          localStorage.removeItem('permissionsJustGranted');
         } else {
-          restoreClaimedStamps();
-          autoClaimAvailableStamps();
-          restoreNotificationStamps();
+          const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
+          if (bonusCount > 0) {
+            restoreBonusStamps(bonusCount);
+          } else {
+            restoreClaimedStamps();
+            autoClaimAvailableStamps();
+            restoreNotificationStamps();
+          }
         }
+        localStorage.removeItem('permissionsJustGranted');
       }
       lastPermissionsState = granted;
     };
@@ -2354,17 +2463,17 @@
 
     syncPermissionsState();
 
-    if (localStorage.getItem('permissionsJustGranted') === 'true') {
-      scrollToStampsCard();
-      localStorage.removeItem('permissionsJustGranted');
-    }
-
     const stampParams = new URLSearchParams(window.location.search);
     if (stampParams.get('addStamp') === '1') {
       addNotificationStamp();
       stampParams.delete('addStamp');
-      const next = `${window.location.pathname}${stampParams.toString() ? `?${stampParams}` : ''}`;
+      const hash = window.location.hash || '';
+      const next = `${window.location.pathname}${stampParams.toString() ? `?${stampParams}` : ''}${hash}`;
       window.history.replaceState({}, '', next);
+    }
+
+    if (localStorage.getItem('notificationFlow') === 'true') {
+      runNotificationFlow();
     }
 
     updateSeasonalVisibility();
