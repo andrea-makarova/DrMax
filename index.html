@@ -116,6 +116,23 @@
       white-space: nowrap;
     }
     .generate-stamps-btn:active { transform: translateY(1px); }
+    .lockscreen-btn {
+      background: #ffffff;
+      color: #1f2937;
+      border: 1px solid #e1e5ea;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .lockscreen-btn:active { transform: translateY(1px); }
     .redeem-btn {
       background: #ffffff;
       color: #0d6fb8;
@@ -340,7 +357,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
+      z-index: 10030;
     }
     .bonus-modal.visible {
       display: flex;
@@ -350,6 +367,9 @@
       inset: 0;
       background: rgba(15, 23, 42, 0.45);
       backdrop-filter: blur(4px);
+    }
+    #daily-modal .bonus-modal__overlay {
+      pointer-events: none;
     }
     .bonus-modal__content {
       position: relative;
@@ -361,6 +381,27 @@
       text-align: center;
       box-shadow: 0 22px 48px rgba(15,23,42,0.18);
       animation: modalLift 0.45s ease-out;
+    }
+    #daily-modal {
+      align-items: flex-end;
+      padding: 64px 0 0;
+    }
+    #daily-modal .bonus-modal__content {
+      width: 100%;
+      max-width: none;
+      height: auto;
+      max-height: calc(100vh - 64px);
+      border-radius: 24px 24px 0 0;
+      padding: 28px 24px 32px;
+      text-align: left;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      animation: drawerSlideUp 520ms ease-out both;
+      animation-delay: 0ms;
+      background: #ffffff;
+      box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
     }
     .celebrate-icon {
       width: 84px;
@@ -398,37 +439,257 @@
     .daily-modal-options {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 0;
       margin-bottom: 18px;
     }
     .daily-option {
-      border: 1px solid #e5e5ea;
-      border-radius: 16px;
-      padding: 12px 14px;
-      background: #ffffff;
+      padding: 16px 0;
+      background: transparent;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 14px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #2c3640;
+      cursor: pointer;
+      text-align: left;
+      border-bottom: 2px solid #d8dbe1;
+      width: 100%;
+    }
+    .daily-option:last-child {
+      border-bottom: none;
+    }
+    .daily-option small {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5c5f6b;
+      margin-top: 6px;
+      line-height: 20px;
+    }
+    .daily-option small.daily-highlight {
+      color: #000000;
+      font-weight: 600;
+    }
+    .daily-option .radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #bfc5d1;
+      margin-top: 2px;
+    }
+    .daily-option.is-selected .radio {
+      border-color: #47850a;
+      box-shadow: inset 0 0 0 5px #47850a;
+    }
+    .daily-info {
+      background: #fff6cf;
+      color: #000000;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-size: 15px;
-      font-weight: 700;
-      color: #3a3a3c;
-      cursor: pointer;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      gap: 10px;
+      margin: 10px 0 14px;
       text-align: left;
     }
-    .daily-option:hover {
-      border-color: #b8d98b;
-      box-shadow: 0 8px 18px rgba(53, 107, 9, 0.12);
-      transform: translateY(-1px);
+    .daily-highlight {
+      background: #fff6cf;
+      color: #000000;
+      border-radius: 4px;
+      padding: 2px 6px;
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 600;
     }
-    .daily-option-badge {
-      background: #e8f6db;
-      color: #2f6f0a;
-      padding: 6px 10px;
+    .daily-info-icon img {
+      width: 34px;
+      height: 34px;
+      display: block;
+      filter: brightness(0) saturate(100%) invert(72%) sepia(68%) saturate(1137%) hue-rotate(359deg) brightness(101%) contrast(101%);
+    }
+    .daily-info span {
+      font-weight: 600;
+    }
+    .daily-modal-footer {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .daily-note {
+      font-size: 14px;
+      color: #9aa0aa;
+      margin: 0;
+      text-align: center;
+    }
+    .start-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      background: rgba(13, 21, 34, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 9999;
+    }
+    .start-modal.open { display: flex; }
+    .start-modal__sheet {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 22px 26px;
+      box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.12);
+      animation: drawerSlideUp 520ms ease-out both;
+      animation-delay: 0ms;
+    }
+    .start-modal__close {
+      margin-left: auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f1f5;
+      color: #6e6e73;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 20px;
+      line-height: 1;
+    }
+    .start-modal__title {
+      margin: 10px 0 10px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #2c3640;
+      line-height: 30px;
+    }
+    .start-modal__desc {
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #3a3a3c;
+    }
+    .start-modal__highlight {
+      background: #fff6cf;
+      color: #000000;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 14px;
+      line-height: 20px;
+      margin: 0 0 18px;
+    }
+    .drawer-cta {
+      width: 100%;
+      border: none;
       border-radius: 999px;
-      font-size: 12px;
+      background: #47850a;
+      color: #ffffff;
+      font-size: 16px;
       font-weight: 700;
-      white-space: nowrap;
+      height: 44px;
+      padding: 0 24px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
+    }
+    .start-modal__cta {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      background: #47850a;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      height: 44px;
+      padding: 0 24px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
+    }
+    .permission-drawer {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      background: rgba(13, 21, 34, 0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 10040;
+    }
+    .permission-drawer.open { display: flex; }
+    .permission-drawer__sheet {
+      width: 100%;
+      max-width: 520px;
+      background: #ffffff;
+      border-radius: 24px 24px 0 0;
+      padding: 24px 22px 28px;
+      box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      animation: drawerSlideUp 520ms ease-out both;
+    }
+    .permission-drawer__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      margin: 4px auto 12px;
+      background: #f2f4f7;
+      color: #2f6f0a;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+    }
+    .permission-drawer__title {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #2c3640;
+      line-height: 30px;
+    }
+    .permission-drawer__desc {
+      margin: 0 0 16px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 500;
+      color: #3a3a3c;
+    }
+    .permission-drawer__highlight {
+      margin: 0 0 18px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2c3640;
+    }
+    .permission-stamp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      justify-items: center;
+      margin: 16px 0 18px;
+    }
+    .permission-stamp {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2px solid #cfd5df;
+      background: #f7f8fa;
+      display: grid;
+      place-items: center;
+      color: #c0c4ce;
+      font-size: 20px;
+    }
+    .permission-stamp.filled {
+      border-color: #2f6f0a;
+      background: #e6f6dc;
+      color: #2f6f0a;
+    }
+    .permission-drawer__note {
+      margin: 0 0 18px;
+      font-size: 15px;
+      color: #5f6368;
+      font-weight: 600;
     }
     .bonus-close {
       margin-top: 16px;
@@ -508,6 +769,14 @@
       0% { transform: translateY(14px) scale(0.97); opacity: 0; }
       100% { transform: translateY(0) scale(1); opacity: 1; }
     }
+    @keyframes drawerSlideUp {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes drawerSlideDown {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
     @keyframes iconPulse {
       0%, 100% { transform: scale(0.95); }
       50% { transform: scale(1.06); }
@@ -534,6 +803,7 @@
     }
     .modal-open .tabbar {
       pointer-events: none;
+      z-index: 1;
     }
     .tab {
       display: grid;
@@ -720,6 +990,7 @@
       <button class="generate-stamps-btn" type="button" id="generate-stamps">
         Generate 5 stamps
       </button>
+      <a class="lockscreen-btn" href="lockscreen-notification.html">Lock screen</a>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       
@@ -744,11 +1015,73 @@
           <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome to health journey. Keep on moving.</p>
         </div>
       </div>
+      <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card" style="margin-top:20px;">
+        <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
+          <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Daily Challenge</p>
+          <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Hit 5,000 steps</p>
+          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
+            Track your steps toward a 5,000-step daily goal to earn today's stamp.
+          </p>
+          <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+            <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
+            1 stamp
+          </span>
+        </div>
+        <div class="relative h-[210px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
+          <svg class="absolute top-[22px] h-[160px] w-[320px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:320px; right:0;">
+            <defs>
+              <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#95DA39" />
+                <stop offset="1" stop-color="#5DA20A" />
+              </linearGradient>
+              <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#E4002B" />
+                <stop offset="1" stop-color="#FD5553" />
+              </linearGradient>
+            </defs>
+            <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="18" />
+            <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="18" pathLength="100" stroke-dasharray="0 100" />
+            <circle class="arc-knob" r="16" fill="#E4002B" opacity="1" stroke="white" stroke-width="4" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));"></circle>
+            <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73" id="daily-goal-label">5k</text>
+            <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+          </svg>
+        <div class="absolute top-[22px] h-[160px] w-[320px] flex items-center justify-center pointer-events-none" style="right:0;">
+          <div class="text-center">
+            <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0" id="daily-steps-count">3,200 / 5,000</p>
+            <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
+          </div>
+        </div>
+        </div>
+        <div style="padding:0 24px 24px;">
+          <button class="btn-disabled challenge-btn" id="daily-start-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
+            <i class="fa-solid fa-check" style="font-size:14px;color:currentColor;"></i>
+            Start challenge
+          </button>
+        </div>
+      </article>
+      <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
+        <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
+          <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
+          <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Connect Android Health</p>
+          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
+            Allow step access to unlock your first 3 stamps instantly.
+          </p>
+          <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+            <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
+            3 stamps
+          </span>
+        </div>
+        <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
+          <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="window.location.href='permissions-android.html'">
+            <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
+            Connect health data
+          </button>
+        </div>
+      </article>
       <div style="display:flex;align-items:center;justify-content:space-between;margin:40px 4px 12px;">
         <h2 style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Your stamps</h2>
-        <button id="stamp-ready-cta" class="claim-all-btn is-hidden" type="button">Claim 0 stamps</button>
       </div>
-      <div class="stamps-card" style="margin-top:0;">
+      <div class="stamps-card" id="stamps-card" style="margin-top:0;">
         <div class="stamps-row" aria-label="Stamp progress">
           <span class="stamp-dot"></span>
           <span class="stamp-dot"></span>
@@ -775,7 +1108,7 @@
       </div>
     </section>
 
-    <section class="mb-12">
+    <section class="mb-12 is-hidden">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <h2 class="section-title" style="font-size:20px;margin-bottom:0;">Your Rewards</h2>
       </div>
@@ -826,111 +1159,6 @@
       </div>
     </section>
 
-    <section class="mb-16">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-        <h2 class="section-title" style="font-size:20px;">Main Challenge</h2>
-      </div>
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
-          <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
-            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Entry Challenge</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Connect Android Health</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-              Allow step access to unlock your first 3 stamps instantly.
-            </p>
-            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
-              <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-              3 stamps
-            </span>
-          </div>
-          <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
-            <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="window.location.href='permissions-android.html'">
-              <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
-              Connect health data
-            </button>
-          </div>
-        </article>
-        <!-- Card 2: Daily 5k Steps -->
-        <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card">
-          <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
-            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Daily Challenge</p>
-            <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Hit 5,000 steps</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
-              Track your steps toward a 5,000-step daily goal to earn today's stamp.
-            </p>
-            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
-              <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-              1 stamp
-            </span>
-          </div>
-          <div class="relative h-[230px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
-            <svg class="absolute top-[24px] h-[186px] w-[380px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:380px; right:0;">
-              <defs>
-                <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#95DA39" />
-                  <stop offset="1" stop-color="#5DA20A" />
-                </linearGradient>
-                <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#E4002B" />
-                  <stop offset="1" stop-color="#FD5553" />
-                </linearGradient>
-              </defs>
-              <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="20" />
-              <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="20" pathLength="100" stroke-dasharray="0 100" />
-              <circle class="arc-knob" r="20" fill="#E4002B" opacity="1" stroke="white" stroke-width="5" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));"></circle>
-              <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73" id="daily-goal-label">5k</text>
-              <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-            </svg>
-          <div class="absolute top-[24px] h-[186px] w-[380px] flex items-center justify-center pointer-events-none" style="right:0;">
-            <div class="text-center">
-              <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0" id="daily-steps-count">3,200 / 5,000</p>
-              <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
-            </div>
-          </div>
-          </div>
-          <div style="padding:0 24px 24px;">
-            <button class="btn-disabled challenge-btn" id="daily-start-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
-              <i class="fa-solid fa-check" style="font-size:14px;color:currentColor;"></i>
-              Start challenge
-            </button>
-          </div>
-        </article>
-
-        <div id="seasonal-section" class="is-hidden">
-          <h3 class="section-title" style="font-size:18px;margin:0 0 12px 0;">Seasonal Challenges</h3>
-
-          <!-- Card 6: Seasonal Nuance Steps -->
-          <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6">
-            <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-5 relative">
-              <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Seasonal · Nuance</p>
-              <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Nuance Spring Stride</p>
-              <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-                Walk 25km this season with Nuance to unlock a Nuance cream reward.
-              </p>
-            <span class="tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a; white-space:nowrap;">
-              <i class="fa-solid fa-gift" style="color:#2f6f0a;font-size:13px;"></i>
-              Nuance cream
-            </span>
-            <div id="seasonal-progress" class="challenge-progress is-hidden" style="margin-top:14px;">
-              <div class="bar" style="height:14px;">
-                <span class="bar-dot" aria-hidden="true"></span>
-                <div class="bar-fill" id="seasonal-progress-fill" style="width:0%;"></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:13px;color:#6e6e73;">
-                <span class="font-sans" id="seasonal-progress-label">0 / 25 km</span>
-                <span class="font-sans font-semibold" id="seasonal-progress-percent" style="color:#3a3a3c;">0%</span>
-              </div>
-            </div>
-            <div style="margin-top:14px;">
-              <button class="btn-disabled challenge-btn" id="seasonal-start-card" style="border-radius:999px;padding:10px 16px;font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
-                <i class="fa-solid fa-check" style="font-size:14px;"></i>
-                Start challenge
-              </button>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
   </main>
 
@@ -971,27 +1199,35 @@
   <div id="daily-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="daily-modal-title" aria-describedby="daily-modal-desc">
     <div id="daily-modal-overlay" class="bonus-modal__overlay"></div>
     <div class="bonus-modal__content glass">
-      <h3 id="daily-modal-title">Choose your daily goal</h3>
-      <p id="daily-modal-desc">Your recent average is about 4,200 steps/day.</p>
-      <p class="muted" style="margin:0 0 6px;"><strong>Step 1:</strong> Pick a goal.</p>
-      <p class="muted" style="margin:0 0 6px;"><strong>Step 2:</strong> Hit it to earn 1 stamp.</p>
-      <p class="muted" style="margin:0 0 12px;"><strong>Step 3:</strong> Collect 8 stamps to unlock your voucher — the % shows the discount.</p>
+      <h3 id="daily-modal-title">Vyberte si svůj denní cíl</h3>
+      <div class="daily-info">
+        <span class="daily-info-icon" aria-hidden="true">
+          <img src="images/lightbulb-regular-full.svg" alt="">
+        </span>
+        <span>Za poslední měsíc jste nachodila průměrně <strong>4 434 kroků</strong> za den.</span>
+      </div>
       <div class="daily-modal-options">
-        <button class="daily-option" type="button" data-steps="3000" data-discount="5">
-          <span>3,000 steps</span>
-          <span class="daily-option-badge">5% off</span>
+        <button class="daily-option" type="button" data-steps="4500" data-discount="5">
+          <span class="radio" aria-hidden="true"></span>
+          <span>Start – 4 500 kroků</span>
         </button>
-        <button class="daily-option" type="button" data-steps="5000" data-discount="10">
-          <span>5,000 steps</span>
-          <span class="daily-option-badge">10% off</span>
+        <button class="daily-option is-selected" type="button" data-steps="7500" data-discount="10">
+          <span class="radio" aria-hidden="true"></span>
+          <span>
+            Pohoda – 7 500 kroků
+            <small>Kroky se sčítají během celého dne – nemusíte je ujít najednou.</small>
+            <small class="daily-highlight">Doporučeno na základě vašeho průměru</small>
+          </span>
         </button>
         <button class="daily-option" type="button" data-steps="10000" data-discount="15">
-          <span>10,000 steps</span>
-          <span class="daily-option-badge">15% off</span>
+          <span class="radio" aria-hidden="true"></span>
+          <span>Výzva – 10 000 kroků</span>
         </button>
       </div>
-      <p class="muted" style="margin:0 0 8px;">Discount vouchers unlock when 8 stamps are collected.</p>
-      <button id="daily-modal-close" class="bonus-close" type="button">Maybe later</button>
+      <div class="daily-modal-footer">
+        <button id="daily-modal-apply" class="drawer-cta" type="button">Nastavit cíl</button>
+        <p class="daily-note">Cíle můžete později změnit</p>
+      </div>
     </div>
   </div>
 
@@ -1012,6 +1248,41 @@
         </span>
       </div>
       <button id="bonus-modal-close" class="bonus-close">Save coupon for later</button>
+    </div>
+  </div>
+
+  <div id="start-modal" class="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-modal-title">
+    <div class="start-modal__sheet">
+      <div style="display:flex;justify-content:flex-end;">
+        <button class="start-modal__close" type="button" id="start-modal-close" aria-label="Zavřít">×</button>
+      </div>
+      <h2 class="start-modal__title" id="start-modal-title">Jste připraveni proměnit zdravý pohyb v zábavu?</h2>
+      <p class="start-modal__desc">Abychom vám mohli přičítat razítka, potřebujeme přístup ke krokům a vzdálenosti.</p>
+      <p class="start-modal__highlight">Nečteme žádné citlivé údaje a data používáme jen pro tuto funkci.</p>
+      <button class="drawer-cta start-modal__cta" type="button" onclick="window.location.href='permissions-android.html'">Jdeme na to!</button>
+    </div>
+  </div>
+
+  <div id="permission-drawer" class="permission-drawer" role="dialog" aria-modal="true" aria-labelledby="permission-drawer-title">
+    <div class="permission-drawer__sheet">
+      <div class="permission-drawer__icon" aria-hidden="true">
+        <i class="fa-solid fa-thumbs-up"></i>
+      </div>
+      <h2 class="permission-drawer__title" id="permission-drawer-title">Skvělý start!</h2>
+      <p class="permission-drawer__desc">Za to, že jste si vybrali cíl a zapojili se do hry, dostáváte rovnou 4 razítka.</p>
+      <p class="permission-drawer__highlight">Zbývají už jen 4 razítka k odměně <i class="fa-solid fa-gift" aria-hidden="true"></i></p>
+      <div class="permission-stamp-grid" aria-label="Progress">
+        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
+        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
+        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
+        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
+        <span class="permission-stamp"></span>
+        <span class="permission-stamp"></span>
+        <span class="permission-stamp"></span>
+        <span class="permission-stamp"></span>
+      </div>
+      <p class="permission-drawer__note">Další razítka získáte postupně za aktivní dny.</p>
+      <button class="drawer-cta" type="button" id="permission-drawer-cta">Jdu sbírat další razítka</button>
     </div>
   </div>
 
@@ -1192,13 +1463,14 @@
       const stampsCard = document.querySelector('.stamps-card');
       const stampCta = document.getElementById('stamp-ready-cta');
       const claimAllBtn = document.getElementById('claim-all-stamps');
+      const suppressReady = document.body.dataset.suppressReady === 'true';
       const hasClaimable = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).some((card) => {
         const btn = card.querySelector('.redeem-btn');
         return btn && !btn.disabled && card.dataset.claimed !== 'true';
       });
-      if (stampsCard) stampsCard.classList.toggle('ready', hasClaimable);
+      if (stampsCard) stampsCard.classList.toggle('ready', hasClaimable && !suppressReady);
 
-      const claimableCount = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).filter((card) => {
+      const claimableCount = suppressReady ? 0 : Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]')).filter((card) => {
         const btn = card.querySelector('.redeem-btn');
         return btn && !btn.disabled && card.dataset.claimed !== 'true';
       }).length;
@@ -1224,7 +1496,16 @@
       }
     };
 
-    const addStamp = () => {
+    const scrollToStampsCard = () => {
+      const target = document.getElementById('stamps-card');
+      if (!target) return;
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    };
+
+    const addStamp = (options = {}) => {
+      const { animate = true } = options;
       const stamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
       const next = stamps.find((stamp) => stamp && stamp.dataset.filled !== 'true');
       if (!next) {
@@ -1244,15 +1525,41 @@
         icon.className = 'fa-solid fa-check stamp-icon';
         next.appendChild(icon);
       }
-      next.classList.add('stamp-pop');
-      setTimeout(() => next.classList.remove('stamp-pop'), 600);
+      if (animate) {
+        next.classList.add('stamp-pop');
+        setTimeout(() => next.classList.remove('stamp-pop'), 600);
+      }
       unlockBonusReward();
       updateSeasonalVisibility();
       updateStampReadyState();
     };
 
+    const addStampsSequential = (count, delay = 450) => {
+      for (let i = 0; i < count; i += 1) {
+        setTimeout(() => addStamp(), i * delay);
+      }
+    };
+
+    const permissionDrawer = document.getElementById('permission-drawer');
+    const permissionDrawerCta = document.getElementById('permission-drawer-cta');
+    const openPermissionDrawer = () => {
+      if (!permissionDrawer) return;
+      permissionDrawer.classList.add('open');
+      document.body.classList.add('modal-open');
+    };
+    const closePermissionDrawer = () => {
+      if (!permissionDrawer) return;
+      permissionDrawer.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    };
+    permissionDrawerCta?.addEventListener('click', () => {
+      document.body.dataset.suppressReady = '';
+      closePermissionDrawer();
+    });
+
     // Convert a reward card to claimed state when its button is clicked
-    const handleRewardClaim = (btn) => {
+    const handleRewardClaim = (btn, options = {}) => {
+      const { animate = true, track = true } = options;
       const card = btn.closest('.reward-card');
       if (!card || card.dataset.claimed === 'true' || btn.disabled) return;
 
@@ -1261,14 +1568,16 @@
       card.style.border = '1px solid #e5e5ea';
       card.style.color = '#3a3a3c';
       card.style.transition = 'all 0.35s ease';
-      card.animate(
-        [
-          { transform: 'scale(1)', boxShadow: card.style.boxShadow || 'none' },
-          { transform: 'scale(1)', boxShadow: '0 8px 20px rgba(0,0,0,0.08)' },
-          { transform: 'scale(1)', boxShadow: '0 6px 14px rgba(0,0,0,0.06)' }
-        ],
-        { duration: 320, easing: 'ease-out' }
-      );
+      if (animate) {
+        card.animate(
+          [
+            { transform: 'scale(1)', boxShadow: card.style.boxShadow || 'none' },
+            { transform: 'scale(1)', boxShadow: '0 8px 20px rgba(0,0,0,0.08)' },
+            { transform: 'scale(1)', boxShadow: '0 6px 14px rgba(0,0,0,0.06)' }
+          ],
+          { duration: 320, easing: 'ease-out' }
+        );
+      }
 
       const actions = btn.closest('.reward-actions') || btn.parentElement;
       if (actions) {
@@ -1282,6 +1591,10 @@
             </button>
           `;
         } else if (type === 'stamp') {
+          if (track) {
+            const count = parseInt(localStorage.getItem('claimedStampCount') || '0', 10);
+            localStorage.setItem('claimedStampCount', String(count + 1));
+          }
           const stampDate = card.dataset.stampDate ? ` ${card.dataset.stampDate}` : '';
           actions.innerHTML = `
             <button style="background:#eaf6dc;color:#2f6f0a;border:1px solid #d5e8b2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:default;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
@@ -1323,8 +1636,54 @@
         if (iconWrap) iconWrap.style.background = 'linear-gradient(180deg, #95DA39 0%, #5DA20A 100%)';
       }
 
-      addStamp();
+      addStamp({ animate });
+      if (document.body.dataset.suppressReady === 'true') {
+        document.body.dataset.suppressReady = '';
+      }
       updateStampReadyState();
+    };
+
+    const restoreClaimedStamps = () => {
+      if (document.body.dataset.claimsRestored === 'true') return;
+      const count = parseInt(localStorage.getItem('claimedStampCount') || '0', 10);
+      if (!count) return;
+      const cards = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]'))
+        .filter((card) => card.dataset.claimed !== 'true');
+      cards.slice(0, count).forEach((card) => {
+        const btn = card.querySelector('.redeem-btn');
+        if (btn && !btn.disabled) {
+          handleRewardClaim(btn, { animate: false, track: false });
+        }
+      });
+      document.body.dataset.claimsRestored = 'true';
+    };
+
+    const restoreNotificationStamps = () => {
+      const granted = localStorage.getItem('permissionsGranted') === 'true';
+      if (!granted || document.body.dataset.notificationStampsRestored === 'true') return;
+      const count = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
+      if (!count) return;
+      for (let i = 0; i < count; i += 1) {
+        addStamp({ animate: false });
+      }
+      document.body.dataset.notificationStampsRestored = 'true';
+    };
+
+    const addNotificationStamp = () => {
+      const count = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
+      localStorage.setItem('notificationStampCount', String(count + 1));
+      if (localStorage.getItem('permissionsGranted') !== 'true') return;
+      addStamp();
+    };
+
+    const autoClaimAvailableStamps = () => {
+      const cards = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]'))
+        .filter((card) => card.dataset.claimed !== 'true');
+      cards.forEach((card, index) => {
+        const btn = card.querySelector('.redeem-btn');
+        if (!btn || btn.disabled) return;
+        setTimeout(() => handleRewardClaim(btn), index * 700);
+      });
     };
 
     document.addEventListener('click', (event) => {
@@ -1594,10 +1953,11 @@
       wireRewardActions(carousel);
     };
 
-    const resetStamps = () => {
+    const resetStamps = (options = {}) => {
+      const { rotate = true } = options;
       const stamps = document.querySelectorAll('.stamps-row .stamp-dot');
       const card = document.querySelector('.stamps-card');
-      if (card) {
+      if (card && rotate) {
         card.classList.remove('turning');
         void card.offsetWidth;
         card.classList.add('turning');
@@ -1657,8 +2017,36 @@
       document.body.classList.remove('modal-open');
     };
 
-    document.getElementById('daily-modal-close')?.addEventListener('click', closeDailyModal);
-    document.getElementById('daily-modal-overlay')?.addEventListener('click', closeDailyModal);
+    // Daily goal drawer has no dismiss action.
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('showDailyModal') === '1') {
+      requestAnimationFrame(() => openDailyModal());
+      urlParams.delete('showDailyModal');
+      const next = `${window.location.pathname}${urlParams.toString() ? `?${urlParams}` : ''}`;
+      window.history.replaceState({}, '', next);
+    }
+    const startModal = document.getElementById('start-modal');
+    const startModalClose = document.getElementById('start-modal-close');
+    if (urlParams.get('showStartModal') === '1') {
+      requestAnimationFrame(() => {
+        startModal?.classList.add('open');
+        document.body.classList.add('modal-open');
+      });
+      urlParams.delete('showStartModal');
+      const next = `${window.location.pathname}${urlParams.toString() ? `?${urlParams}` : ''}`;
+      window.history.replaceState({}, '', next);
+    }
+    startModalClose?.addEventListener('click', () => {
+      startModal?.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    });
+    startModal?.addEventListener('click', (event) => {
+      if (event.target === startModal) {
+        startModal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+      }
+    });
 
     const applyDailyGoal = (steps, discount) => {
       const target = Number(steps) || 5000;
@@ -1680,14 +2068,23 @@
       }
     };
 
+    let selectedDailyOption = document.querySelector('#daily-modal .daily-option.is-selected');
     document.querySelectorAll('#daily-modal .daily-option').forEach((option) => {
       option.addEventListener('click', () => {
-        const steps = option.dataset.steps || '5000';
-        const discount = option.dataset.discount || '10';
-        applyDailyGoal(steps, discount);
-        closeDailyModal();
-        startDailyChallenge(Number(steps));
+        document.querySelectorAll('#daily-modal .daily-option').forEach((btn) => btn.classList.remove('is-selected'));
+        option.classList.add('is-selected');
+        selectedDailyOption = option;
       });
+    });
+
+    document.getElementById('daily-modal-apply')?.addEventListener('click', () => {
+      const option = selectedDailyOption || document.querySelector('#daily-modal .daily-option');
+      if (!option) return;
+      const steps = option.dataset.steps || '5000';
+      const discount = option.dataset.discount || '10';
+      applyDailyGoal(steps, discount);
+      closeDailyModal();
+      startDailyChallenge(Number(steps));
     });
 
     let lastPermissionsState = null;
@@ -1705,6 +2102,8 @@
     }
 
     const applyPermissionsState = (granted) => {
+      const justGranted = localStorage.getItem('permissionsJustGranted') === 'true';
+      const isFreshGrant = justGranted || lastPermissionsState === false;
       const permissionCard = document.getElementById('entry-permission-card');
       const permissionToggle = document.getElementById('permissions-toggle');
       const sticky = document.getElementById('entry-challenge-sticky');
@@ -1813,15 +2212,20 @@
         if (!granted) {
           card.dataset.claimed = '';
         }
-        if (granted && lastPermissionsState === false) {
-          card.classList.remove('enable-pop');
-          void card.offsetWidth;
-          card.classList.add('enable-pop');
-        }
+      if (granted && lastPermissionsState === false) {
+        card.classList.remove('enable-pop');
+        void card.offsetWidth;
+        card.classList.add('enable-pop');
+      }
       });
       if (!granted) {
         localStorage.removeItem('seasonalUnlocked');
         localStorage.removeItem('seasonalStarted');
+        localStorage.removeItem('claimedStampCount');
+        localStorage.removeItem('notificationStampCount');
+        document.body.dataset.suppressReady = '';
+        document.body.dataset.claimsRestored = '';
+        document.body.dataset.notificationStampsRestored = '';
         const seasonalSection = document.getElementById('seasonal-section');
         if (seasonalSection) {
           seasonalSection.classList.add('is-hidden');
@@ -1833,6 +2237,28 @@
         resetStamps();
       }
       updateStampReadyState();
+      if (granted) {
+        if (isFreshGrant) {
+          document.body.dataset.suppressReady = 'true';
+          resetStamps({ rotate: false });
+          localStorage.removeItem('claimedStampCount');
+          localStorage.removeItem('notificationStampCount');
+          document.body.dataset.claimsRestored = '';
+          document.body.dataset.notificationStampsRestored = '';
+          scrollToStampsCard();
+          setTimeout(() => {
+            addStampsSequential(4, 500);
+          }, 360);
+          setTimeout(() => {
+            openPermissionDrawer();
+          }, 2600);
+          localStorage.removeItem('permissionsJustGranted');
+        } else {
+          restoreClaimedStamps();
+          autoClaimAvailableStamps();
+          restoreNotificationStamps();
+        }
+      }
       lastPermissionsState = granted;
     };
 
@@ -1913,7 +2339,11 @@
 
     permissionsToggle?.addEventListener('click', () => {
       const granted = localStorage.getItem('permissionsGranted') === 'true';
-      localStorage.setItem('permissionsGranted', granted ? 'false' : 'true');
+      const next = !granted;
+      localStorage.setItem('permissionsGranted', next ? 'true' : 'false');
+      if (next) {
+        localStorage.setItem('permissionsJustGranted', 'true');
+      }
       syncPermissionsState();
     });
 
@@ -1923,6 +2353,20 @@
     }
 
     syncPermissionsState();
+
+    if (localStorage.getItem('permissionsJustGranted') === 'true') {
+      scrollToStampsCard();
+      localStorage.removeItem('permissionsJustGranted');
+    }
+
+    const stampParams = new URLSearchParams(window.location.search);
+    if (stampParams.get('addStamp') === '1') {
+      addNotificationStamp();
+      stampParams.delete('addStamp');
+      const next = `${window.location.pathname}${stampParams.toString() ? `?${stampParams}` : ''}`;
+      window.history.replaceState({}, '', next);
+    }
+
     updateSeasonalVisibility();
     updateStampReadyState();
     updateSeasonalStickyImmediate();
@@ -1962,6 +2406,7 @@
       }
       applyPermissionsState(true);
       updateStampReadyState();
+      autoClaimAvailableStamps();
     });
 
     const startDailyChallenge = (targetOverride) => {

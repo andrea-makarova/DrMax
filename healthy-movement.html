@@ -13,6 +13,7 @@
       --gray-900: #1b1b1b;
       --green-500: #47850a;
       --purple-500: #665beb;
+      --tabbar-height: 72px;
     }
     * { box-sizing: border-box; }
     body {
@@ -87,32 +88,40 @@
     .benefits {
       margin: 24px 0 28px;
       display: grid;
-      gap: 18px;
+      gap: 0;
       padding: 0 8px;
     }
     .benefit {
-      display: grid;
-      grid-template-columns: 32px 1fr;
-      gap: 12px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
+      gap: 2px;
+      padding: 16px 0;
       font-size: 17px;
       color: var(--gray-700);
     }
-    .benefit strong {
+
+    .benefit p {
+      padding: 0;
+      margin: 0;
+    }
+
+    .benefit-emphasis {
       font-weight: 800;
       color: #2c3640;
     }
     .benefit-icon {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
       color: #18a892;
-      font-size: 22px;
+      font-size: 24px;
     }
     .benefit-icon img {
-      width: 30px;
-      height: 30px;
+      width: 38px;
+      height: 38px;
       display: block;
       object-fit: contain;
       filter: brightness(0) saturate(100%) invert(35%) sepia(75%) saturate(515%) hue-rotate(50deg) brightness(90%) contrast(90%);
@@ -125,18 +134,25 @@
       font-size: 15px;
       font-weight: 700;
       line-height: 18px;
-      padding: 12px 20px;
+      height: 44px;
+      padding: 0 24px;
+      min-width: 220px;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      align-self: center;
-    }
+                                                                   box-shadow: 0 8px 18px rgba(53,107,9,0.25);
+                                                                   display: inline-flex;
+                                                                   align-items: center;
+                                                                   justify-content: center;
+                                                                   align-self: center;
+                                                               }
     .cta-wrap {
-      width: 100%;
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(var(--tabbar-height) + 16px);
       display: flex;
       justify-content: center;
+      margin: 0;
+      z-index: 10;
     }
     .tabbar {
       position: fixed;
@@ -215,24 +231,24 @@
         <span class="benefit-icon" aria-hidden="true">
           <img src="images/heart-pulse-regular-full.svg" alt="">
         </span>
-        Propojíte kroky ze svého telefonu
+        <p>Propojíte kroky ze svého telefonu</p>
       </div>
       <div class="benefit">
         <span class="benefit-icon" aria-hidden="true">
           <img src="images/badge-percent-regular-full.svg" alt="">
         </span>
-        Plníte denní cíl a sbíráte razítka.
+        <p>Plníte denní cíl a sbíráte razítka.</p>
       </div>
       <div class="benefit">
         <span class="benefit-icon" aria-hidden="true">
           <img src="images/stamp-regular-full.svg" alt="">
         </span>
-        Za nasbíraná razítka získáte slevové kupony a speciální dárky
+       <p> Za nasbíraná razítka získáte <span class="benefit-emphasis">slevové kupony</span> a <span class="benefit-emphasis">speciální dárky</span></p>
       </div>
     </section>
 
     <div class="cta-wrap">
-      <button class="cta" type="button">Začínáme</button>
+      <button class="cta" type="button" onclick="window.location.href='index.html?showStartModal=1'">Začínáme</button>
     </div>
   </main>
 
@@ -258,6 +274,7 @@
       <span>Menu</span>
     </a>
   </nav>
+
 
 </body>
 </html>

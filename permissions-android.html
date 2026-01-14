@@ -362,6 +362,7 @@
     allowBtn?.addEventListener('click', () => {
       if (allowBtn.disabled) return;
       localStorage.setItem('permissionsGranted', 'true');
+      localStorage.setItem('permissionsJustGranted', 'true');
       window.location.href = 'index.html';
     });
     denyBtn?.addEventListener('click', () => {

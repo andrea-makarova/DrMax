@@ -297,7 +297,7 @@
       background-repeat: no-repeat;
       background-position: right 250% bottom 200%, center;
       color: #ffffff;
-      text-align: center;
+      text-align: left;
       box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
       overflow: hidden;
       display: flex;
@@ -305,32 +305,51 @@
       align-items: center;
       justify-content: center;
       animation: drawerSlideUp 520ms ease-out both;
+      animation-delay: 0ms;
       z-index: 9;
     }
     .journey-drawer h3 {
+      width: 100%;
       margin: 32px 0 16px;
       font-size: 24px;
       line-height: 30px;
       font-weight: 800;
     }
+    .journey-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .journey-title img {
+      width: 28px;
+      height: 28px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
     .journey-drawer p {
-      margin: 0 24px 32px;
+      width: 100%;
+      margin: 0 0 24px;
       font-size: 16px;
       line-height: 22px;
       font-weight: 500;
       color: #f8f8f8;
     }
     .journey-cta {
+      width: 100%;
+      height: 44px;
       background: #ffffff;
       color: #09629d;
       border: none;
       border-radius: 999px;
-      padding: 12px 20px;
+      padding: 0 24px;
       font-size: 15px;
       font-weight: 700;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      justify-content: center;
+      text-align: center;
+      align-self: center;
       cursor: pointer;
       box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
     }
@@ -360,6 +379,7 @@
     }
     .journey-drawer.closing {
       animation: drawerSlideDown 420ms ease-in forwards;
+      animation-delay: 0ms;
     }
     .menu-list {
       margin: 0;
@@ -516,7 +536,7 @@
         <img src="images/MaxHealth.svg" alt="">
       </div>
       <p class="journey-banner-text">Walk 8000 steps for 8 days and get a 10% discount on your entire app purchase.</p>
-      <button class="journey-banner-cta" type="button" onclick="window.location.href='index.html'">Begin Your Journey</button>
+      <button class="journey-banner-cta" type="button" onclick="window.location.href='healthy-movement.html'">Begin Your Journey</button>
     </div>
 
     <div class="promo-row">
@@ -619,7 +639,7 @@
   <div class="journey-overlay" role="dialog" aria-labelledby="journey-title" style="display:none;">
     <div class="journey-drawer">
       <button class="journey-close" id="journey-close" aria-label="Close health journey drawer">×</button>
-      <h3 id="journey-title">Health journey</h3>
+      <h3 id="journey-title" class="journey-title"><img src="images/MaxHealth.svg" alt="">Health journey</h3>
       <p>
         Daily movement brings real benefits—now it brings rewards too.
         Each time you meet your step goal, you’ll earn a badge.
@@ -644,7 +664,6 @@
       const banner = document.querySelector('.health-journey-banner');
       const ctaBtn = document.getElementById('journey-cta');
       let shown = false;
-      let revealTimer = null;
 
       const hideDrawer = () => {
         if (!overlay || !drawer) return;
@@ -662,10 +681,6 @@
         overlay.style.display = 'flex';
         requestAnimationFrame(() => overlay.classList.add('open'));
         shown = true;
-        if (revealTimer) {
-          clearTimeout(revealTimer);
-          revealTimer = null;
-        }
         window.removeEventListener('scroll', handleScroll);
       };
 
@@ -674,13 +689,12 @@
         if (banner) banner.remove();
       });
       ctaBtn?.addEventListener('click', () => {
-        window.location.href = 'index.html';
+        window.location.href = 'healthy-movement.html';
       });
 
       const handleScroll = () => {
         if (shown) return;
-        if (revealTimer) return;
-        revealTimer = setTimeout(showDrawer, 2000);
+        showDrawer();
       };
       if (overlay) overlay.style.display = 'none';
       window.addEventListener('scroll', handleScroll, { passive: true });
