@@ -993,9 +993,8 @@
       <a class="lockscreen-btn" href="lockscreen-notification.html">Lock screen</a>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
-      
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;">
-        <div style="width:120px;height:120px;position:relative;flex-shrink:0;">
+        <div style="width:120px;position:relative;flex-shrink:0;">
           <svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88" fill="none">
 <path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="url(#paint0_linear_49145_52454)"/>
 <path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="url(#paint1_linear_49145_52454)"/>
@@ -1011,24 +1010,24 @@
 </defs>
 </svg>
         </div>
-        <div>
-          <p style="margin:0;font-size:32px;font-weight:800;line-height:40px;color:#333;">Welcome to health journey. Keep on moving.</p>
-        </div>
+     
       </div>
       <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card" style="margin-top:20px;">
         <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
-          <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Daily Challenge</p>
+          <div class="flex items-center justify-between gap-3">
+            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-0">Daily Challenge</p>
+            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
+              <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
+              1 stamp
+            </span>
+          </div>
           <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Hit 5,000 steps</p>
           <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
             Track your steps toward a 5,000-step daily goal to earn today's stamp.
           </p>
-          <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
-            <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-            1 stamp
-          </span>
         </div>
-        <div class="relative h-[210px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
-          <svg class="absolute top-[22px] h-[160px] w-[320px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:320px; right:0;">
+        <div class="relative h-[220px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
+          <svg class="absolute top-[20px] h-[172px] w-[340px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:340px; right:0;">
             <defs>
               <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
                 <stop stop-color="#95DA39" />
@@ -1045,19 +1044,14 @@
             <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73" id="daily-goal-label">5k</text>
             <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
           </svg>
-        <div class="absolute top-[22px] h-[160px] w-[320px] flex items-center justify-center pointer-events-none" style="right:0;">
+        <div class="absolute top-[20px] h-[172px] w-[340px] flex items-center justify-center pointer-events-none" style="right:0;">
           <div class="text-center">
             <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0" id="daily-steps-count">3,200 / 5,000</p>
             <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">steps today</p>
           </div>
         </div>
         </div>
-        <div style="padding:0 24px 24px;">
-          <button class="btn-disabled challenge-btn" id="daily-start-btn" style="border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:8px;" disabled>
-            <i class="fa-solid fa-check" style="font-size:14px;color:currentColor;"></i>
-            Start challenge
-          </button>
-        </div>
+        <div style="padding:0 24px 24px;"></div>
       </article>
       <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
         <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
@@ -1607,6 +1601,12 @@
       document.body.dataset.suppressReady = '';
       document.body.dataset.stampBaseline = '4';
       closePermissionDrawer();
+      const dailyProgress = document.getElementById('daily-progress');
+      if (dailyProgress && dailyProgress.dataset.started !== 'true') {
+        const targetSteps = Number(dailyProgress.dataset.target || '5000');
+        startDailyChallenge(targetSteps);
+      }
+      animateDailyProgressTo(4200);
     });
 
 
@@ -2137,7 +2137,9 @@
         desc.textContent = `Complete ${formatSteps(target)} steps today to earn a ${discountValue}% discount and today's stamp.`;
       }
       if (goalLabel) {
-        const label = target >= 1000 ? `${Math.round(target / 1000)}k` : `${target}`;
+        const label = target >= 1000
+          ? `${(target / 1000).toFixed(target % 1000 === 0 ? 0 : 1)}k`
+          : `${target}`;
         goalLabel.textContent = label;
       }
       if (dailyProgress) {
@@ -2162,6 +2164,18 @@
       applyDailyGoal(steps, discount);
       closeDailyModal();
       startDailyChallenge(Number(steps));
+      if (localStorage.getItem('pendingPermissionStamps') === 'true') {
+        setTimeout(() => forceScrollToStampsCard(), 200);
+        setTimeout(() => forceScrollToStampsCard(), 600);
+        setTimeout(() => {
+          addStampsSequential(4, 500);
+        }, 360);
+        setTimeout(() => {
+          ensureMinimumStamps(4);
+          openPermissionDrawer();
+          localStorage.removeItem('pendingPermissionStamps');
+        }, 2600);
+      }
     });
 
     let lastPermissionsState = null;
@@ -2191,6 +2205,10 @@
       }
       if (permissionToggle) {
         permissionToggle.textContent = granted ? 'Permissions: On' : 'Permissions: Off';
+      }
+      const dailyCard = document.getElementById('main-challenge-card');
+      if (dailyCard) {
+        dailyCard.style.display = granted ? '' : 'none';
       }
       const dailyProgress = document.getElementById('daily-progress');
       if (dailyProgress) {
@@ -2319,31 +2337,17 @@
       updateStampReadyState();
       if (granted) {
         if (isFreshGrant) {
-          const bonusApplied = localStorage.getItem('permissionsBonusApplied') === 'true';
           document.body.dataset.suppressReady = 'true';
           document.body.dataset.stampBaseline = '';
-          if (!bonusApplied) {
-            localStorage.setItem('permissionsBonusApplied', 'true');
-            localStorage.setItem('permissionsBonusCount', '4');
-            resetStamps({ rotate: false });
-          }
+          localStorage.setItem('permissionsBonusApplied', 'true');
+          localStorage.setItem('permissionsBonusCount', '4');
+          resetStamps({ rotate: false });
           localStorage.removeItem('claimedStampCount');
           localStorage.removeItem('notificationStampCount');
           document.body.dataset.claimsRestored = '';
           document.body.dataset.notificationStampsRestored = '';
-          setTimeout(() => forceScrollToStampsCard(), 200);
-          setTimeout(() => forceScrollToStampsCard(), 600);
-          if (!bonusApplied) {
-            setTimeout(() => {
-              addStampsSequential(4, 500);
-              document.body.dataset.suppressReady = '';
-            }, 360);
-            setTimeout(() => {
-              ensureMinimumStamps(4);
-            }, 2400);
-          } else {
-            document.body.dataset.suppressReady = '';
-          }
+          localStorage.setItem('pendingPermissionStamps', 'true');
+          document.body.dataset.suppressReady = '';
           setTimeout(() => {
             if (localStorage.getItem('notificationStampPending') === 'true') {
               setTimeout(() => forceScrollToStampsCard(), 80);
@@ -2354,7 +2358,7 @@
             }
           }, 2600);
           setTimeout(() => {
-            openPermissionDrawer();
+            openDailyModal();
           }, 2600);
         } else {
           const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
@@ -2463,6 +2467,11 @@
 
     syncPermissionsState();
 
+    if (localStorage.getItem('openDailyOnReturn') === 'true') {
+      localStorage.removeItem('openDailyOnReturn');
+      requestAnimationFrame(() => openDailyModal());
+    }
+
     const stampParams = new URLSearchParams(window.location.search);
     if (stampParams.get('addStamp') === '1') {
       addNotificationStamp();
@@ -2545,6 +2554,71 @@
         dot.setAttribute('cx', '340');
         dot.setAttribute('cy', '198');
       }
+    };
+
+    const updateDailyProgressTo = (steps) => {
+      const dailyProgress = document.getElementById('daily-progress');
+      const targetSteps = Number(dailyProgress?.dataset.target || '5000');
+      const clamped = Math.max(0, Math.min(steps, targetSteps));
+      const percent = targetSteps ? (clamped / targetSteps) * 100 : 0;
+      const stepsLabel = document.getElementById('daily-steps-count');
+      if (stepsLabel) {
+        stepsLabel.textContent = `${formatSteps(clamped)} / ${formatSteps(targetSteps)}`;
+      }
+      const svg = document.querySelector('#daily-progress svg[data-progress]');
+      const arc = document.querySelector('#daily-progress .arc-progress');
+      const dot = document.querySelector('#daily-progress .arc-knob');
+      if (svg) {
+        svg.dataset.progress = `${percent}`;
+        svg.dataset.animated = 'true';
+      }
+      if (arc && dot) {
+        arc.setAttribute('stroke-dasharray', `${percent} ${100 - percent}`);
+        const totalLen = arc.getTotalLength();
+        const point = arc.getPointAtLength((percent / 100) * totalLen);
+        dot.setAttribute('cx', point.x);
+        dot.setAttribute('cy', point.y);
+      }
+    };
+
+    const animateDailyProgressTo = (steps, duration = 1400) => {
+      const dailyProgress = document.getElementById('daily-progress');
+      const targetSteps = Number(dailyProgress?.dataset.target || '5000');
+      const startLabel = document.getElementById('daily-steps-count');
+      const svg = document.querySelector('#daily-progress svg[data-progress]');
+      const arc = document.querySelector('#daily-progress .arc-progress');
+      const dot = document.querySelector('#daily-progress .arc-knob');
+      if (!svg || !arc || !dot) {
+        updateDailyProgressTo(steps);
+        return;
+      }
+      const startPercent = parseFloat(svg.dataset.progress || '0');
+      const target = Math.max(0, Math.min(steps, targetSteps));
+      const endPercent = targetSteps ? (target / targetSteps) * 100 : 0;
+      const start = performance.now();
+      const totalLen = arc.getTotalLength();
+      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = easeOut(t);
+        const current = startPercent + (endPercent - startPercent) * eased;
+        svg.dataset.progress = `${current}`;
+        arc.setAttribute('stroke-dasharray', `${current} ${100 - current}`);
+        const point = arc.getPointAtLength((current / 100) * totalLen);
+        dot.setAttribute('cx', point.x);
+        dot.setAttribute('cy', point.y);
+        if (startLabel) {
+          const stepsNow = Math.round((current / 100) * targetSteps);
+          startLabel.textContent = `${formatSteps(stepsNow)} / ${formatSteps(targetSteps)}`;
+        }
+        if (t < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          updateDailyProgressTo(target);
+        }
+      };
+      requestAnimationFrame(tick);
     };
 
     document.getElementById('daily-start-btn')?.addEventListener('click', (event) => {

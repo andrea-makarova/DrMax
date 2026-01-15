@@ -363,6 +363,7 @@
       if (allowBtn.disabled) return;
       localStorage.setItem('permissionsGranted', 'true');
       localStorage.setItem('permissionsJustGranted', 'true');
+      localStorage.setItem('openDailyOnReturn', 'true');
       window.location.href = 'index.html';
     });
     denyBtn?.addEventListener('click', () => {
