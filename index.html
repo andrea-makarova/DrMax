@@ -1020,6 +1020,53 @@
       background: #47850a;
       color: #ffffff;
     }
+    .press-menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding: 8px 4px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2c2c2e;
+    }
+    .press-menu-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .press-menu-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .press-menu-slider {
+      position: absolute;
+      inset: 0;
+      background: #d6d8de;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+    .press-menu-slider::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+      transition: transform 0.2s ease;
+    }
+    .press-menu-switch input:checked + .press-menu-slider {
+      background: #47850a;
+    }
+    .press-menu-switch input:checked + .press-menu-slider::after {
+      transform: translateX(20px);
+    }
   </style>
 </head>
 <body>
@@ -1332,29 +1379,78 @@
         <span>Quick actions</span>
         <button class="press-menu-close" type="button" data-action="close">×</button>
       </div>
-      <button class="press-menu-btn" type="button" data-action="back">Back</button>
-      <button class="press-menu-btn" type="button" data-action="how">How it works</button>
-      <button class="press-menu-btn" type="button" data-action="permissions">Permissions</button>
-      <button class="press-menu-btn" type="button" data-action="generate">Generate 5 stamps</button>
+      <div class="press-menu-row">
+        <span>Permissions</span>
+        <label class="press-menu-switch">
+          <input type="checkbox" id="press-permissions-toggle">
+          <span class="press-menu-slider"></span>
+        </label>
+      </div>
+      <button class="press-menu-btn" type="button" data-action="generate">Generate 3 stamps</button>
       <button class="press-menu-btn" type="button" data-action="reset">Reset prototype</button>
       <button class="press-menu-btn primary" type="button" data-action="lockscreen">Lock screen</button>
     </div>
   </div>
 
   <script>
+    localStorage.setItem('indexVisited', 'true');
+
+    const setPermissionsGranted = (next) => {
+      localStorage.setItem('permissionsGranted', next ? 'true' : 'false');
+      if (next) {
+        localStorage.setItem('permissionsJustGranted', 'true');
+      } else {
+        localStorage.removeItem('permissionsJustGranted');
+        localStorage.removeItem('openDailyOnReturn');
+      }
+      syncPermissionsState();
+    };
+
+    const generateStamps = (count = 3) => {
+      localStorage.setItem('permissionsGranted', 'true');
+      syncPermissionsState();
+      const carousel = document.querySelector('.rewards-carousel');
+      if (carousel) {
+        const insertBefore = carousel.querySelector('.reward-card');
+        for (let i = 1; i <= count; i += 1) {
+          const card = document.createElement('div');
+          card.className = 'reward-card font-sans';
+          card.dataset.rewardType = 'stamp';
+          card.dataset.rewardCode = 'MOVE10';
+          card.style.cssText = 'flex:0 0 220px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 22px; padding: 18px 16px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;';
+          card.innerHTML = `
+            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+              <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
+                <i class="fa-solid fa-check reward-main-icon" style="font-size:26px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
+              </div>
+            </div>
+            <div style="text-align:center; margin-bottom:18px;">
+              <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Daily challenge done</p>
+              <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Stamp earned</p>
+            </div>
+            <div class="reward-actions">
+              <button class="redeem-btn" type="button">Redeem stamp</button>
+            </div>
+          `;
+          if (insertBefore) {
+            carousel.insertBefore(card, insertBefore);
+          } else {
+            carousel.appendChild(card);
+          }
+        }
+      }
+      applyPermissionsState(true);
+      updateStampReadyState();
+      autoClaimAvailableStamps();
+    };
+
     const menuAction = localStorage.getItem('menuAction');
     if (menuAction) {
       localStorage.removeItem('menuAction');
-      if (menuAction === 'permissions') {
-        document.getElementById('permissions-toggle')?.click();
-      } else if (menuAction === 'generate') {
-        document.getElementById('generate-stamps')?.click();
+      if (menuAction === 'generate') {
+        generateStamps(3);
       } else if (menuAction === 'lockscreen') {
         window.location.href = 'lockscreen-notification.html';
-      } else if (menuAction === 'how') {
-        document.querySelector('.how-works-btn')?.click();
-      } else if (menuAction === 'back') {
-        window.history.back();
       } else if (menuAction === 'reset') {
         localStorage.clear();
         window.location.href = 'app-home.html';
@@ -2638,41 +2734,7 @@
     updateSeasonalStickyImmediate();
 
     document.getElementById('generate-stamps')?.addEventListener('click', () => {
-      localStorage.setItem('permissionsGranted', 'true');
-      syncPermissionsState();
-      const carousel = document.querySelector('.rewards-carousel');
-      if (carousel) {
-        const insertBefore = carousel.querySelector('.reward-card');
-        for (let i = 1; i <= 5; i += 1) {
-          const card = document.createElement('div');
-          card.className = 'reward-card font-sans';
-          card.dataset.rewardType = 'stamp';
-          card.dataset.rewardCode = 'MOVE10';
-          card.style.cssText = 'flex:0 0 220px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 22px; padding: 18px 16px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;';
-          card.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-              <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-                <i class="fa-solid fa-check reward-main-icon" style="font-size:26px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-              </div>
-            </div>
-            <div style="text-align:center; margin-bottom:18px;">
-              <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Daily challenge done</p>
-              <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Stamp earned</p>
-            </div>
-            <div class="reward-actions">
-              <button class="redeem-btn" type="button">Redeem stamp</button>
-            </div>
-          `;
-          if (insertBefore) {
-            carousel.insertBefore(card, insertBefore);
-          } else {
-            carousel.appendChild(card);
-          }
-        }
-      }
-      applyPermissionsState(true);
-      updateStampReadyState();
-      autoClaimAvailableStamps();
+      generateStamps(3);
     });
 
     const startDailyChallenge = (targetOverride) => {
@@ -2793,6 +2855,7 @@
     (() => {
       const overlay = document.getElementById('press-menu');
       const menu = overlay?.querySelector('.press-menu');
+      const permissionsToggle = document.getElementById('press-permissions-toggle');
       if (!overlay || !menu) return;
       let pressTimer = null;
       let startX = 0;
@@ -2802,6 +2865,9 @@
         overlay.classList.add('open');
         overlay.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
+        if (permissionsToggle) {
+          permissionsToggle.checked = localStorage.getItem('permissionsGranted') === 'true';
+        }
       };
       const closeMenu = () => {
         overlay.classList.remove('open');
@@ -2816,23 +2882,35 @@
       };
       const shouldIgnore = (target) => target.closest('button, a, input, textarea, select, .press-menu');
 
-      document.addEventListener('pointerdown', (event) => {
+      document.addEventListener('touchstart', (event) => {
         if (shouldIgnore(event.target)) return;
-        startX = event.clientX;
-        startY = event.clientY;
+        if (event.touches.length !== 2) {
+          clearPressTimer();
+          return;
+        }
+        const [t1, t2] = event.touches;
+        startX = (t1.clientX + t2.clientX) / 2;
+        startY = (t1.clientY + t2.clientY) / 2;
         clearPressTimer();
         pressTimer = setTimeout(() => openMenu(), 3000);
-      });
-      document.addEventListener('pointermove', (event) => {
+      }, { passive: true });
+      document.addEventListener('touchmove', (event) => {
         if (!pressTimer) return;
-        const dx = Math.abs(event.clientX - startX);
-        const dy = Math.abs(event.clientY - startY);
+        if (event.touches.length !== 2) {
+          clearPressTimer();
+          return;
+        }
+        const [t1, t2] = event.touches;
+        const x = (t1.clientX + t2.clientX) / 2;
+        const y = (t1.clientY + t2.clientY) / 2;
+        const dx = Math.abs(x - startX);
+        const dy = Math.abs(y - startY);
         if (dx > 12 || dy > 12) {
           clearPressTimer();
         }
-      });
-      document.addEventListener('pointerup', clearPressTimer);
-      document.addEventListener('pointercancel', clearPressTimer);
+      }, { passive: true });
+      document.addEventListener('touchend', clearPressTimer);
+      document.addEventListener('touchcancel', clearPressTimer);
       overlay.addEventListener('click', (event) => {
         if (event.target === overlay) closeMenu();
       });
@@ -2841,10 +2919,6 @@
           const action = btn.dataset.action;
           closeMenu();
           if (action === 'close') return;
-          if (action === 'back') {
-            window.history.back();
-            return;
-          }
           if (action === 'reset') {
             localStorage.clear();
             window.location.href = 'app-home.html';
@@ -2854,18 +2928,14 @@
             window.location.href = 'lockscreen-notification.html';
             return;
           }
-          if (action === 'permissions') {
-            document.getElementById('permissions-toggle')?.click();
-            return;
-          }
           if (action === 'generate') {
-            document.getElementById('generate-stamps')?.click();
+            generateStamps(3);
             return;
-          }
-          if (action === 'how') {
-            document.querySelector('.how-works-btn')?.click();
           }
         });
+      });
+      permissionsToggle?.addEventListener('change', () => {
+        setPermissionsGranted(permissionsToggle.checked);
       });
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') closeMenu();
