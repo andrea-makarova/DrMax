@@ -212,6 +212,60 @@
       width: 45vw;
       background: rgba(255, 255, 255, 0.4);
     }
+    .press-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 18, 24, 0.4);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .press-menu-overlay.open { display: flex; }
+    .press-menu {
+      width: min(420px, calc(100% - 32px));
+      background: #ffffff;
+      border-radius: 20px 20px 16px 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 18px 30px rgba(15, 18, 24, 0.2);
+      font-family: "Proxima Vara", "Proxima Nova", sans-serif;
+    }
+    .press-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #3a3a3c;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .press-menu-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f1f4;
+      color: #3a3a3c;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .press-menu-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      background: #f7f7fb;
+      color: #2c2c2e;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .press-menu-btn.primary {
+      background: #47850a;
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -242,5 +296,93 @@
       </div>
     </div>
   </div>
+  <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
+    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Quick actions">
+      <div class="press-menu-header">
+        <span>Quick actions</span>
+        <button class="press-menu-close" type="button" data-action="close">×</button>
+      </div>
+      <button class="press-menu-btn" type="button" data-action="back">Back</button>
+      <button class="press-menu-btn" type="button" data-action="how">How it works</button>
+      <button class="press-menu-btn" type="button" data-action="permissions">Permissions</button>
+      <button class="press-menu-btn" type="button" data-action="generate">Generate 5 stamps</button>
+      <button class="press-menu-btn" type="button" data-action="reset">Reset prototype</button>
+      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Lock screen</button>
+    </div>
+  </div>
+  <script>
+    (() => {
+      const overlay = document.getElementById('press-menu');
+      const menu = overlay?.querySelector('.press-menu');
+      if (!overlay || !menu) return;
+      let pressTimer = null;
+      let startX = 0;
+      let startY = 0;
+
+      const openMenu = () => {
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden', 'false');
+      };
+      const closeMenu = () => {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+      };
+      const clearPressTimer = () => {
+        if (pressTimer) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+        }
+      };
+      const shouldIgnore = (target) => target.closest('button, a, input, textarea, select, .press-menu');
+
+      document.addEventListener('pointerdown', (event) => {
+        if (shouldIgnore(event.target)) return;
+        startX = event.clientX;
+        startY = event.clientY;
+        clearPressTimer();
+        pressTimer = setTimeout(() => openMenu(), 3000);
+      });
+      document.addEventListener('pointermove', (event) => {
+        if (!pressTimer) return;
+        const dx = Math.abs(event.clientX - startX);
+        const dy = Math.abs(event.clientY - startY);
+        if (dx > 12 || dy > 12) {
+          clearPressTimer();
+        }
+      });
+      document.addEventListener('pointerup', clearPressTimer);
+      document.addEventListener('pointercancel', clearPressTimer);
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) closeMenu();
+      });
+      overlay.querySelectorAll('[data-action]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const action = btn.dataset.action;
+          closeMenu();
+          if (action === 'close') return;
+          if (action === 'back') {
+            window.history.back();
+            return;
+          }
+          if (action === 'reset') {
+            localStorage.clear();
+            window.location.href = 'app-home.html';
+            return;
+          }
+          if (action === 'lockscreen') {
+            window.location.href = 'lockscreen-notification.html';
+            return;
+          }
+          if (action === 'how' || action === 'permissions' || action === 'generate') {
+            localStorage.setItem('menuAction', action);
+            window.location.href = 'index.html';
+          }
+        });
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeMenu();
+      });
+    })();
+  </script>
 </body>
 </html>
