@@ -1602,11 +1602,21 @@
       document.body.dataset.stampBaseline = '4';
       closePermissionDrawer();
       const dailyProgress = document.getElementById('daily-progress');
+      const savedGoal = Number(localStorage.getItem('dailyGoalSteps') || dailyProgress?.dataset.target || '5000');
+      const savedDiscount = Number(localStorage.getItem('dailyGoalDiscount') || '10');
+      applyDailyGoal(savedGoal, savedDiscount);
       if (dailyProgress && dailyProgress.dataset.started !== 'true') {
-        const targetSteps = Number(dailyProgress.dataset.target || '5000');
-        startDailyChallenge(targetSteps);
+        startDailyChallenge(savedGoal);
       }
-      animateDailyProgressTo(4200);
+      if (dailyProgress) {
+        dailyProgress.dataset.started = 'true';
+        dailyProgress.classList.remove('is-hidden');
+      }
+      const currentSteps = 4200;
+      localStorage.setItem('dailyCurrentSteps', '4200');
+      setTimeout(() => {
+        animateDailyProgressTo(currentSteps);
+      }, 120);
     });
 
 
@@ -2083,14 +2093,16 @@
       if (!modal || modal.dataset.open === 'true') return;
       modal.dataset.open = 'true';
       modal.classList.add('visible');
+      modal.style.display = 'flex';
       document.body.classList.add('modal-open');
     };
 
     const closeDailyModal = () => {
       const modal = document.getElementById('daily-modal');
-      if (!modal || modal.dataset.open !== 'true') return;
+      if (!modal) return;
       modal.dataset.open = 'false';
       modal.classList.remove('visible');
+      modal.style.display = 'none';
       document.body.classList.remove('modal-open');
     };
 
@@ -2125,6 +2137,31 @@
       }
     });
 
+    function updateDailyProgressTo(steps) {
+      const dailyProgress = document.getElementById('daily-progress');
+      const targetSteps = Number(dailyProgress?.dataset.target || localStorage.getItem('dailyGoalSteps') || '5000');
+      const clamped = Math.max(0, Math.min(steps, targetSteps));
+      const percent = targetSteps ? (clamped / targetSteps) * 100 : 0;
+      const stepsLabel = document.getElementById('daily-steps-count');
+      if (stepsLabel) {
+        stepsLabel.textContent = `${formatSteps(clamped)} / ${formatSteps(targetSteps)}`;
+      }
+      const svg = document.querySelector('#daily-progress svg[data-progress]');
+      const arc = document.querySelector('#daily-progress .arc-progress');
+      const dot = document.querySelector('#daily-progress .arc-knob');
+      if (svg) {
+        svg.dataset.progress = `${percent}`;
+        svg.dataset.animated = 'true';
+      }
+      if (arc && dot) {
+        arc.setAttribute('stroke-dasharray', `${percent} ${100 - percent}`);
+        const totalLen = arc.getTotalLength();
+        const point = arc.getPointAtLength((percent / 100) * totalLen);
+        dot.setAttribute('cx', point.x);
+        dot.setAttribute('cy', point.y);
+      }
+    }
+
     const applyDailyGoal = (steps, discount) => {
       const target = Number(steps) || 5000;
       const discountValue = Number(discount) || 10;
@@ -2145,6 +2182,13 @@
       if (dailyProgress) {
         dailyProgress.dataset.target = `${target}`;
       }
+      localStorage.setItem('dailyGoalSteps', String(target));
+      localStorage.setItem('dailyGoalDiscount', String(discountValue));
+      if (dailyProgress && localStorage.getItem('permissionsGranted') === 'true') {
+        dailyProgress.dataset.started = 'true';
+        dailyProgress.classList.remove('is-hidden');
+      }
+      updateDailyProgressTo(parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10));
     };
 
     let selectedDailyOption = document.querySelector('#daily-modal .daily-option.is-selected');
@@ -2156,27 +2200,30 @@
       });
     });
 
-    document.getElementById('daily-modal-apply')?.addEventListener('click', () => {
+    const handleDailyApply = () => {
       const option = selectedDailyOption || document.querySelector('#daily-modal .daily-option');
       if (!option) return;
       const steps = option.dataset.steps || '5000';
       const discount = option.dataset.discount || '10';
+      localStorage.setItem('dailyCurrentSteps', '0');
       applyDailyGoal(steps, discount);
       closeDailyModal();
       startDailyChallenge(Number(steps));
       if (localStorage.getItem('pendingPermissionStamps') === 'true') {
-        setTimeout(() => forceScrollToStampsCard(), 200);
-        setTimeout(() => forceScrollToStampsCard(), 600);
+        setTimeout(() => forceScrollToStampsCard(), 250);
+        setTimeout(() => forceScrollToStampsCard(), 650);
         setTimeout(() => {
           addStampsSequential(4, 500);
-        }, 360);
+        }, 450);
         setTimeout(() => {
           ensureMinimumStamps(4);
           openPermissionDrawer();
           localStorage.removeItem('pendingPermissionStamps');
-        }, 2600);
+        }, 2700);
       }
-    });
+    };
+    document.getElementById('daily-modal-apply')?.addEventListener('click', handleDailyApply);
+    window.handleDailyApply = handleDailyApply;
 
     let lastPermissionsState = null;
     document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
@@ -2348,6 +2395,7 @@
           document.body.dataset.notificationStampsRestored = '';
           localStorage.setItem('pendingPermissionStamps', 'true');
           document.body.dataset.suppressReady = '';
+          requestAnimationFrame(() => openDailyModal());
           setTimeout(() => {
             if (localStorage.getItem('notificationStampPending') === 'true') {
               setTimeout(() => forceScrollToStampsCard(), 80);
@@ -2356,9 +2404,6 @@
                 localStorage.removeItem('notificationStampPending');
               }, 300);
             }
-          }, 2600);
-          setTimeout(() => {
-            openDailyModal();
           }, 2600);
         } else {
           const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
@@ -2472,6 +2517,24 @@
       requestAnimationFrame(() => openDailyModal());
     }
 
+    if (localStorage.getItem('permissionsGranted') === 'true') {
+      const dailyProgress = document.getElementById('daily-progress');
+      const savedSteps = parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10);
+      const savedGoal = parseInt(localStorage.getItem('dailyGoalSteps') || '0', 10);
+      const savedDiscount = parseInt(localStorage.getItem('dailyGoalDiscount') || '0', 10);
+      if (savedGoal) {
+        applyDailyGoal(savedGoal, savedDiscount || 10);
+      }
+      if (dailyProgress) {
+        dailyProgress.dataset.started = 'true';
+        dailyProgress.classList.remove('is-hidden');
+        if (savedGoal) {
+          dailyProgress.dataset.target = `${savedGoal}`;
+        }
+        updateDailyProgressTo(savedSteps || 0);
+      }
+    }
+
     const stampParams = new URLSearchParams(window.location.search);
     if (stampParams.get('addStamp') === '1') {
       addNotificationStamp();
@@ -2528,10 +2591,14 @@
     });
 
     const startDailyChallenge = (targetOverride) => {
-      const targetSteps = Number(targetOverride) || Number(document.getElementById('daily-progress')?.dataset.target || '5000');
+      const targetSteps = Number(targetOverride)
+        || Number(localStorage.getItem('dailyGoalSteps') || '0')
+        || Number(document.getElementById('daily-progress')?.dataset.target || '5000');
       const dailyProgress = document.getElementById('daily-progress');
+      const goalLabel = document.getElementById('daily-goal-label');
       if (dailyProgress) {
         dailyProgress.dataset.started = 'true';
+        dailyProgress.dataset.target = `${targetSteps}`;
         dailyProgress.classList.remove('is-hidden');
       }
       const dailyBtn = document.getElementById('daily-start-btn');
@@ -2541,6 +2608,12 @@
       const stepsLabel = document.getElementById('daily-steps-count');
       if (stepsLabel) {
         stepsLabel.textContent = `0 / ${formatSteps(targetSteps)}`;
+      }
+      if (goalLabel) {
+        const label = targetSteps >= 1000
+          ? `${(targetSteps / 1000).toFixed(targetSteps % 1000 === 0 ? 0 : 1)}k`
+          : `${targetSteps}`;
+        goalLabel.textContent = label;
       }
       const svg = document.querySelector('#daily-progress svg[data-progress]');
       const arc = document.querySelector('#daily-progress .arc-progress');
@@ -2556,34 +2629,9 @@
       }
     };
 
-    const updateDailyProgressTo = (steps) => {
+    const animateDailyProgressTo = (steps, duration) => {
       const dailyProgress = document.getElementById('daily-progress');
-      const targetSteps = Number(dailyProgress?.dataset.target || '5000');
-      const clamped = Math.max(0, Math.min(steps, targetSteps));
-      const percent = targetSteps ? (clamped / targetSteps) * 100 : 0;
-      const stepsLabel = document.getElementById('daily-steps-count');
-      if (stepsLabel) {
-        stepsLabel.textContent = `${formatSteps(clamped)} / ${formatSteps(targetSteps)}`;
-      }
-      const svg = document.querySelector('#daily-progress svg[data-progress]');
-      const arc = document.querySelector('#daily-progress .arc-progress');
-      const dot = document.querySelector('#daily-progress .arc-knob');
-      if (svg) {
-        svg.dataset.progress = `${percent}`;
-        svg.dataset.animated = 'true';
-      }
-      if (arc && dot) {
-        arc.setAttribute('stroke-dasharray', `${percent} ${100 - percent}`);
-        const totalLen = arc.getTotalLength();
-        const point = arc.getPointAtLength((percent / 100) * totalLen);
-        dot.setAttribute('cx', point.x);
-        dot.setAttribute('cy', point.y);
-      }
-    };
-
-    const animateDailyProgressTo = (steps, duration = 1400) => {
-      const dailyProgress = document.getElementById('daily-progress');
-      const targetSteps = Number(dailyProgress?.dataset.target || '5000');
+      const targetSteps = Number(dailyProgress?.dataset.target || localStorage.getItem('dailyGoalSteps') || '5000');
       const startLabel = document.getElementById('daily-steps-count');
       const svg = document.querySelector('#daily-progress svg[data-progress]');
       const arc = document.querySelector('#daily-progress .arc-progress');
@@ -2595,12 +2643,16 @@
       const startPercent = parseFloat(svg.dataset.progress || '0');
       const target = Math.max(0, Math.min(steps, targetSteps));
       const endPercent = targetSteps ? (target / targetSteps) * 100 : 0;
+      const currentSteps = Math.round((startPercent / 100) * targetSteps);
+      const deltaSteps = Math.abs(target - currentSteps);
+      const computedDuration = Math.min(2400, Math.max(600, deltaSteps * 0.25));
+      const finalDuration = duration ?? computedDuration;
       const start = performance.now();
       const totalLen = arc.getTotalLength();
       const easeOut = (t) => 1 - Math.pow(1 - t, 3);
 
       const tick = (now) => {
-        const t = Math.min(1, (now - start) / duration);
+        const t = Math.min(1, (now - start) / finalDuration);
         const eased = easeOut(t);
         const current = startPercent + (endPercent - startPercent) * eased;
         svg.dataset.progress = `${current}`;
@@ -2616,6 +2668,7 @@
           requestAnimationFrame(tick);
         } else {
           updateDailyProgressTo(target);
+          localStorage.setItem('dailyCurrentSteps', String(target));
         }
       };
       requestAnimationFrame(tick);
