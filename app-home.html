@@ -898,6 +898,9 @@
           if (action === 'close') return;
           if (action === 'reset') {
             localStorage.clear();
+            localStorage.setItem('bonusRewardStage', 'first');
+            localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+            localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
             window.location.href = 'app-home.html';
             return;
           }

@@ -310,14 +310,10 @@
       box-shadow: none;
     }
     .rewards-carousel {
-      display: flex;
-      gap: 12px;
-      padding: 0 24px 16px;
-      margin: 0 -24px;
-      scroll-snap-type: x mandatory;
-      scroll-padding: 0 24px;
-      overflow-x: auto;
-      overflow-y: visible;
+      display: block;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
       position: relative;
     }
     .rewards-carousel.reveal-card {
@@ -381,6 +377,22 @@
       text-align: center;
       box-shadow: 0 22px 48px rgba(15,23,42,0.18);
       animation: modalLift 0.45s ease-out;
+    }
+    #bonus-modal {
+      align-items: flex-end;
+      padding: 64px 0 0;
+    }
+    #bonus-modal .bonus-modal__content {
+      width: 100%;
+      max-width: none;
+      border-radius: 24px 24px 0 0;
+      text-align: center;
+      animation: drawerSlideUp 520ms ease-out both;
+      background: #ffffff;
+      box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     #daily-modal {
       align-items: flex-end;
@@ -692,7 +704,7 @@
       font-weight: 600;
     }
     .bonus-close {
-      margin-top: 16px;
+      margin-top: 24px;
       background: #e5f1fe;
       color: #0d6fb8;
       border: 1px solid #cbdcf6;
@@ -704,6 +716,9 @@
       min-width: 160px;
       box-shadow: 0 6px 16px rgba(13, 111, 184, 0.16);
       transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+    }
+    #bonus-modal .bonus-close {
+      width: 100%;
     }
     .bonus-close:hover { filter: brightness(0.98); box-shadow: 0 10px 20px rgba(13, 111, 184, 0.18); }
     .bonus-close:active { transform: translateY(1px); box-shadow: 0 6px 16px rgba(13, 111, 184, 0.16); }
@@ -1020,6 +1035,22 @@
       background: #47850a;
       color: #ffffff;
     }
+    .menu-open-btn {
+      background: #ffffff;
+      color: #1f2937;
+      border: 1px solid #e1e5ea;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .menu-open-btn:active { transform: translateY(1px); }
     .press-menu-row {
       display: flex;
       align-items: center;
@@ -1085,6 +1116,7 @@
         </svg>
         How it works
       </button>
+      <button class="menu-open-btn" type="button" id="menu-open-btn">Menu</button>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;">
@@ -1183,67 +1215,26 @@
           </span>
         </div>
       </div>
-      <div class="reward-card font-sans" style="background:#ffffff;border:1px solid #e5e5ea;border-radius:24px;padding:16px 18px;color:#3a3a3c;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
+      <div class="reward-card font-sans" style="background:linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);border:0;border-radius:24px;padding:16px 18px;color:#ffffff;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
         <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(180deg,#95DA39 0%,#5DA20A 100%);display:flex;align-items:center;justify-content:center;color:#ffffff;">
+          <div style="width:48px;height:48px;border-radius:14px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:#5DA20A;">
             <i class="fa-solid fa-gift" style="font-size:18px;"></i>
           </div>
           <div>
-            <p style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Bonus Reward</p>
-            <p class="muted" style="margin:2px 0 0;">Collect all stamps to unlock 10% off.</p>
+            <p id="bonus-reward-title" style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Bonus Reward</p>
+            <p class="muted" id="bonus-reward-text" style="margin:2px 0 0;color:#ffffff;">10% off Dr. Max products.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mb-12 is-hidden">
+    <section class="mb-12 is-hidden" id="rewards-section">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <h2 class="section-title" style="font-size:20px;margin-bottom:0;">Your Rewards</h2>
+        <h2 style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Your rewards</h2>
       </div>
       <div class="rewards-carousel">
         <!-- Daily steps stamp rewards -->
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 18" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Android Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Android Health</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
-          </div>
-          <div class="reward-actions">
-            <a class="perm-cta" href="permissions-android.html">Connect health data</a>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 17" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Android Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Android Health</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
-          </div>
-          <div class="reward-actions">
-            <a class="perm-cta" href="permissions-android.html">Connect health data</a>
-          </div>
-        </div>
-        <div class="reward-card font-sans" data-reward-type="stamp" data-stamp-date="Apr 16" data-reward-code="MOVE10" data-active-title="Health data synced" data-active-desc="Bonus stamp" data-active-icon="fa-check" data-inactive-title="Connect Android Health" data-inactive-desc="Allow step access to unlock stamps" data-inactive-icon="fa-lock" style="flex:0 0 220px; background: #cfd3dc; border-radius: 22px; padding: 18px 16px; color: #6e6e73; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-lock reward-main-icon" style="font-size:26px;color:#8e8e93;"></i>
-            </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Connect Android Health</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Allow step access to unlock stamps</p>
-          </div>
-          <div class="reward-actions">
-            <a class="perm-cta" href="permissions-android.html">Connect health data</a>
-          </div>
-        </div>
+        <div class="reward-empty" style="padding:6px 0;color:#6e6e73;font-size:14px;font-weight:600;">Rewards will appear here after you save a coupon.</div>
       </div>
     </section>
 
@@ -1335,7 +1326,7 @@
           </button>
         </span>
       </div>
-      <button id="bonus-modal-close" class="bonus-close">Save coupon for later</button>
+      <button id="bonus-modal-close" class="bonus-close" type="button">Save coupon for later</button>
     </div>
   </div>
 
@@ -1394,6 +1385,33 @@
 
   <script>
     localStorage.setItem('indexVisited', 'true');
+    const bonusTitle = document.getElementById('bonus-reward-title');
+    const bonusText = document.getElementById('bonus-reward-text');
+    const filledCountInit = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+    if (localStorage.getItem('bonusRewardSaved') !== 'true') {
+      localStorage.setItem('bonusRewardStage', 'first');
+      localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
+      if (bonusTitle) bonusTitle.textContent = 'Bonus Reward';
+      if (bonusText) bonusText.textContent = '10% off Dr. Max products.';
+      localStorage.removeItem('bonusRewardSavedText');
+    }
+    if (filledCountInit === 0 && localStorage.getItem('permissionsGranted') !== 'true') {
+      localStorage.removeItem('bonusRewardSaved');
+    }
+    if (!localStorage.getItem('bonusRewardTitle')) {
+      localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+    }
+    if (localStorage.getItem('bonusRewardStage') === 'second') {
+      localStorage.setItem('bonusRewardText', '15% off Dr. Max products');
+    } else if (!localStorage.getItem('bonusRewardText')) {
+      localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
+    }
+    if (bonusTitle) {
+      bonusTitle.textContent = localStorage.getItem('bonusRewardTitle') || 'Bonus Reward';
+    }
+    if (bonusText) {
+      bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% off Dr. Max products.';
+    }
 
     const setPermissionsGranted = (next) => {
       localStorage.setItem('permissionsGranted', next ? 'true' : 'false');
@@ -1407,41 +1425,21 @@
     };
 
     const generateStamps = (count = 3) => {
+      const total = Math.max(0, Number(count) || 0);
+      if (!total) return;
+      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
+      localStorage.setItem('manualGeneratedCount', String(manualCount + total));
       localStorage.setItem('permissionsGranted', 'true');
       syncPermissionsState();
-      const carousel = document.querySelector('.rewards-carousel');
-      if (carousel) {
-        const insertBefore = carousel.querySelector('.reward-card');
-        for (let i = 1; i <= count; i += 1) {
-          const card = document.createElement('div');
-          card.className = 'reward-card font-sans';
-          card.dataset.rewardType = 'stamp';
-          card.dataset.rewardCode = 'MOVE10';
-          card.style.cssText = 'flex:0 0 220px; background: linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%); border-radius: 22px; padding: 18px 16px; color: #ffffff; box-shadow: none; scroll-snap-align:start; margin-bottom:8px;';
-          card.innerHTML = `
-            <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-              <div style="width:56px;height:56px;border-radius:50%;background:#ffffff;display:flex;align-items:center;justify-content:center;">
-                <i class="fa-solid fa-check reward-main-icon" style="font-size:26px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
-              </div>
-            </div>
-            <div style="text-align:center; margin-bottom:18px;">
-              <p class="reward-title" style="margin:0 0 6px 0; font-size:18px; font-weight:700; line-height:22px;">Daily challenge done</p>
-              <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px;">Stamp earned</p>
-            </div>
-            <div class="reward-actions">
-              <button class="redeem-btn" type="button">Redeem stamp</button>
-            </div>
-          `;
-          if (insertBefore) {
-            carousel.insertBefore(card, insertBefore);
-          } else {
-            carousel.appendChild(card);
-          }
-        }
-      }
-      applyPermissionsState(true);
-      updateStampReadyState();
-      autoClaimAvailableStamps();
+      document.body.dataset.suppressReady = 'true';
+      localStorage.setItem('dailyCurrentSteps', '3256');
+      updateDailyProgressTo(3256);
+      forceScrollToStampsCard();
+      addStampsSequential(total, 450);
+      setTimeout(() => {
+        document.body.dataset.suppressReady = '';
+        updateStampReadyState();
+      }, total * 450 + 200);
     };
 
     const menuAction = localStorage.getItem('menuAction');
@@ -1614,8 +1612,17 @@
 
       if (document.body.dataset.bonusPending === 'true') return;
       document.body.dataset.bonusPending = 'true';
-      launchConfetti();
-      openBonusModal();
+      const bonusTitle = document.getElementById('bonus-reward-title');
+      const bonusText = document.getElementById('bonus-reward-text');
+      if (bonusTitle) bonusTitle.textContent = 'Bonus Reward';
+      if (bonusText) bonusText.textContent = '10% off Dr. Max products.';
+      localStorage.setItem('bonusRewardStage', 'first');
+      localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+      localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
+      setTimeout(() => {
+        launchConfetti();
+        openBonusModal();
+      }, 1000);
     };
 
 
@@ -1721,8 +1728,9 @@
       if (!next) {
         const gift = document.querySelector('.stamp-dot-disabled');
         if (gift) {
-          gift.classList.add('stamp-gift-active');
+          gift.classList.add('stamp-gift-active', 'stamp-pop');
           gift.querySelector('i')?.setAttribute('style', 'font-size:18px;color:#ffffff;');
+          setTimeout(() => gift.classList.remove('stamp-pop'), 600);
         }
         unlockBonusReward();
         updateSeasonalVisibility();
@@ -2169,16 +2177,20 @@
     }
 
     const addBonusCard = (withAnimation = true) => {
+      const rewardsSection = document.getElementById('rewards-section');
+      if (rewardsSection) rewardsSection.classList.remove('is-hidden');
       const carousel = document.querySelector('.rewards-carousel');
       if (!carousel || carousel.dataset.bonusAdded === 'true') return;
       carousel.dataset.bonusAdded = 'true';
+      localStorage.setItem('bonusRewardSaved', 'true');
+      carousel.querySelector('.reward-empty')?.classList.add('is-hidden');
       document.body.dataset.bonusPending = 'done';
 
       const card = document.createElement('div');
       card.className = 'reward-card font-sans';
       card.dataset.rewardType = 'code';
       card.dataset.rewardCode = 'MOVE10';
-      card.style.cssText = 'flex:0 0 240px; background:#ffffff; border:1px solid #e5e5ea; border-radius:24px; padding:22px 18px; color:#3a3a3c; box-shadow:none; scroll-snap-align:start; margin-bottom:10px; position:relative; z-index:5;';
+      card.style.cssText = 'max-width:220px; background:#ffffff; border:1px solid #e5e5ea; border-radius:24px; padding:22px 18px; color:#3a3a3c; box-shadow:none; margin-bottom:10px; position:relative; z-index:5;';
       card.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
           <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);display:flex;align-items:center;justify-content:center;">
@@ -2187,9 +2199,9 @@
         </div>
         <div style="text-align:center; margin-bottom:18px;">
           <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Bonus Reward</p>
-          <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px; color:#6e6e73;">10% off your next order</p>
+          <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px; color:#6e6e73;">10% off Dr. Max products.</p>
         </div>
-        <div style="display:flex;justify-content:center;">
+        <div style="display:flex;justify-content:center;margin-bottom:10px;">
           <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
             <span style="letter-spacing:0.6px;">MOVE10</span>
             <button class="copy-code" data-code="MOVE10" aria-label="Copy code" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
@@ -2197,6 +2209,7 @@
             </button>
           </span>
         </div>
+        <p style="margin:0; font-size:13px; font-weight:600; color:#6e6e73; text-align:center;">Expires in 25 days</p>
       `;
 
       if (carousel.firstElementChild) {
@@ -2250,6 +2263,11 @@
     const openBonusModal = () => {
       const modal = document.getElementById('bonus-modal');
       if (!modal || modal.dataset.open === 'true') return;
+      const bonusDesc = document.getElementById('bonus-modal-desc');
+      if (bonusDesc) {
+        const rewardText = localStorage.getItem('bonusRewardText') || '10% off Dr. Max products.';
+        bonusDesc.textContent = `8 stamps collected. Your bonus reward is ${rewardText.replace(/\.$/, '')}.`;
+      }
       modal.dataset.open = 'true';
       modal.classList.add('visible');
       document.body.classList.add('modal-open');
@@ -2261,12 +2279,51 @@
       modal.dataset.open = 'false';
       modal.classList.remove('visible');
       document.body.classList.remove('modal-open');
+      const bonusTitle = document.getElementById('bonus-reward-title');
+      const bonusText = document.getElementById('bonus-reward-text');
+      const currentStage = localStorage.getItem('bonusRewardStage') || 'first';
+      const currentRewardText = currentStage === 'second'
+        ? '15% off Dr. Max products'
+        : '10% off Dr. Max products.';
+      localStorage.setItem('bonusRewardSavedText', currentRewardText);
+      if (currentStage !== 'second') {
+        localStorage.setItem('bonusRewardStage', 'second');
+        localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+        localStorage.setItem('bonusRewardText', '15% off Dr. Max products');
+      }
+      if (bonusTitle) bonusTitle.textContent = 'Bonus Reward';
+      if (bonusText) {
+        bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% off Dr. Max products.';
+      }
       setTimeout(() => addBonusCard(true), 800);
+      localStorage.removeItem('manualGeneratedCount');
+      localStorage.removeItem('notificationStampCount');
+      localStorage.removeItem('claimedStampCount');
+      localStorage.removeItem('permissionsBonusCount');
+      localStorage.removeItem('permissionsBonusApplied');
+      document.body.dataset.stampBaseline = '';
+      document.body.dataset.claimsRestored = '';
+      document.body.dataset.notificationStampsRestored = '';
       resetStamps();
     };
 
     document.getElementById('bonus-modal-close')?.addEventListener('click', closeBonusModal);
     document.getElementById('bonus-modal-overlay')?.addEventListener('click', closeBonusModal);
+
+    const restoreManualStamps = () => {
+      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
+      const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
+      const notificationCount = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
+      const targetTotal = manualCount + bonusCount + notificationCount;
+      if (!targetTotal) return;
+      const existing = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+      const needed = Math.max(0, targetTotal - existing);
+      if (needed > 0) {
+        for (let i = 0; i < needed; i += 1) {
+          addStamp({ animate: false });
+        }
+      }
+    };
 
     const formatSteps = (value) => Number(value || 0).toLocaleString('en-US');
 
@@ -2420,11 +2477,6 @@
       }
     });
     const rewardsCarousel = document.querySelector('.rewards-carousel');
-    if (rewardsCarousel && !rewardsCarousel.dataset.baseStampCards) {
-      rewardsCarousel.dataset.baseStampCards = Array.from(
-        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="stamp"]')
-      ).map((card) => card.outerHTML).join('');
-    }
 
     const applyPermissionsState = (granted) => {
       const justGranted = localStorage.getItem('permissionsJustGranted') === 'true';
@@ -2489,64 +2541,18 @@
         }
       });
 
-      if (!granted && rewardsCarousel?.dataset.baseStampCards) {
-        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="stamp"]').forEach((card) => card.remove());
-        rewardsCarousel.insertAdjacentHTML('beforeend', rewardsCarousel.dataset.baseStampCards);
-        rewardsCarousel.querySelectorAll('.reward-card[data-reward-type="code"]').forEach((card) => card.remove());
-        rewardsCarousel.dataset.bonusAdded = '';
+      if (!granted) {
+        rewardsCarousel?.querySelectorAll('.reward-card[data-reward-type="code"]').forEach((card) => card.remove());
+        rewardsCarousel?.querySelector('.reward-empty')?.classList.remove('is-hidden');
+        rewardsCarousel?.removeAttribute('data-bonus-added');
+        rewardsCarousel?.removeAttribute('data-bonusAdded');
+        rewardsCarousel?.removeAttribute('data-bonusadded');
+        rewardsCarousel?.dataset && (rewardsCarousel.dataset.bonusAdded = '');
         document.body.dataset.bonusPending = '';
+        localStorage.removeItem('bonusRewardSaved');
+        localStorage.removeItem('bonusRewardSavedText');
+        localStorage.removeItem('bonusRewardStage');
       }
-
-      document.querySelectorAll('.rewards-carousel .reward-card[data-reward-type="stamp"]').forEach((card) => {
-        const title = granted ? card.dataset.activeTitle : (card.dataset.inactiveTitle || 'Permission needed');
-        const desc = granted ? card.dataset.activeDesc : (card.dataset.inactiveDesc || 'Grant access to unlock stamps');
-        const icon = granted ? card.dataset.activeIcon : (card.dataset.inactiveIcon || 'fa-lock');
-
-        const isClaimed = card.dataset.claimed === 'true';
-        card.style.background = granted
-          ? (isClaimed ? '#ffffff' : 'linear-gradient(180deg, #8ed63a 0%, #5ca80a 100%)')
-          : '#cfd3dc';
-        card.style.color = granted ? (isClaimed ? '#3a3a3c' : '#ffffff') : '#6e6e73';
-
-        const titleEl = card.querySelector('.reward-title');
-        const descEl = card.querySelector('.reward-description');
-        if (titleEl && title) titleEl.textContent = title;
-        if (descEl && desc) descEl.textContent = desc;
-
-        const iconEl = card.querySelector('.reward-main-icon');
-        if (iconEl && icon && card.dataset.claimed !== 'true') {
-          iconEl.className = `fa-solid ${icon} reward-main-icon`;
-          if (granted) {
-            iconEl.setAttribute('style', 'font-size:28px;color:#2f6f0a;background:linear-gradient(135deg,#95DA39 0%,#2f6f0a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;');
-          } else {
-            iconEl.setAttribute('style', 'font-size:26px;color:#8e8e93;');
-            iconEl.style.webkitTextFillColor = '';
-          }
-        }
-        const iconWrap = iconEl?.parentElement;
-        if (iconWrap) {
-          iconWrap.style.background = card.dataset.claimed === 'true'
-            ? 'linear-gradient(180deg, #95DA39 0%, #5DA20A 100%)'
-            : '#ffffff';
-        }
-
-        const actions = card.querySelector('.reward-actions');
-        if (actions) {
-          if (!granted) {
-            actions.innerHTML = '<a class="perm-cta" href="permissions-android.html">Connect health data</a>';
-          } else if (card.dataset.claimed !== 'true') {
-            actions.innerHTML = '<button class="redeem-btn" type="button">Redeem stamp</button>';
-          }
-        }
-        if (!granted) {
-          card.dataset.claimed = '';
-        }
-      if (granted && lastPermissionsState === false) {
-        card.classList.remove('enable-pop');
-        void card.offsetWidth;
-        card.classList.add('enable-pop');
-      }
-      });
       if (!granted) {
         localStorage.removeItem('seasonalUnlocked');
         localStorage.removeItem('seasonalStarted');
@@ -2554,6 +2560,8 @@
         localStorage.removeItem('notificationStampCount');
         localStorage.removeItem('permissionsBonusApplied');
         localStorage.removeItem('permissionsBonusCount');
+        localStorage.removeItem('manualGeneratedCount');
+        localStorage.removeItem('bonusRewardStage');
         document.body.dataset.suppressReady = '';
         document.body.dataset.stampBaseline = '';
         document.body.dataset.claimsRestored = '';
@@ -2732,6 +2740,17 @@
     updateSeasonalVisibility();
     updateStampReadyState();
     updateSeasonalStickyImmediate();
+    restoreManualStamps();
+    const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+    if (localStorage.getItem('bonusRewardSaved') !== 'true' && filledCount === 0) {
+      localStorage.setItem('bonusRewardStage', 'first');
+      localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
+      if (bonusTitle) bonusTitle.textContent = 'Bonus Reward';
+      if (bonusText) bonusText.textContent = '10% off Dr. Max products.';
+    }
+    if (localStorage.getItem('bonusRewardSaved') === 'true') {
+      addBonusCard(false);
+    }
 
     document.getElementById('generate-stamps')?.addEventListener('click', () => {
       generateStamps(3);
@@ -2874,6 +2893,7 @@
         overlay.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
       };
+      window.openPressMenu = openMenu;
       const clearPressTimer = () => {
         if (pressTimer) {
           clearTimeout(pressTimer);
@@ -2921,6 +2941,9 @@
           if (action === 'close') return;
           if (action === 'reset') {
             localStorage.clear();
+            localStorage.setItem('bonusRewardStage', 'first');
+            localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+            localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
             window.location.href = 'app-home.html';
             return;
           }
@@ -2941,6 +2964,12 @@
         if (event.key === 'Escape') closeMenu();
       });
     })();
+
+    document.getElementById('menu-open-btn')?.addEventListener('click', () => {
+      if (typeof window.openPressMenu === 'function') {
+        window.openPressMenu();
+      }
+    });
 
   </script>
 
