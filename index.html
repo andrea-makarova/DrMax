@@ -91,6 +91,22 @@
       align-items: center;
       gap: 8px;
     }
+    .gear-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+    .gear-btn img {
+      width: 22px;
+      height: 22px;
+      display: block;
+      filter: brightness(0) saturate(100%) invert(62%) sepia(7%) saturate(211%) hue-rotate(201deg) brightness(95%) contrast(88%);
+    }
     .how-works-btn {
       background: #ffffff;
       color: #0d77ba;
@@ -1241,7 +1257,10 @@
       </button>
       <h1 class="top-title">Zdravý pohyb s Maxem</h1>
       <div class="top-actions">
-        <button class="menu-open-btn" type="button" id="menu-open-btn">Menu</button>
+        <button class="gear-btn" type="button" aria-label="Nastavení">
+          <img src="images/gear-regular-full.svg" alt="">
+        </button>
+        <button class="menu-open-btn is-hidden" type="button" id="menu-open-btn">Menu</button>
       </div>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
