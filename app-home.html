@@ -785,6 +785,7 @@
       const bannerCta = document.getElementById('journey-banner-cta');
       const hasClickedCta = localStorage.getItem('homeCtaClicked') === 'true';
       const hasVisitedIndex = localStorage.getItem('indexVisited') === 'true';
+      const movementCompleted = localStorage.getItem('healthyMovementCompleted') === 'true';
       let shown = false;
 
       const hideDrawer = () => {
@@ -811,7 +812,7 @@
         if (banner) banner.remove();
       });
       const handleCta = () => {
-        if (localStorage.getItem('homeCtaClicked') === 'true' || hasVisitedIndex) {
+        if (movementCompleted) {
           localStorage.setItem('suppressDrawersOnIndex', 'true');
           window.location.href = 'index.html';
           return;

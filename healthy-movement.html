@@ -348,7 +348,7 @@
     </section>
 
     <div class="cta-wrap">
-      <button class="cta" type="button" onclick="window.location.href='index.html?showStartModal=1'">Začínáme</button>
+      <button class="cta" type="button">Začínáme</button>
     </div>
   </main>
 
@@ -393,7 +393,12 @@
     </div>
   </div>
   <script>
-    localStorage.setItem('healthyMovementVisited', 'true');
+    const ctaBtn = document.querySelector('.cta');
+    ctaBtn?.addEventListener('click', () => {
+      localStorage.setItem('healthyMovementCompleted', 'true');
+      localStorage.removeItem('suppressDrawersOnIndex');
+      window.location.href = 'index.html?showStartModal=1';
+    });
     (() => {
       const overlay = document.getElementById('press-menu');
       const menu = overlay?.querySelector('.press-menu');
