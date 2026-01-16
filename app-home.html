@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dr. Max App - Home</title>
+  <title>Dr. Max App – Domů</title>
   <style>
     :root {
       --blue-25: #f5f8fd;
@@ -164,13 +164,13 @@
       bottom: -60px;
       z-index: 0;
       pointer-events: none;
+      background: #95DA39;
+      opacity: 0.5;
+      -webkit-mask: url("images/MaxHealth.svg") no-repeat center / contain;
+      mask: url("images/MaxHealth.svg") no-repeat center / contain;
     }
     .journey-banner-bg img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      opacity: 1;
-      filter: brightness(0) saturate(100%) invert(63%) sepia(60%) saturate(484%) hue-rotate(49deg) brightness(93%) contrast(94%);
+      display: none;
     }
     .health-journey-banner > *:not(.journey-banner-close):not(.journey-banner-bg) {
       position: relative;
@@ -287,15 +287,15 @@
       position: relative;
       width: 100%;
       max-width: none;
-      padding: 24px 28px 32px;
+      padding: 20px 24px 24px;
       border-radius: 24px 24px 0 0;
-      min-height: 46vh;
+      min-height: 36vh;
       background-image:
         url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 88 88' fill='none'><path d='M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z' fill='%23ffffff' fill-opacity='0.15'/><path d='M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z' fill='%23ffffff' fill-opacity='0.15'/></svg>"),
         linear-gradient(151deg, #95da39 0%, #5da20a 100%);
       background-size: 450px, cover;
       background-repeat: no-repeat;
-      background-position: right 250% bottom 200%, center;
+      background-position: right 250% bottom 120%, center;
       color: #ffffff;
       text-align: left;
       box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
@@ -310,7 +310,7 @@
     }
     .journey-drawer h3 {
       width: 100%;
-      margin: 32px 0 16px;
+      margin: 20px 0 12px;
       font-size: 24px;
       line-height: 30px;
       font-weight: 800;
@@ -328,7 +328,7 @@
     }
     .journey-drawer p {
       width: 100%;
-      margin: 0 0 24px;
+      margin: 0 0 16px;
       font-size: 16px;
       line-height: 22px;
       font-weight: 500;
@@ -621,88 +621,88 @@
         <circle cx="7" cy="7" r="5" stroke="#6e6e73" stroke-width="1.5"></circle>
         <path d="M10.8 10.8L14.5 14.5" stroke="#6e6e73" stroke-width="1.5" stroke-linecap="round"></path>
       </svg>
-      <span>Search</span>
+      <span>Hledat</span>
     </div>
 
-    <div class="health-journey-banner" aria-label="Health Journey">
-      <button class="journey-banner-close" type="button" aria-label="Close" id="journey-banner-close">×</button>
+    <div class="health-journey-banner" aria-label="Zdravá cesta">
+      <button class="journey-banner-close" type="button" aria-label="Zavřít" id="journey-banner-close">×</button>
       <div class="journey-banner-header">
         <svg width="24" height="24" viewBox="0 0 88 88" fill="none" aria-hidden="true">
           <path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="#ffffff"></path>
           <path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="#ffffff"></path>
         </svg>
-        <span class="journey-banner-title">Health Journey</span>
+        <span class="journey-banner-title">Zdravý pohyb s Maxem</span>
       </div>
       <div class="journey-banner-bg" aria-hidden="true">
         <img src="images/MaxHealth.svg" alt="">
       </div>
-      <p class="journey-banner-text">Walk 8000 steps for 8 days and get a 10% discount on your entire app purchase.</p>
-      <button class="journey-banner-cta" type="button" id="journey-banner-cta">Begin Your Journey</button>
+      <p class="journey-banner-text">Pravidelná chůze prospívá zdraví – a my vás za ni v Dr. Max appce odměníme.</p>
+      <button class="journey-banner-cta" type="button" id="journey-banner-cta">Začít</button>
     </div>
 
 
     <div class="promo-row">
       <div class="promo-card">
-        <img src="images/Mobile Banner-1.png" alt="Promo 1">
+        <img src="images/Mobile Banner-1.png" alt="Akce 1">
       </div>
       <div class="promo-card">
-        <img src="images/Mobile Banner-2.png" alt="Promo 2">
+        <img src="images/Mobile Banner-2.png" alt="Akce 2">
       </div>
       <div class="promo-card">
-        <img src="images/Mobile Banner-3.png" alt="Promo 3">
+        <img src="images/Mobile Banner-3.png" alt="Akce 3">
       </div>
       <div class="promo-card">
-        <img src="images/Mobile Banner-4.png" alt="Promo 4">
+        <img src="images/Mobile Banner-4.png" alt="Akce 4">
       </div>
       <div class="promo-card">
-        <img src="images/Mobile Banner.png" alt="Promo 5">
+        <img src="images/Mobile Banner.png" alt="Akce 5">
       </div>
     </div>
 
     <ul class="menu-list">
       <li class="menu-item">
-        <div class="menu-icon" style="background:#ffe5e5;"><img src="images/sales-red.webp" alt="Sales & Discounts"></div>
-        <span class="menu-text">Sales & Discounts</span>
+        <div class="menu-icon" style="background:#ffe5e5;"><img src="images/sales-red.webp" alt="Slevy a akce"></div>
+        <span class="menu-text">Slevy a akce</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon" style="background:#e9f7dc;"><img src="images/drmax.webp" alt="Dr. Max Products"></div>
-        <span class="menu-text">Dr. Max Products</span>
+        <div class="menu-icon" style="background:#e9f7dc;"><img src="images/drmax.webp" alt="Produkty Dr. Max"></div>
+        <span class="menu-text">Produkty Dr. Max</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/detska-kosmetika.webp" alt="Mother & Child"></div>
-        <span class="menu-text">Mother & Child</span>
+        <div class="menu-icon"><img src="images/detska-kosmetika.webp" alt="Maminka a dítě"></div>
+        <span class="menu-text">Maminka a dítě</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/liceni.webp" alt="Beauty & Care"></div>
-        <span class="menu-text">Beauty & Care</span>
+        <div class="menu-icon"><img src="images/liceni.webp" alt="Krása a péče"></div>
+        <span class="menu-text">Krása a péče</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/zdrava-vyziva.webp" alt="Healthy Food"></div>
-        <span class="menu-text">Healthy Food</span>
+        <div class="menu-icon"><img src="images/zdrava-vyziva.webp" alt="Zdravá výživa"></div>
+        <span class="menu-text">Zdravá výživa</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/pro-sportovce.webp" alt="For Athletes"></div>
-        <span class="menu-text">For Athletes</span>
+        <div class="menu-icon"><img src="images/pro-sportovce.webp" alt="Pro sportovce"></div>
+        <span class="menu-text">Pro sportovce</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/zdravotnicke-pomucky.webp" alt="Medical Supplies"></div>
-        <span class="menu-text">Medical Supplies</span>
+        <div class="menu-icon"><img src="images/zdravotnicke-pomucky.webp" alt="Zdravotnické pomůcky"></div>
+        <span class="menu-text">Zdravotnické pomůcky</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/pro-zvirata.webp" alt="For Pets"></div>
-        <span class="menu-text">For Pets</span>
+        <div class="menu-icon"><img src="images/pro-zvirata.webp" alt="Pro mazlíčky"></div>
+        <span class="menu-text">Pro mazlíčky</span>
         <span class="chevron">›</span>
       </li>
       <li class="menu-item">
-        <div class="menu-icon"><img src="images/drogerie.webp" alt="Home Care"></div>
-        <span class="menu-text">Home Care</span>
+        <div class="menu-icon"><img src="images/drogerie.webp" alt="Domácí péče"></div>
+        <span class="menu-text">Domácí péče</span>
         <span class="chevron">›</span>
       </li>
     </ul>
@@ -710,7 +710,7 @@
     <div class="loyalty">
       <button>
         <img src="images/Loyality Card.svg" alt="" style="height:18px;width:auto;">
-        loyalty card
+        věrnostní karta
       </button>
     </div>
   </div>
@@ -722,15 +722,15 @@
     </a>
     <a class="tab" href="#">
       <div class="tab-icon"><img src="images/Rx.svg" alt=""></div>
-      <span>Prescription</span>
+      <span>Recepty</span>
     </a>
     <a class="tab" href="#">
       <div class="tab-icon"><img src="images/Cart.svg" alt=""></div>
-      <span>Cart</span>
+      <span>Košík</span>
     </a>
     <a class="tab" href="#">
       <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
-      <span>Purchases</span>
+      <span>Nákupy</span>
     </a>
     <a class="tab menu-badge" href="menu.html">
       <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
@@ -740,34 +740,33 @@
 
   <div class="journey-overlay" role="dialog" aria-labelledby="journey-title" style="display:none;">
     <div class="journey-drawer">
-      <button class="journey-close" id="journey-close" aria-label="Close health journey drawer">×</button>
-      <h3 id="journey-title" class="journey-title"><img src="images/MaxHealth.svg" alt="">Health journey</h3>
+      <button class="journey-close" id="journey-close" aria-label="Zavřít panel Zdravá cesta">×</button>
+      <h3 id="journey-title" class="journey-title"><img src="images/MaxHealth.svg" alt="">Zdravý pohyb s Maxem</h3>
       <p>
-        Daily movement brings real benefits—now it brings rewards too.
-        Each time you meet your step goal, you’ll earn a badge.
+      Pravidelná chůze prospívá zdraví – a my vás za ni v Dr. Max appce odměníme.
       </p>
       <p>
-        Gather your badges and redeem them for exclusive offers that support your health journey.
+        Nasbírejte razítka a získejte exkluzivní nabídky, které podpoří vaši cestu ke zdraví.
       </p>
-      <button class="journey-cta" id="journey-cta">Begin Your Journey</button>
+      <button class="journey-cta" id="journey-cta">Začít</button>
     </div>
   </div>
   <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
     <div class="press-menu" role="dialog" aria-modal="true" aria-label="Quick actions">
       <div class="press-menu-header">
-        <span>Quick actions</span>
+        <span>Rychlé akce</span>
         <button class="press-menu-close" type="button" data-action="close">×</button>
       </div>
       <div class="press-menu-row">
-        <span>Permissions</span>
+        <span>Oprávnění</span>
         <label class="press-menu-switch">
           <input type="checkbox" id="press-permissions-toggle">
           <span class="press-menu-slider"></span>
         </label>
       </div>
-      <button class="press-menu-btn" type="button" data-action="generate">Generate 3 stamps</button>
-      <button class="press-menu-btn" type="button" data-action="reset">Reset prototype</button>
-      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Lock screen</button>
+      <button class="press-menu-btn" type="button" data-action="generate">Vygenerovat 3 razítka</button>
+      <button class="press-menu-btn" type="button" data-action="reset">Resetovat prototyp</button>
+      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Uzamčená obrazovka</button>
     </div>
   </div>
   <script>
