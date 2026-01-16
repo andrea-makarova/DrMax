@@ -552,6 +552,66 @@
       background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
       box-shadow: inset 0 0 0 5px #ffffff;
     }
+    .daily-complete-msg {
+      color: #2f6f0a;
+      font-weight: 600;
+    }
+    .daily-complete-msg span {
+      font-weight: 700;
+    }
+    .daily-complete-panel {
+      margin: -12px 24px 16px;
+      padding: 18px 16px;
+      border-radius: 20px;
+      border: 0;
+      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
+      display: none;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
+    }
+    .daily-complete-panel.is-visible {
+      display: flex;
+    }
+    .daily-complete-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+    .daily-complete-icon svg path {
+      fill: #2f6f0a;
+    }
+    .daily-complete-icon-mask {
+      width: 26px;
+      height: 26px;
+      display: block;
+      background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
+      -webkit-mask: url("images/shoe-prints-solid-full.svg") center / contain no-repeat;
+      mask: url("images/shoe-prints-solid-full.svg") center / contain no-repeat;
+    }
+    .daily-complete-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .daily-complete-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .daily-complete-subtitle {
+      color: #ffffff;
+    }
+    .daily-complete-subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: #ffffff;
+    }
     .daily-info {
       background: #f0f1f5;
       color: #000000;
@@ -1214,8 +1274,12 @@
             </span>
           </div>
           <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Pohoda – 7&nbsp;500 kroků</p>
+          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93] mb-0" id="daily-complete-steps">Dnes jste ušli 8&nbsp;234 / 7&nbsp;500 kroků</p>
           <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
             Ještě 5&nbsp;345 kroků k dnešnímu razítku.
+          </p>
+          <p class="font-sans text-[14px] font-normal leading-[18px] daily-complete-msg is-hidden" id="daily-complete-msg">
+            Dnešní cíl splněn. Další výzva začne za <span id="daily-countdown">23 h 59 min</span>.
           </p>
         </div>
         <div class="relative h-[220px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
@@ -1244,6 +1308,15 @@
         </div>
         </div>
         <div style="padding:0 24px 24px;"></div>
+        <div class="daily-complete-panel" id="daily-complete-panel" aria-live="polite">
+          <div class="daily-complete-icon" aria-hidden="true">
+            <span class="daily-complete-icon-mask" aria-hidden="true"></span>
+          </div>
+          <div class="daily-complete-text">
+            <p class="daily-complete-title">Dnešní cíl splněn</p>
+            <p class="daily-complete-subtitle">Další výzva začne zítra.</p>
+          </div>
+        </div>
       </article>
       <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
         <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
@@ -1265,7 +1338,7 @@
         </div>
       </article>
       <div style="display:flex;align-items:center;justify-content:space-between;margin:40px 4px 12px;">
-        <h2 style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Zbývají už jen 4 razítka k odměně</h2>
+      <h2 id="stamps-remaining-title" style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Zbývají už jen 4 razítka k odměně</h2>
       </div>
       <div class="stamps-card" id="stamps-card" style="margin-top:0;">
         <div class="stamps-row" aria-label="Průběh razítek">
@@ -1416,7 +1489,7 @@
       </div>
       <h2 class="permission-drawer__title" id="permission-drawer-title">Skvělý start!</h2>
       <p class="permission-drawer__desc">Za to, že jste si vybrali cíl a zapojili se do hry, dostáváte rovnou 4 razítka.</p>
-      <p class="permission-drawer__highlight">Zbývají už jen 4 razítka k odměně </p>
+      <p class="permission-drawer__highlight" id="permission-drawer-remaining">Zbývají už jen 4 razítka k odměně</p>
       <div class="permission-stamp-grid" aria-label="Průběh">
         <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
         <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
@@ -1708,6 +1781,24 @@
       updateSeasonalStickyImmediate();
     }
 
+    const getStampLabel = (count) => {
+      if (count === 1) return 'razítko';
+      if (count >= 2 && count <= 4) return 'razítka';
+      return 'razítek';
+    };
+
+    const updateRemainingStamps = () => {
+      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
+      const remaining = Math.max(0, 8 - filled);
+      const verb = remaining === 1 ? 'Zbývá' : 'Zbývají';
+      const label = getStampLabel(remaining);
+      const text = `${verb} už jen ${remaining} ${label} k odměně`;
+      const title = document.getElementById('stamps-remaining-title');
+      const drawerText = document.getElementById('permission-drawer-remaining');
+      if (title) title.textContent = text;
+      if (drawerText) drawerText.textContent = text;
+    };
+
     const updateStampReadyState = () => {
       const stampsCard = document.querySelector('.stamps-card');
       const stampCta = document.getElementById('stamp-ready-cta');
@@ -1724,6 +1815,7 @@
       document.querySelectorAll('.stamps-row .stamp-dot').forEach((stamp) => {
         stamp.classList.remove('stamp-dot-ready');
       });
+      updateRemainingStamps();
     };
 
     const scrollToStampsCard = () => {
@@ -2027,6 +2119,17 @@
               addStamp({ animate: true });
             }
             localStorage.setItem('stampFillCount', String(targetFill));
+            const goalSteps = parseInt(localStorage.getItem('dailyGoalSteps') || '0', 10);
+            if (goalSteps > 0) {
+              localStorage.setItem('dailyCurrentSteps', String(goalSteps));
+              updateDailyProgressTo(goalSteps);
+            }
+            const nextMidnight = new Date();
+            nextMidnight.setHours(24, 0, 0, 0);
+            localStorage.setItem('dailyCompleteUntil', String(nextMidnight.getTime()));
+            localStorage.setItem('dailyCompleted', 'true');
+            setDailyCompleteState(true);
+            startDailyCountdown();
           } else {
             const currentFill = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
             addStampsSequential(1, 500);
@@ -2517,6 +2620,58 @@
       }
     }
 
+    let dailyCountdownTimer = null;
+    const setDailyCompleteState = (active) => {
+      const desc = document.getElementById('daily-desc');
+      const completeMsg = document.getElementById('daily-complete-msg');
+      const completePanel = document.getElementById('daily-complete-panel');
+      const dailyProgress = document.getElementById('daily-progress');
+      if (!desc || !completeMsg) return;
+      if (!desc.dataset.defaultText) {
+        desc.dataset.defaultText = desc.textContent || '';
+      }
+      if (active) {
+        desc.classList.add('is-hidden');
+        completeMsg.classList.add('is-hidden');
+        completePanel?.classList.add('is-visible');
+        dailyProgress?.classList.add('is-hidden');
+      } else {
+        desc.textContent = desc.dataset.defaultText || desc.textContent;
+        desc.classList.remove('is-hidden');
+        completeMsg.classList.add('is-hidden');
+        completePanel?.classList.remove('is-visible');
+      }
+    };
+
+    const updateDailyCountdown = () => {
+      const countdown = document.getElementById('daily-countdown');
+      const until = parseInt(localStorage.getItem('dailyCompleteUntil') || '0', 10);
+      if (!countdown || !until) return;
+      const now = Date.now();
+      if (until <= now) {
+        localStorage.removeItem('dailyCompleteUntil');
+        localStorage.removeItem('dailyCompleted');
+        setDailyCompleteState(false);
+        if (dailyCountdownTimer) {
+          clearInterval(dailyCountdownTimer);
+          dailyCountdownTimer = null;
+        }
+        return;
+      }
+      const diff = until - now;
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      countdown.textContent = `${hours} h ${String(minutes).padStart(2, '0')} min`;
+    };
+
+    const startDailyCountdown = () => {
+      if (dailyCountdownTimer) {
+        clearInterval(dailyCountdownTimer);
+      }
+      updateDailyCountdown();
+      dailyCountdownTimer = setInterval(updateDailyCountdown, 60000);
+    };
+
     const applyDailyGoal = (steps, discount) => {
       const target = Number(steps) || 5000;
       const discountValue = Number(discount) || 10;
@@ -2831,6 +2986,10 @@
         }
         updateDailyProgressTo(savedSteps || 0);
       }
+    }
+    if (localStorage.getItem('dailyCompleted') === 'true') {
+      setDailyCompleteState(true);
+      startDailyCountdown();
     }
 
     const stampParams = new URLSearchParams(window.location.search);
