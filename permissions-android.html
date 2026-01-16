@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Health Connect Access</title>
+  <title>Přístup ke Health Connect</title>
   <style>
     :root {
       --blue-500: #1b6ff5;
@@ -307,8 +307,8 @@
       <div class="hero-icon" aria-hidden="true">
         <img src="images/a_health.png" alt="">
       </div>
-      <h1>Allow Dr. Max to access Health Connect?</h1>
-      <p>Choose what this app can read or write.</p>
+      <h1>Povolit Dr. Max přístup k Health Connect?</h1>
+      <p>Vyberte, co tato aplikace může číst nebo zapisovat.</p>
     </section>
 
     <div class="info-list">
@@ -318,7 +318,7 @@
             <path d="M4 7H10M14 7H20M4 12H8M12 12H20M4 17H10M14 17H20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </span>
-        Choose data you want this app to read or write.
+        Vyberte data, která má tato aplikace číst nebo zapisovat.
       </div>
       <div class="info-row">
         <span class="info-icon" aria-hidden="true">
@@ -327,7 +327,7 @@
             <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        If you give access, the app can read new data and the past 30 days.
+        Pokud přístup povolíte, aplikace může číst nová data i data za posledních 30 dní.
       </div>
       <div class="info-row">
         <span class="info-icon" aria-hidden="true">
@@ -337,8 +337,8 @@
           </svg>
         </span>
         <p>
-          <span class="line">You can learn how Dr. Max handles your data in their </span>
-          <span class="link-inline"><span class="link-text">privacy policy</span></span>
+          <span class="line">Jak Dr. Max nakládá s vašimi daty se dozvíte v </span>
+          <span class="link-inline"><span class="link-text">zásadách ochrany osobních údajů</span></span>
         </p>
       </div>
     </div>
@@ -350,7 +350,7 @@
             <path d="M6 12h4l2-4 2 8 2-4h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        Allow all
+        Povolit vše
       </div>
       <label class="toggle" aria-label="Allow all">
         <input type="checkbox" id="allow-all-toggle">
@@ -358,7 +358,7 @@
       </label>
     </div>
 
-    <div class="section-label">Allow “Dr. Max” to read</div>
+    <div class="section-label">Povolit „Dr. Max“ číst</div>
     <div class="permission-row">
       <div class="permission-item">
         <span class="perm-icon" aria-hidden="true">
@@ -366,7 +366,7 @@
             <path d="M6 17l3-6 3 3 4-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        Exercise
+        Cvičení
       </div>
       <label class="toggle permission-toggle">
         <input type="checkbox">
@@ -380,7 +380,7 @@
             <path d="M7 8h10M7 12h10M7 16h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </span>
-        Step count
+        Počet kroků
       </div>
       <label class="toggle permission-toggle">
         <input type="checkbox">
@@ -388,7 +388,7 @@
       </label>
     </div>
 
-    <div class="section-label">Allow “Dr. Max” to write</div>
+    <div class="section-label">Povolit „Dr. Max“ zapisovat</div>
     <div class="permission-row">
       <div class="permission-item">
         <span class="perm-icon" aria-hidden="true">
@@ -396,7 +396,7 @@
             <path d="M12 4v6m0 0 3-3m-3 3-3-3M5 20h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        Calories burned
+        Spálené kalorie
       </div>
       <label class="toggle permission-toggle">
         <input type="checkbox">
@@ -410,7 +410,7 @@
             <path d="M5 12h14M16 8l3 4-3 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        Distance
+        Vzdálenost
       </div>
       <label class="toggle permission-toggle">
         <input type="checkbox">
@@ -424,7 +424,7 @@
             <path d="M3 13h3l2-4 3 8 2-4h3l2 4h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </span>
-        Heart rate
+        Srdeční tep
       </div>
       <label class="toggle permission-toggle">
         <input type="checkbox">
@@ -433,27 +433,27 @@
     </div>
 
     <div class="footer-actions">
-      <button class="btn" type="button" id="deny-permissions">Cancel</button>
-      <button class="btn btn-primary" type="button" id="allow-permissions" disabled>Allow</button>
+      <button class="btn" type="button" id="deny-permissions">Zrušit</button>
+      <button class="btn btn-primary" type="button" id="allow-permissions" disabled>Povolit</button>
     </div>
   </main>
 
   <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
-    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Quick actions">
+    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Rychlé akce">
       <div class="press-menu-header">
-        <span>Quick actions</span>
+        <span>Rychlé akce</span>
         <button class="press-menu-close" type="button" data-action="close">×</button>
       </div>
       <div class="press-menu-row">
-        <span>Permissions</span>
+        <span>Oprávnění</span>
         <label class="press-menu-switch">
           <input type="checkbox" id="press-permissions-toggle">
           <span class="press-menu-slider"></span>
         </label>
       </div>
-      <button class="press-menu-btn" type="button" data-action="generate">Generate 3 stamps</button>
-      <button class="press-menu-btn" type="button" data-action="reset">Reset prototype</button>
-      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Lock screen</button>
+      <button class="press-menu-btn" type="button" data-action="generate">Vygenerovat 3 razítka</button>
+      <button class="press-menu-btn" type="button" data-action="reset">Resetovat prototyp</button>
+      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Uzamčená obrazovka</button>
     </div>
   </div>
   <script>

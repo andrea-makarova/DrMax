@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="cs">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lockscreen Notification</title>
+  <title>Oznámení na zamykací obrazovce</title>
   <style>
     :root {
       --text-dark: #2b2b2b;
@@ -52,6 +52,9 @@
       flex-direction: column;
       box-shadow: 0 12px 28px rgba(0,0,0,0.16);
       font-family: "Roboto", system-ui, -apple-system, sans-serif;
+    }
+    .notification + .notification {
+      margin-top: 16px;
     }
     .notif-card {
       width: 100%;
@@ -251,7 +254,7 @@
 <body>
   <main class="screen" role="img" aria-label="Lockscreen notification mockup">
     <h1 class="time">16:53</h1>
-    <p class="date">Wednesday, January 22</p>
+    <p class="date">Středa, 22. ledna</p>
 
     <section class="notification" aria-label="Dr. Max notification">
       <div class="notif-card">
@@ -259,7 +262,7 @@
           <div class="notif-app">
             <img class="notif-logo" src="images/Dr.Max.svg" alt="Dr. Max logo">
             <span class="notif-app-name">Dr. Max</span>
-            <span class="notif-time">now</span>
+            <span class="notif-time">právě teď</span>
           </div>
           <span class="notif-chevron" aria-hidden="true">
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
@@ -267,32 +270,51 @@
             </svg>
           </span>
         </div>
-        <p class="notif-title">Congrats!</p>
-        <p class="notif-body">You reached your daily goal! Your stamp is waiting for you in the app.</p>
+        <p class="notif-title">Skvělé!</p>
+        <p class="notif-body">Splnili jste denní cíl! Razítko na vás čeká v aplikaci.</p>
       </div>
       <div class="notif-actions">
-        <button class="action" type="button" onclick="localStorage.setItem('notificationFlow','true');localStorage.setItem('notificationStampPending','true');window.location.href='index.html?addStamp=1#stamps-card'">Open the app</button>
+        <button class="action" type="button" onclick="localStorage.setItem('notificationFlow','true');localStorage.setItem('notificationStampPending','true');window.location.href='index.html?addStamp=1#stamps-card'">Otevřít aplikaci</button>
         <span class="action-divider" aria-hidden="true"></span>
-        <button class="action" type="button">Dismiss</button>
+        <button class="action" type="button">Zavřít</button>
+      </div>
+    </section>
+
+    <section class="notification" aria-label="Odměna připravena">
+      <div class="notif-card">
+        <div class="notif-header">
+          <div class="notif-app">
+            <img class="notif-logo" src="images/Dr.Max.svg" alt="Dr. Max logo">
+            <span class="notif-app-name">Dr. Max</span>
+            <span class="notif-time">právě teď</span>
+          </div>
+          <span class="notif-chevron" aria-hidden="true">
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <p class="notif-title">Odměna je připravena 🎁</p>
+        <p class="notif-body">Nasbírali jste všechna razítka. Vyzvedněte si slevový kupón.</p>
       </div>
     </section>
   </main>
   <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
-    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Quick actions">
+    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Rychlé akce">
       <div class="press-menu-header">
-        <span>Quick actions</span>
+        <span>Rychlé akce</span>
         <button class="press-menu-close" type="button" data-action="close">×</button>
       </div>
       <div class="press-menu-row">
-        <span>Permissions</span>
+        <span>Oprávnění</span>
         <label class="press-menu-switch">
           <input type="checkbox" id="press-permissions-toggle">
           <span class="press-menu-slider"></span>
         </label>
       </div>
-      <button class="press-menu-btn" type="button" data-action="generate">Generate 3 stamps</button>
-      <button class="press-menu-btn" type="button" data-action="reset">Reset prototype</button>
-      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Lock screen</button>
+      <button class="press-menu-btn" type="button" data-action="generate">Vygenerovat 3 razítka</button>
+      <button class="press-menu-btn" type="button" data-action="reset">Resetovat prototyp</button>
+      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Uzamčená obrazovka</button>
     </div>
   </div>
   <script>
@@ -364,7 +386,7 @@
           if (action === 'reset') {
             localStorage.clear();
             localStorage.setItem('bonusRewardStage', 'first');
-            localStorage.setItem('bonusRewardTitle', 'Bonus Reward');
+            localStorage.setItem('bonusRewardTitle', 'Bonusová odměna');
             localStorage.setItem('bonusRewardText', '10% off Dr. Max products.');
             window.location.href = 'app-home.html';
             return;
