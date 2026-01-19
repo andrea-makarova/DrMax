@@ -206,7 +206,7 @@
       display: none;
       align-items: flex-end;
       justify-content: center;
-      z-index: 9999;
+      z-index: 12000;
     }
     .press-menu-overlay.open { display: flex; }
     .press-menu {
@@ -249,9 +249,10 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .press-menu-btn.primary {
+    .press-menu-btn.danger {
       background: #47850a;
       color: #ffffff;
+      box-shadow: 0 8px 18px rgba(53, 107, 9, 0.25);
     }
     .press-menu-row {
       display: flex;
@@ -452,10 +453,10 @@
           <span class="press-menu-slider"></span>
         </label>
       </div>
-      <button class="press-menu-btn" type="button" data-action="generate">Vygenerovat 3 razítka</button>
-      <button class="press-menu-btn" type="button" data-action="reset">Resetovat prototyp</button>
-      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Uzamčená obrazovka</button>
-    </div>
+            <button class="press-menu-btn" type="button" data-action="lockscreen-stamp">Notifikace razítko</button>
+      <button class="press-menu-btn" type="button" data-action="lockscreen-reward">Notifikace odměna</button>
+      <button class="press-menu-btn danger" type="button" data-action="reset">Resetovat prototyp</button>
+</div>
   </div>
   <script>
     const allowAll = document.getElementById('allow-all-toggle');
@@ -591,15 +592,15 @@
             window.location.href = 'app-home.html';
             return;
           }
-          if (action === 'lockscreen') {
+          if (action === 'lockscreen-stamp') {
+            window.location.href = 'lockscreen-notification-stamp.html';
+            return;
+          }
+          if (action === 'lockscreen-reward') {
             window.location.href = 'lockscreen-notification.html';
             return;
           }
-          if (action === 'generate') {
-            localStorage.setItem('menuAction', action);
-            window.location.href = 'index.html';
-          }
-        });
+                  });
       });
       permissionsToggle?.addEventListener('change', () => {
         const next = permissionsToggle.checked;

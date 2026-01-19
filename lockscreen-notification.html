@@ -156,7 +156,7 @@
       display: none;
       align-items: flex-end;
       justify-content: center;
-      z-index: 9999;
+      z-index: 12000;
     }
     .press-menu-overlay.open { display: flex; }
     .press-menu {
@@ -199,9 +199,10 @@
       font-weight: 600;
       cursor: pointer;
     }
-    .press-menu-btn.primary {
+    .press-menu-btn.danger {
       background: #47850a;
       color: #ffffff;
+      box-shadow: 0 8px 18px rgba(53, 107, 9, 0.25);
     }
     .press-menu-row {
       display: flex;
@@ -257,30 +258,6 @@
     <h1 class="time">16:53</h1>
     <p class="date">Středa, 22. ledna</p>
 
-    <section class="notification" aria-label="Dr. Max notification">
-      <div class="notif-card">
-        <div class="notif-header">
-          <div class="notif-app">
-            <img class="notif-logo" src="images/Dr.Max.svg" alt="Dr. Max logo">
-            <span class="notif-app-name">Dr. Max</span>
-            <span class="notif-time">právě teď</span>
-          </div>
-          <span class="notif-chevron" aria-hidden="true">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-              <path d="M1 5l4-4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-        </div>
-        <p class="notif-title">Skvělé!</p>
-        <p class="notif-body">Splnili jste denní cíl! Razítko na vás čeká v aplikaci.</p>
-      </div>
-      <div class="notif-actions">
-        <button class="action" type="button" onclick="localStorage.setItem('notificationFlow','true');localStorage.setItem('notificationStampPending','true');window.location.href='index.html?addStamp=1'">Otevřít aplikaci</button>
-        <span class="action-divider" aria-hidden="true"></span>
-        <button class="action" type="button">Zavřít</button>
-      </div>
-    </section>
-
     <section class="notification" aria-label="Odměna připravena">
       <div class="notif-card">
         <div class="notif-header">
@@ -298,6 +275,11 @@
         <p class="notif-title">Odměna je připravena 🎁</p>
         <p class="notif-body">Nasbírali jste všechna razítka. Vyzvedněte si slevový kupón.</p>
       </div>
+      <div class="notif-actions">
+        <button class="action" type="button" onclick="(() => { const manual = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10); const bonus = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10); const notif = parseInt(localStorage.getItem('notificationStampCount') || '0', 10); const stored = parseInt(localStorage.getItem('stampFillCount') || '0', 10); const current = Math.max(stored, manual + bonus + notif); const missing = Math.max(0, 8 - current); const target = current + missing; localStorage.setItem('notificationFlow','true'); localStorage.setItem('notificationStampPending','true'); localStorage.setItem('notificationTargetFill', String(target)); window.location.href='index.html'; })()">Otevřít aplikaci</button>
+        <span class="action-divider" aria-hidden="true"></span>
+        <button class="action" type="button">Zavřít</button>
+      </div>
     </section>
   </main>
   <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
@@ -313,10 +295,10 @@
           <span class="press-menu-slider"></span>
         </label>
       </div>
-      <button class="press-menu-btn" type="button" data-action="generate">Vygenerovat 3 razítka</button>
-      <button class="press-menu-btn" type="button" data-action="reset">Resetovat prototyp</button>
-      <button class="press-menu-btn primary" type="button" data-action="lockscreen">Uzamčená obrazovka</button>
-    </div>
+            <button class="press-menu-btn" type="button" data-action="lockscreen-stamp">Notifikace razítko</button>
+      <button class="press-menu-btn" type="button" data-action="lockscreen-reward">Notifikace odměna</button>
+      <button class="press-menu-btn danger" type="button" data-action="reset">Resetovat prototyp</button>
+</div>
   </div>
   <script>
     (() => {
@@ -410,15 +392,15 @@
             window.location.href = 'app-home.html';
             return;
           }
-          if (action === 'lockscreen') {
+          if (action === 'lockscreen-stamp') {
+            window.location.href = 'lockscreen-notification-stamp.html';
+            return;
+          }
+          if (action === 'lockscreen-reward') {
             window.location.href = 'lockscreen-notification.html';
             return;
           }
-          if (action === 'generate') {
-            localStorage.setItem('menuAction', action);
-            window.location.href = 'index.html';
-          }
-        });
+                  });
       });
       permissionsToggle?.addEventListener('change', () => {
         const next = permissionsToggle.checked;
