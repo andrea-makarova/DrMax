@@ -41,12 +41,12 @@
       font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif !important;
     }
     body.tutorial-active {
-      overflow: hidden;
+      overflow: auto;
     }
     .page {
       max-width: 1080px;
       margin: 0 auto;
-      padding: 70px 24px 140px;
+      padding: 44px 24px 140px;
     }
     .top-nav {
       position: fixed;
@@ -659,6 +659,9 @@
       will-change: top, left, width, height, border-radius;
       pointer-events: none;
     }
+    .tutorial-active .page {
+      padding-bottom: 300px;
+    }
     .tutorial-card {
       position: fixed;
       max-width: none;
@@ -756,6 +759,13 @@
       gap: 10px;
       margin: 10px 0 14px;
       text-align: left;
+    }
+    .daily-info-text {
+      white-space: normal;
+    }
+    .daily-info-avg {
+      display: inline-block;
+      white-space: nowrap;
     }
     .daily-highlight {
       background: #f0f1f5;
@@ -957,6 +967,12 @@
     .permission-stamp i {
       font-size: 18px;
       color: #2f6f0a;
+    }
+    .permission-stamp[data-stamp="8"] i {
+      color: #c0c4ce;
+    }
+    .permission-stamp.pop {
+      animation: stampBounce 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2);
     }
     .permission-drawer__note {
       margin: 0 0 18px;
@@ -1381,25 +1397,7 @@
       </div>
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
-      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;">
-        <div style="width:120px;position:relative;flex-shrink:0;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88" fill="none">
-<path d="M44.9279 59.5715C44.8309 54.0181 46.8772 48.6548 50.6165 44.6615C54.3558 40.6682 59.4819 38.3719 64.867 38.2779C70.2521 38.1839 75.4551 40.2999 79.3315 44.1603C83.2079 48.0206 85.4401 53.3092 85.5371 58.8626C85.634 64.416 83.5877 69.7793 79.8484 73.7726C76.1091 77.7659 70.9831 80.0622 65.598 80.1562C60.2128 80.2502 55.0098 78.1342 51.1334 74.2739C47.257 70.4135 45.0248 65.1249 44.9279 59.5715ZM69.7466 47.9382C68.9181 47.3418 67.7906 47.3906 67.0124 48.0587L55.8945 57.5619C55.1578 58.1856 54.88 59.2378 55.2205 60.1627C55.5611 61.0877 56.418 61.6982 57.3768 61.6815L62.0159 61.6005L59.8815 67.805C59.546 68.7854 59.8896 69.8849 60.7184 70.4959C61.5471 71.1069 62.6744 71.0435 63.4526 70.3754L74.5705 60.8722C75.3071 60.2485 75.585 59.1964 75.2444 58.2714C74.9039 57.3464 74.0469 56.7359 73.0881 56.7527L68.4491 56.8336L70.5834 50.6291C70.9189 49.6487 70.5753 48.5492 69.7466 47.9382Z" fill="url(#paint0_linear_49145_52454)"/>
-<path d="M37.5065 14.1882L39.6741 17.1613L41.7366 14.1144C45.1739 9.02162 50.7902 5.94176 56.8111 5.83666C67.1749 5.65576 75.7301 14.1755 75.9166 24.8632L75.9232 25.2413C75.9679 27.8005 75.5342 30.4263 74.72 33.0732C71.6242 31.8763 68.2562 31.2369 64.7452 31.2982C49.7987 31.5591 37.8906 44.2761 38.1597 59.6896C38.232 63.8338 39.175 67.7592 40.8162 71.2796C40.7457 71.2809 40.6893 71.2818 40.6188 71.2831C38.4332 71.3212 36.2642 70.69 34.5057 69.3389C24.0711 61.4192 4.01385 42.8165 3.72907 26.5014L3.72247 26.1234C3.53592 15.4357 11.7885 6.62254 22.1523 6.44164C28.1732 6.33654 33.8936 9.21852 37.5065 14.1882Z" fill="url(#paint1_linear_49145_52454)"/>
-<defs>
-<linearGradient id="paint0_linear_49145_52454" x1="44.9279" y1="59.5715" x2="85.5371" y2="58.8626" gradientUnits="userSpaceOnUse">
-<stop stop-color="#E4002B"/>
-<stop offset="1" stop-color="#FD5553"/>
-</linearGradient>
-<linearGradient id="paint1_linear_49145_52454" x1="39.4817" y1="6.13915" x2="40.6188" y2="71.2831" gradientUnits="userSpaceOnUse">
-<stop stop-color="#95DA39"/>
-<stop offset="1" stop-color="#5DA20A"/>
-</linearGradient>
-</defs>
-</svg>
-        </div>
-     
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;"></div>
       <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card" style="margin-top:20px;">
         <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
           <div class="flex items-center justify-between gap-3">
@@ -1503,15 +1501,7 @@
       </div>
     </section>
 
-    <section class="mb-12" id="rewards-section">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <h2 style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Moje odměny</h2>
-      </div>
-      <div class="rewards-carousel">
-        <!-- Daily steps stamp rewards -->
-        <div class="reward-empty" style="padding:6px 0;color:#6e6e73;font-size:14px;font-weight:600;">Odměny se zde zobrazí po sesbírání všech razítek.</div>
-      </div>
-    </section>
+    
 
 
   </main>
@@ -1558,7 +1548,7 @@
         <span class="daily-info-icon" aria-hidden="true">
           <img src="images/lightbulb-regular-full.svg" alt="">
         </span>
-        <span>Za poslední měsíc jste nachodila průměrně <strong>4 434 kroků</strong> za den.</span>
+        <span class="daily-info-text">Za poslední měsíc jste nachodila průměrně <strong class="daily-info-avg">4 434 kroků</strong> za den.</span>
       </div>
       <div class="daily-modal-options">
         <button class="daily-option" type="button" data-steps="4500" data-discount="5">
@@ -1621,7 +1611,6 @@
         <span class="tutorial-dot" data-step="0"></span>
         <span class="tutorial-dot" data-step="1"></span>
         <span class="tutorial-dot" data-step="2"></span>
-        <span class="tutorial-dot" data-step="3"></span>
       </div>
     </div>
   </div>
@@ -1647,14 +1636,16 @@
       <p class="permission-drawer__desc">Za to, že jste si vybrali cíl a zapojili se do hry, dostáváte rovnou 4 razítka.</p>
       <p class="permission-drawer__highlight" id="permission-drawer-remaining">Zbývají už jen 4 razítka k odměně</p>
       <div class="permission-stamp-grid" aria-label="Průběh">
-        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
-        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
-        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
-        <span class="permission-stamp filled"><i class="fa-solid fa-check"></i></span>
-        <span class="permission-stamp"></span>
-        <span class="permission-stamp"></span>
-        <span class="permission-stamp"></span>
-        <span class="permission-stamp"></span>
+        <span class="permission-stamp" data-stamp="1"></span>
+        <span class="permission-stamp" data-stamp="2"></span>
+        <span class="permission-stamp" data-stamp="3"></span>
+        <span class="permission-stamp" data-stamp="4"></span>
+        <span class="permission-stamp" data-stamp="5"></span>
+        <span class="permission-stamp" data-stamp="6"></span>
+        <span class="permission-stamp" data-stamp="7"></span>
+        <span class="permission-stamp" data-stamp="8">
+          <i class="fa-solid fa-gift"></i>
+        </span>
       </div>
       <p class="permission-drawer__note">Další razítka získáte postupně za aktivní dny.</p>
       <button class="drawer-cta" type="button" id="permission-drawer-cta">Jdu sbírat další razítka</button>
@@ -1965,9 +1956,7 @@
       const label = getStampLabel(remaining);
       const text = `${verb} už jen ${remaining} ${label} k odměně`;
       const title = document.getElementById('stamps-remaining-title');
-      const drawerText = document.getElementById('permission-drawer-remaining');
       if (title) title.textContent = text;
-      if (drawerText) drawerText.textContent = text;
     };
 
     const updateStampReadyState = () => {
@@ -1989,65 +1978,9 @@
       updateRemainingStamps();
     };
 
-    const scrollToStampsCard = () => {
-      const target = document.getElementById('stamps-card');
-      if (!target) return;
-      const offset = 16;
-      const scrollRoot = document.scrollingElement || document.documentElement;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      requestAnimationFrame(() => {
-        target.scrollIntoView({ behavior: 'auto', block: 'start' });
-        window.scrollTo({ top, behavior: 'auto' });
-        scrollRoot.scrollTop = top;
-      });
-      setTimeout(() => {
-        const retryTop = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: retryTop, behavior: 'auto' });
-        scrollRoot.scrollTop = retryTop;
-      }, 200);
-    };
+    const scrollToStampsCard = () => {};
 
-    const forceScrollToStampsCard = (behavior = 'smooth') => {
-      const target = document.getElementById('stamps-card');
-      if (!target) return;
-      const offset = 16;
-      const root = document.documentElement;
-      const body = document.body;
-      const originalBehavior = root.style.scrollBehavior;
-      const originalOverflow = body.style.overflow;
-      root.style.scrollBehavior = behavior;
-      body.style.overflow = 'auto';
-
-      const applyScroll = () => {
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior });
-        root.scrollTop = top;
-        body.scrollTop = top;
-        target.scrollIntoView({ block: 'start', behavior });
-      };
-
-      let attempts = 0;
-      const maxAttempts = 8;
-      const tryScroll = () => {
-        applyScroll();
-        const rect = target.getBoundingClientRect();
-        const inView = rect.top >= 0 && rect.top <= 40;
-        attempts += 1;
-        if (!inView && attempts < maxAttempts) {
-          setTimeout(tryScroll, 150);
-        } else {
-          root.style.scrollBehavior = originalBehavior;
-          body.style.overflow = originalOverflow;
-        }
-      };
-      tryScroll();
-      if (location.hash !== '#stamps-card') {
-        location.hash = 'stamps-card';
-        setTimeout(() => {
-          history.replaceState({}, '', window.location.pathname + window.location.search);
-        }, 200);
-      }
-    };
+    const forceScrollToStampsCard = () => {};
 
     const addStamp = (options = {}) => {
       const { animate = true } = options;
@@ -2115,6 +2048,31 @@
       if (!permissionDrawer) return;
       permissionDrawer.classList.add('open');
       document.body.classList.add('modal-open');
+      const drawerText = document.getElementById('permission-drawer-remaining');
+      if (drawerText) {
+        drawerText.textContent = 'Zbývají už jen 4 razítka k odměně';
+      }
+      const stamps = Array.from(permissionDrawer.querySelectorAll('.permission-stamp'));
+      stamps.forEach((stamp) => {
+        stamp.classList.remove('filled', 'pop');
+        if (!stamp.querySelector('i') && stamp.dataset.stamp !== '8') {
+          stamp.innerHTML = '';
+        }
+      });
+      setTimeout(() => {
+        const toFill = stamps.filter((stamp) => stamp.dataset.stamp && Number(stamp.dataset.stamp) <= 4);
+        toFill.forEach((stamp, index) => {
+          setTimeout(() => {
+            stamp.classList.add('filled', 'pop');
+            if (!stamp.querySelector('i')) {
+              const icon = document.createElement('i');
+              icon.className = 'fa-solid fa-check';
+              stamp.appendChild(icon);
+            }
+            setTimeout(() => stamp.classList.remove('pop'), 600);
+          }, index * 280);
+        });
+      }, 420);
     };
     const closePermissionDrawer = () => {
       if (!permissionDrawer) return;
@@ -2125,19 +2083,19 @@
       document.body.dataset.suppressReady = '';
       document.body.dataset.stampBaseline = '';
       closePermissionDrawer();
-      forceScrollToStampsCard();
       if (localStorage.getItem('pendingPermissionStamps') === 'true') {
         const currentFill = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
         const needed = Math.max(0, 4 - currentFill);
         if (needed > 0) {
           setTimeout(() => {
-            addStampsSequential(needed, 500);
+            for (let i = 0; i < needed; i += 1) {
+              addStamp({ animate: false });
+            }
           }, 300);
         }
         setTimeout(() => {
-          ensureMinimumStamps(4);
           localStorage.removeItem('pendingPermissionStamps');
-        }, needed * 500 + 600);
+        }, 420);
       }
       const dailyProgress = document.getElementById('daily-progress');
       const savedGoal = Number(localStorage.getItem('dailyGoalSteps') || dailyProgress?.dataset.target || '5000');
@@ -3280,12 +3238,6 @@
         target: '#bonus-reward-card',
         step: '2-3',
         text: 'Tady uvidíte odměnu, kterou získáte po nasbírání všech razítek.'
-      },
-      {
-        id: 'reward',
-        target: '#rewards-section',
-        step: '2-4',
-        text: 'A takhle to bude vypadat, když je odměna připravená.'
       }
     ];
 
@@ -3338,7 +3290,8 @@
         const highlightRadius = Math.max(24, targetRadius + pad);
         tutorialHighlight.style.borderRadius = `${highlightRadius}px`;
         const extraOffset = 0;
-        tutorialHighlight.style.top = `${Math.max(0, rect.top - pad - extraOffset)}px`;
+        const desiredTop = Math.max(0, rect.top - pad - extraOffset);
+        tutorialHighlight.style.top = `${desiredTop}px`;
         tutorialHighlight.style.left = `${Math.max(0, rect.left - pad)}px`;
         tutorialHighlight.style.width = `${Math.max(0, rect.width + pad * 2)}px`;
         tutorialHighlight.style.height = `${Math.max(0, rect.height + pad * 2)}px`;
@@ -3348,7 +3301,7 @@
         const cardHeight = tutorialCard.offsetHeight || 110;
         let cardTop = rect.top - cardHeight - 12;
         if (cardTop < 12) {
-          cardTop = 12;
+          cardTop = rect.bottom + 12;
         }
         const highlightTop = Math.max(0, rect.top - pad);
         if (cardTop + cardHeight > highlightTop - 6) {
@@ -3367,20 +3320,20 @@
         tutorialCard.style.left = `${cardLeft}px`;
       };
 
-      const prevBodyOverflow = document.body.style.overflow;
-      const prevHtmlOverflow = document.documentElement.style.overflow;
-      document.body.style.overflow = 'auto';
-      document.documentElement.style.overflow = 'auto';
-      target.scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'center' });
       clearTimeout(tutorialScrollTimer);
-      tutorialScrollTimer = setTimeout(() => {
-        document.body.style.overflow = prevBodyOverflow;
-        document.documentElement.style.overflow = prevHtmlOverflow;
+      if (tutorialHighlight) tutorialHighlight.style.opacity = '0';
+      target.scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'center' });
+      let lastScrollTop = window.scrollY;
+      const settle = () => {
+        const moved = Math.abs(window.scrollY - lastScrollTop) > 4;
+        lastScrollTop = window.scrollY;
         applyPosition();
-        if (!prefersReduce) {
-          setTimeout(() => applyPosition(), 220);
+        if (tutorialHighlight) tutorialHighlight.style.opacity = '1';
+        if (moved && !prefersReduce) {
+          tutorialScrollTimer = setTimeout(settle, 180);
         }
-      }, prefersReduce ? 0 : 260);
+      };
+      tutorialScrollTimer = setTimeout(settle, prefersReduce ? 0 : 260);
     };
 
     const showTutorialStep = (index) => {
