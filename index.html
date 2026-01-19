@@ -645,34 +645,34 @@
       z-index: 10080;
       display: none;
       pointer-events: none;
+      background: transparent;
     }
     .tutorial-overlay.is-visible {
       display: block;
-    }
-    .tutorial-mask {
-      position: fixed;
-      background: rgba(13, 21, 34, 0.12);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      pointer-events: none;
     }
     .tutorial-highlight {
       position: fixed;
       border-radius: 32px;
       border: none;
+      box-shadow: 0 0 0 9999px rgba(13, 21, 34, 0.35);
       transition: all 320ms ease-out;
       will-change: top, left, width, height, border-radius;
       pointer-events: none;
     }
     .tutorial-card {
       position: fixed;
-      max-width: 260px;
+      max-width: none;
       background: #3f4a55;
       color: #ffffff;
       border-radius: 12px;
       padding: 12px 14px;
       box-shadow: 0 10px 22px rgba(0,0,0,0.25);
       pointer-events: auto;
+      transition: top 320ms ease-out, left 320ms ease-out;
+      will-change: top, left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
     .tutorial-stepper {
       position: fixed;
@@ -720,9 +720,11 @@
       display: none;
     }
     .tutorial-text {
-      font-size: 13px;
-      line-height: 18px;
-      margin: 0 0 10px;
+      font-size: 17px;
+      line-height: 22px;
+      margin: 0;
+      text-align: left;
+      flex: 1;
     }
     .tutorial-actions {
       display: flex;
@@ -1494,7 +1496,7 @@
             <i class="fa-solid fa-gift" style="font-size:18px;"></i>
           </div>
           <div>
-            <p id="bonus-reward-title" style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Bonusová odměna</p>
+            <p id="bonus-reward-title" style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Cílová odměna</p>
             <p class="muted" id="bonus-reward-text" style="margin:2px 0 0;color:#ffffff;">10% sleva na produkty Dr. Max.</p>
           </div>
         </div>
@@ -1591,7 +1593,7 @@
         <i class="fa-solid fa-gift" style="font-size:30px;color:#ffffff;"></i>
       </div>
       <h3 id="bonus-modal-title">Skvělé!</h3>
-      <p id="bonus-modal-desc">Nasbírali jste 8 razítek. Vaše bonusová odměna je 10% sleva.</p>
+      <p id="bonus-modal-desc">Nasbírali jste 8 razítek. Vaše cílová odměna je 10% sleva.</p>
       <div style="margin-bottom:8px;">
         <span class="bonus-code">
           MOVE10
@@ -1605,10 +1607,6 @@
   </div>
 
   <div id="tutorial-overlay" class="tutorial-overlay" aria-hidden="true">
-    <div class="tutorial-mask" data-mask="top"></div>
-    <div class="tutorial-mask" data-mask="left"></div>
-    <div class="tutorial-mask" data-mask="right"></div>
-    <div class="tutorial-mask" data-mask="bottom"></div>
     <div class="tutorial-highlight" id="tutorial-highlight"></div>
     <div class="tutorial-card" id="tutorial-card">
       <div class="tutorial-step" id="tutorial-step">2-1</div>
@@ -1689,7 +1687,7 @@
     if (localStorage.getItem('bonusRewardSaved') !== 'true') {
       localStorage.setItem('bonusRewardStage', 'first');
       localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-      if (bonusTitle) bonusTitle.textContent = 'Bonusová odměna';
+      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
       if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
       localStorage.removeItem('bonusRewardSavedText');
     }
@@ -1697,7 +1695,7 @@
       localStorage.removeItem('bonusRewardSaved');
     }
     if (!localStorage.getItem('bonusRewardTitle')) {
-      localStorage.setItem('bonusRewardTitle', 'Bonusová odměna');
+      localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
     }
     if (localStorage.getItem('bonusRewardStage') === 'second') {
       localStorage.setItem('bonusRewardText', '15% sleva na produkty Dr. Max');
@@ -1705,7 +1703,7 @@
       localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
     }
     if (bonusTitle) {
-      bonusTitle.textContent = localStorage.getItem('bonusRewardTitle') || 'Bonusová odměna';
+      bonusTitle.textContent = localStorage.getItem('bonusRewardTitle') || 'Cílová odměna';
     }
     if (bonusText) {
       bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
@@ -1927,10 +1925,10 @@
       document.body.dataset.bonusPending = 'true';
       const bonusTitle = document.getElementById('bonus-reward-title');
       const bonusText = document.getElementById('bonus-reward-text');
-      if (bonusTitle) bonusTitle.textContent = 'Bonusová odměna';
+      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
       if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
       localStorage.setItem('bonusRewardStage', 'first');
-      localStorage.setItem('bonusRewardTitle', 'Bonusová odměna');
+      localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
       localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
       setTimeout(() => {
         launchConfetti();
@@ -2575,7 +2573,7 @@
           </div>
         </div>
         <div style="text-align:center; margin-bottom:18px;">
-          <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Bonusová odměna</p>
+          <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Cílová odměna</p>
           <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px; color:#6e6e73;">10% sleva na produkty Dr. Max.</p>
         </div>
         <div style="display:flex;justify-content:center;margin-bottom:10px;">
@@ -2647,7 +2645,7 @@
       const bonusDesc = document.getElementById('bonus-modal-desc');
       if (bonusDesc) {
         const rewardText = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
-        bonusDesc.textContent = `Nasbírali jste 8 razítek. Vaše bonusová odměna je ${rewardText.replace(/\.$/, '')}.`;
+        bonusDesc.textContent = `Nasbírali jste 8 razítek. Vaše cílová odměna je ${rewardText.replace(/\.$/, '')}.`;
       }
       modal.dataset.open = 'true';
       modal.classList.add('visible');
@@ -2669,10 +2667,10 @@
       localStorage.setItem('bonusRewardSavedText', currentRewardText);
       if (currentStage !== 'second') {
         localStorage.setItem('bonusRewardStage', 'second');
-        localStorage.setItem('bonusRewardTitle', 'Bonusová odměna');
+        localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
         localStorage.setItem('bonusRewardText', '15% sleva na produkty Dr. Max');
       }
-      if (bonusTitle) bonusTitle.textContent = 'Bonusová odměna';
+      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
       if (bonusText) {
         bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
       }
@@ -3253,7 +3251,7 @@
     if (localStorage.getItem('bonusRewardSaved') !== 'true' && filledCount === 0) {
       localStorage.setItem('bonusRewardStage', 'first');
       localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-      if (bonusTitle) bonusTitle.textContent = 'Bonusová odměna';
+      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
       if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
     }
     if (localStorage.getItem('bonusRewardSaved') === 'true') {
@@ -3281,7 +3279,7 @@
         id: 'bonus',
         target: '#bonus-reward-card',
         step: '2-3',
-        text: 'Bonusová odměna čeká pod kartou razítek.'
+        text: 'Tady uvidíte odměnu, kterou získáte po nasbírání všech razítek.'
       },
       {
         id: 'reward',
@@ -3292,14 +3290,8 @@
     ];
 
     let tutorialIndex = 0;
+    let tutorialScrollTimer = null;
     const tutorialOverlay = document.getElementById('tutorial-overlay');
-    const tutorialMaskHole = document.getElementById('tutorial-mask-hole');
-    const tutorialMasks = {
-      top: document.querySelector('.tutorial-mask[data-mask="top"]'),
-      left: document.querySelector('.tutorial-mask[data-mask="left"]'),
-      right: document.querySelector('.tutorial-mask[data-mask="right"]'),
-      bottom: document.querySelector('.tutorial-mask[data-mask="bottom"]')
-    };
     const tutorialHighlight = document.getElementById('tutorial-highlight');
     const tutorialCard = document.getElementById('tutorial-card');
     const tutorialStepLabel = document.getElementById('tutorial-step');
@@ -3338,85 +3330,57 @@
     const positionTutorial = (step) => {
       const target = document.querySelector(step.target);
       if (!target || !tutorialHighlight || !tutorialCard) return;
+      const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const applyPosition = () => {
+        const rect = target.getBoundingClientRect();
+        const pad = step.id === 'stamps' ? 8 : 8;
+        const targetRadius = parseFloat(window.getComputedStyle(target).borderRadius || '0') || 0;
+        const highlightRadius = Math.max(24, targetRadius + pad);
+        tutorialHighlight.style.borderRadius = `${highlightRadius}px`;
+        const extraOffset = 0;
+        tutorialHighlight.style.top = `${Math.max(0, rect.top - pad - extraOffset)}px`;
+        tutorialHighlight.style.left = `${Math.max(0, rect.left - pad)}px`;
+        tutorialHighlight.style.width = `${Math.max(0, rect.width + pad * 2)}px`;
+        tutorialHighlight.style.height = `${Math.max(0, rect.height + pad * 2)}px`;
+
+        const cardWidth = Math.max(0, window.innerWidth - 24);
+        tutorialCard.style.width = `${cardWidth}px`;
+        const cardHeight = tutorialCard.offsetHeight || 110;
+        let cardTop = rect.top - cardHeight - 12;
+        if (cardTop < 12) {
+          cardTop = 12;
+        }
+        const highlightTop = Math.max(0, rect.top - pad);
+        if (cardTop + cardHeight > highlightTop - 6) {
+          cardTop = Math.max(12, highlightTop - cardHeight - 12);
+        }
+        if (tutorialStepper) {
+          const stepperRect = tutorialStepper.getBoundingClientRect();
+          const stepperTop = stepperRect.top;
+          if (cardTop + cardHeight > stepperTop - 12) {
+            cardTop = Math.max(12, stepperTop - cardHeight - 12);
+          }
+        }
+        let cardLeft = 12;
+        if (cardTop < 12) cardTop = 12;
+        tutorialCard.style.top = `${cardTop}px`;
+        tutorialCard.style.left = `${cardLeft}px`;
+      };
+
       const prevBodyOverflow = document.body.style.overflow;
       const prevHtmlOverflow = document.documentElement.style.overflow;
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
-      target.scrollIntoView({ behavior: 'auto', block: 'center' });
-      setTimeout(() => {
+      target.scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'center' });
+      clearTimeout(tutorialScrollTimer);
+      tutorialScrollTimer = setTimeout(() => {
         document.body.style.overflow = prevBodyOverflow;
         document.documentElement.style.overflow = prevHtmlOverflow;
-      }, 80);
-      const rect = target.getBoundingClientRect();
-      const pad = 8;
-      const targetRadius = parseFloat(window.getComputedStyle(target).borderRadius || '0') || 0;
-      const highlightRadius = Math.max(24, targetRadius + pad);
-      tutorialHighlight.style.borderRadius = `${highlightRadius}px`;
-      tutorialHighlight.style.top = `${Math.max(8, rect.top - pad)}px`;
-      tutorialHighlight.style.left = `${Math.max(8, rect.left - pad)}px`;
-      tutorialHighlight.style.width = `${Math.max(0, rect.width + pad * 2)}px`;
-      tutorialHighlight.style.height = `${Math.max(0, rect.height + pad * 2)}px`;
-      const highlightTop = Math.max(0, rect.top - pad);
-      const highlightLeft = Math.max(0, rect.left - pad);
-      const highlightWidth = Math.max(0, rect.width + pad * 2);
-      const highlightHeight = Math.max(0, rect.height + pad * 2);
-      const highlightRight = highlightLeft + highlightWidth;
-      const highlightBottom = highlightTop + highlightHeight;
-      if (tutorialMasks.top) {
-        tutorialMasks.top.style.top = '0';
-        tutorialMasks.top.style.left = '0';
-        tutorialMasks.top.style.right = '0';
-        tutorialMasks.top.style.height = `${highlightTop}px`;
-      }
-      if (tutorialMasks.left) {
-        tutorialMasks.left.style.top = `${highlightTop}px`;
-        tutorialMasks.left.style.left = '0';
-        tutorialMasks.left.style.width = `${highlightLeft}px`;
-        tutorialMasks.left.style.height = `${highlightHeight}px`;
-      }
-      if (tutorialMasks.right) {
-        tutorialMasks.right.style.top = `${highlightTop}px`;
-        tutorialMasks.right.style.right = '0';
-        tutorialMasks.right.style.left = `${highlightRight}px`;
-        tutorialMasks.right.style.height = `${highlightHeight}px`;
-      }
-      if (tutorialMasks.bottom) {
-        tutorialMasks.bottom.style.top = `${highlightBottom}px`;
-        tutorialMasks.bottom.style.left = '0';
-        tutorialMasks.bottom.style.right = '0';
-        tutorialMasks.bottom.style.bottom = '0';
-      }
-      if (tutorialMaskHole) {
-        const r = Math.min(highlightRadius, highlightWidth / 2, highlightHeight / 2);
-        tutorialMaskHole.setAttribute('x', `${highlightLeft}`);
-        tutorialMaskHole.setAttribute('y', `${highlightTop}`);
-        tutorialMaskHole.setAttribute('width', `${highlightWidth}`);
-        tutorialMaskHole.setAttribute('height', `${highlightHeight}`);
-        tutorialMaskHole.setAttribute('rx', `${r}`);
-        tutorialMaskHole.setAttribute('ry', `${r}`);
-      }
-
-      const cardWidth = tutorialCard.offsetWidth || 220;
-      const cardHeight = tutorialCard.offsetHeight || 110;
-      let cardTop = rect.top - cardHeight - 12;
-      if (cardTop < 12) {
-        cardTop = rect.bottom + 12;
-      }
-      if (tutorialStepper) {
-        const stepperRect = tutorialStepper.getBoundingClientRect();
-        const stepperTop = stepperRect.top;
-        if (cardTop + cardHeight > stepperTop - 12) {
-          cardTop = Math.max(12, stepperTop - cardHeight - 12);
+        applyPosition();
+        if (!prefersReduce) {
+          setTimeout(() => applyPosition(), 220);
         }
-      }
-      let cardLeft = rect.left;
-      if (cardLeft + cardWidth > window.innerWidth) {
-        cardLeft = window.innerWidth - cardWidth - 16;
-      }
-      if (cardLeft < 12) cardLeft = 12;
-      if (cardTop < 12) cardTop = 12;
-      tutorialCard.style.top = `${cardTop}px`;
-      tutorialCard.style.left = `${cardLeft}px`;
+      }, prefersReduce ? 0 : 260);
     };
 
     const showTutorialStep = (index) => {
@@ -3694,7 +3658,7 @@
           if (action === 'reset') {
             localStorage.clear();
             localStorage.setItem('bonusRewardStage', 'first');
-            localStorage.setItem('bonusRewardTitle', 'Bonusová odměna');
+            localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
             localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
             window.location.href = 'app-home.html';
             return;
