@@ -1378,6 +1378,43 @@
     .press-menu-switch input:checked + .press-menu-slider::after {
       transform: translateX(20px);
     }
+    .challenge-progress {
+      position: relative;
+      width: calc(100vw - 24px);
+      max-width: none;
+      margin: 16px 0 24px;
+      margin-left: calc(50% - 50vw + 24px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .challenge-progress .progress-shell {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-top: 55.3%;
+    }
+    .challenge-progress .progress-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .challenge-progress .progress-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .stamps-card {
+      position: relative;
+      z-index: 2;
+    }
+    .daily-block {
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -1398,60 +1435,40 @@
     </div>
     <section style="padding:20px 0px 28px;margin-bottom:24px;">
       <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;"></div>
-      <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" id="main-challenge-card" style="margin-top:20px;">
-        <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
-          <div class="flex items-center justify-between gap-3">
-            <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-0">Dnešní cíl</p>
-            <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
-              <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-              1 razítko
-            </span>
-          </div>
-          <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]" id="daily-title">Pohoda – 7&nbsp;500 kroků</p>
-          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93] mb-0 is-hidden" id="daily-complete-steps">Dnes jste ušli 8&nbsp;234 / 7&nbsp;500 kroků</p>
-          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]" id="daily-desc">
-            Ještě 5&nbsp;345 kroků k dnešnímu razítku.
-          </p>
-          <p class="font-sans text-[14px] font-normal leading-[18px] daily-complete-msg is-hidden" id="daily-complete-msg">
-            Dnešní cíl splněn. Další výzva začne za <span id="daily-countdown">23 h 59 min</span>.
-          </p>
-        </div>
-        <div class="relative h-[220px] overflow-hidden challenge-progress is-hidden" id="daily-progress">
-          <svg class="absolute top-[20px] h-[172px] w-[340px]" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64" style="overflow: visible; width:340px; right:0;">
-            <defs>
-              <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#95DA39" />
-                <stop offset="1" stop-color="#5DA20A" />
-              </linearGradient>
-              <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#E4002B" />
-                <stop offset="1" stop-color="#FD5553" />
-              </linearGradient>
-            </defs>
-            <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#F2F2F7" stroke-width="18" />
-            <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="18" pathLength="100" stroke-dasharray="0 100" />
-            <circle class="arc-knob" r="16" fill="#E4002B" opacity="1" stroke="white" stroke-width="4" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));"></circle>
-            <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#6e6e73" id="daily-goal-label">5k</text>
-            <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-          </svg>
-        <div class="absolute top-[20px] h-[172px] w-[340px] flex items-center justify-center pointer-events-none" style="right:0;">
-          <div class="text-center">
-            <p class="font-sans text-[24px] font-semibold leading-[28px] text-[#3a3a3c] m-0" id="daily-steps-count">3,200 / 5,000</p>
-            <p class="font-sans text-[13px] font-normal leading-[18px] text-[#8a8a93] m-0">kroků dnes</p>
+      <div class="daily-block">
+      <div class="challenge-progress is-hidden" id="daily-progress">
+        <div class="progress-shell">
+        <svg class="progress-svg" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64">
+          <defs>
+            <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#95DA39" />
+              <stop offset="1" stop-color="#5DA20A" />
+            </linearGradient>
+            <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#E4002B" />
+              <stop offset="1" stop-color="#FD5553" />
+            </linearGradient>
+          </defs>
+          <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#E2E6EE" stroke-width="18" />
+          <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="18" pathLength="100" stroke-dasharray="0 100" />
+          <circle class="arc-knob" r="16" fill="#E4002B" opacity="1" stroke="white" stroke-width="4" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));"></circle>
+          <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.2)" stroke-width="0.6" paint-order="stroke" id="daily-goal-label">5000</text>
+          <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
+        </svg>
+        <div class="progress-label">
+          <div class="text-left" style="max-width: 240px;">
+            <p class="font-sans text-[22px] font-semibold leading-[26px] text-[#3a3a3c] m-0" id="daily-steps-title">Dnešní cíl</p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-goal">
+              Pohoda – 7&nbsp;500 kroků
+            </p>
+            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-remaining" style="margin-top:6px;">
+              Ještě 5&nbsp;345 kroků k dnešnímu razítku.
+            </p>
           </div>
         </div>
         </div>
-        <div style="padding:0 24px 24px;"></div>
-        <div class="daily-complete-panel" id="daily-complete-panel" aria-live="polite">
-          <div class="daily-complete-icon" aria-hidden="true">
-            <span class="daily-complete-icon-mask" aria-hidden="true"></span>
-          </div>
-          <div class="daily-complete-text">
-            <p class="daily-complete-title">Dnešní cíl splněn</p>
-            <p class="daily-complete-subtitle">Další výzva začne zítra.</p>
-          </div>
-        </div>
-      </article>
+      </div>
+      </div>
       <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
         <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
           <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Vstupní výzva</p>
@@ -2232,9 +2249,6 @@
     const runNotificationFlow = () => {
       if (localStorage.getItem('permissionsGranted') !== 'true') return;
       document.body.dataset.suppressReady = 'true';
-      requestAnimationFrame(() => {
-        forceScrollToStampsCard();
-      });
       setTimeout(() => {
         if (localStorage.getItem('notificationStampPending') === 'true') {
           const targetFill = parseInt(localStorage.getItem('notificationTargetFill') || '0', 10);
@@ -2250,8 +2264,12 @@
             localStorage.setItem('stampFillCount', String(targetFill));
             const goalSteps = parseInt(localStorage.getItem('dailyGoalSteps') || '0', 10);
             if (goalSteps > 0) {
+              const prevSteps = parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10);
               localStorage.setItem('dailyCurrentSteps', String(goalSteps));
-              updateDailyProgressTo(goalSteps);
+              updateDailyProgressTo(prevSteps);
+              if (goalSteps !== prevSteps) {
+                animateDailyProgressTo(goalSteps, 1200);
+              }
             }
             const nextMidnight = new Date();
             nextMidnight.setHours(24, 0, 0, 0);
@@ -2731,6 +2749,79 @@
       }
     });
 
+    const getDailyGoalName = (target) => {
+      if (target <= 4500) return 'Start';
+      if (target <= 7500) return 'Pohoda';
+      return 'Výzva';
+    };
+
+    const updateDailyText = (currentSteps, targetSteps) => {
+      const goalLine = document.getElementById('daily-steps-goal');
+      const remainingLine = document.getElementById('daily-steps-remaining');
+      const titleLine = document.getElementById('daily-steps-title');
+      const goalName = localStorage.getItem('dailyGoalName') || getDailyGoalName(targetSteps);
+      const isComplete = currentSteps >= targetSteps || localStorage.getItem('dailyCompleted') === 'true';
+      if (goalLine) {
+        goalLine.textContent = `${goalName} – ${formatSteps(targetSteps)} kroků`;
+      }
+      if (titleLine) {
+        titleLine.textContent = isComplete ? 'Dnešní cíl splněn' : 'Dnešní cíl';
+      }
+      if (remainingLine) {
+        if (isComplete) {
+          remainingLine.textContent = 'Pokračujeme zítra';
+        } else {
+          const remaining = Math.max(0, targetSteps - currentSteps);
+          remainingLine.innerHTML = `Ještě <strong>${formatSteps(remaining)}</strong> kroků k dnešnímu razítku.`;
+        }
+      }
+    };
+
+    const getGoalLabelThreshold = () => {
+      const svg = document.querySelector('#daily-progress svg[data-progress]');
+      const arc = document.querySelector('#daily-progress .arc-progress');
+      const label = document.getElementById('daily-goal-label');
+      if (!svg || !arc || !label) return 100;
+      if (svg.dataset.goalThreshold) {
+        return parseFloat(svg.dataset.goalThreshold);
+      }
+      const targetX = parseFloat(label.getAttribute('x') || '0');
+      const targetY = parseFloat(label.getAttribute('y') || '0');
+      const totalLen = arc.getTotalLength();
+      let bestLen = 0;
+      let bestDist = Number.POSITIVE_INFINITY;
+      const steps = 200;
+      for (let i = 0; i <= steps; i += 1) {
+        const len = (totalLen * i) / steps;
+        const point = arc.getPointAtLength(len);
+        const dx = point.x - targetX;
+        const dy = point.y - targetY;
+        const dist = Math.hypot(dx, dy);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestLen = len;
+        }
+      }
+      const threshold = (bestLen / totalLen) * 100;
+      svg.dataset.goalThreshold = threshold.toFixed(2);
+      return threshold;
+    };
+
+    const updateGoalLabelColor = (percent) => {
+      const label = document.getElementById('daily-goal-label');
+      if (!label) return;
+      const threshold = getGoalLabelThreshold();
+      if (percent >= threshold) {
+        label.setAttribute('fill', '#ffffff');
+        label.setAttribute('stroke', 'rgba(0,0,0,0.2)');
+        label.setAttribute('stroke-width', '0.6');
+        label.setAttribute('paint-order', 'stroke');
+      } else {
+        label.setAttribute('fill', '#1b1b1b');
+        label.setAttribute('stroke', 'none');
+      }
+    };
+
     function updateDailyProgressTo(steps) {
       const dailyProgress = document.getElementById('daily-progress');
       const targetSteps = Number(dailyProgress?.dataset.target || localStorage.getItem('dailyGoalSteps') || '5000');
@@ -2740,6 +2831,7 @@
       if (stepsLabel) {
         stepsLabel.textContent = `${formatSteps(clamped)} / ${formatSteps(targetSteps)}`;
       }
+      updateDailyText(clamped, targetSteps);
       const svg = document.querySelector('#daily-progress svg[data-progress]');
       const arc = document.querySelector('#daily-progress .arc-progress');
       const dot = document.querySelector('#daily-progress .arc-knob');
@@ -2753,7 +2845,9 @@
         const point = arc.getPointAtLength((percent / 100) * totalLen);
         dot.setAttribute('cx', point.x);
         dot.setAttribute('cy', point.y);
+        dot.style.opacity = percent >= 100 ? '0' : '1';
       }
+      updateGoalLabelColor(percent);
     }
 
     let dailyCountdownTimer = null;
@@ -2822,11 +2916,9 @@
       if (desc) {
         desc.textContent = `Ujděte dnes ${formatSteps(target)} kroků a získejte dnešní razítko.`;
       }
+      localStorage.setItem('dailyGoalName', getDailyGoalName(target));
       if (goalLabel) {
-        const label = target >= 1000
-          ? `${(target / 1000).toFixed(target % 1000 === 0 ? 0 : 1)}k`
-          : `${target}`;
-        goalLabel.textContent = label;
+        goalLabel.textContent = `${target}`;
       }
       if (dailyProgress) {
         dailyProgress.dataset.target = `${target}`;
@@ -2948,7 +3040,7 @@
       const dailyProgress = document.getElementById('daily-progress');
       if (dailyProgress) {
         const started = dailyProgress.dataset.started === 'true';
-        dailyProgress.classList.toggle('is-hidden', !started);
+        dailyProgress.classList.toggle('is-hidden', !granted || !started);
       }
       const seasonalProgress = document.getElementById('seasonal-progress');
       if (seasonalProgress) {
@@ -3422,15 +3514,13 @@
       if (dailyBtn) {
         dailyBtn.remove();
       }
+      updateDailyText(0, targetSteps);
       const stepsLabel = document.getElementById('daily-steps-count');
       if (stepsLabel) {
         stepsLabel.textContent = `0 / ${formatSteps(targetSteps)}`;
       }
       if (goalLabel) {
-        const label = targetSteps >= 1000
-          ? `${(targetSteps / 1000).toFixed(targetSteps % 1000 === 0 ? 0 : 1)}k`
-          : `${targetSteps}`;
-        goalLabel.textContent = label;
+        goalLabel.textContent = `${targetSteps}`;
       }
       const svg = document.querySelector('#daily-progress svg[data-progress]');
       const arc = document.querySelector('#daily-progress .arc-progress');
@@ -3443,7 +3533,9 @@
         arc.setAttribute('stroke-dasharray', '5 95');
         dot.setAttribute('cx', '340');
         dot.setAttribute('cy', '198');
+        dot.style.opacity = '1';
       }
+      updateGoalLabelColor(0);
     };
 
     const animateDailyProgressTo = (steps, duration) => {
@@ -3477,16 +3569,19 @@
         const point = arc.getPointAtLength((current / 100) * totalLen);
         dot.setAttribute('cx', point.x);
         dot.setAttribute('cy', point.y);
+        dot.style.opacity = current >= 100 ? '0' : '1';
         if (startLabel) {
           const stepsNow = Math.round((current / 100) * targetSteps);
           startLabel.textContent = `${formatSteps(stepsNow)} / ${formatSteps(targetSteps)}`;
         }
+        updateDailyText(Math.round((current / 100) * targetSteps), targetSteps);
         if (t < 1) {
           requestAnimationFrame(tick);
         } else {
           updateDailyProgressTo(target);
           localStorage.setItem('dailyCurrentSteps', String(target));
         }
+        updateGoalLabelColor(current);
       };
       requestAnimationFrame(tick);
     };
