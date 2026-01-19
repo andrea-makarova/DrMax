@@ -43,9 +43,6 @@
     body.tutorial-active {
       overflow: hidden;
     }
-    body.tutorial-active #rewards-section {
-      margin-bottom: 140px;
-    }
     .page {
       max-width: 1080px;
       margin: 0 auto;
@@ -3341,7 +3338,15 @@
     const positionTutorial = (step) => {
       const target = document.querySelector(step.target);
       if (!target || !tutorialHighlight || !tutorialCard) return;
+      const prevBodyOverflow = document.body.style.overflow;
+      const prevHtmlOverflow = document.documentElement.style.overflow;
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
       target.scrollIntoView({ behavior: 'auto', block: 'center' });
+      setTimeout(() => {
+        document.body.style.overflow = prevBodyOverflow;
+        document.documentElement.style.overflow = prevHtmlOverflow;
+      }, 80);
       const rect = target.getBoundingClientRect();
       const pad = 8;
       const targetRadius = parseFloat(window.getComputedStyle(target).borderRadius || '0') || 0;
@@ -3393,9 +3398,16 @@
 
       const cardWidth = tutorialCard.offsetWidth || 220;
       const cardHeight = tutorialCard.offsetHeight || 110;
-      let cardTop = rect.bottom + 12;
-      if (cardTop + cardHeight > window.innerHeight) {
-        cardTop = rect.top - cardHeight - 12;
+      let cardTop = rect.top - cardHeight - 12;
+      if (cardTop < 12) {
+        cardTop = rect.bottom + 12;
+      }
+      if (tutorialStepper) {
+        const stepperRect = tutorialStepper.getBoundingClientRect();
+        const stepperTop = stepperRect.top;
+        if (cardTop + cardHeight > stepperTop - 12) {
+          cardTop = Math.max(12, stepperTop - cardHeight - 12);
+        }
       }
       let cardLeft = rect.left;
       if (cardLeft + cardWidth > window.innerWidth) {
