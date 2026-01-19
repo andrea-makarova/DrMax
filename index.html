@@ -363,8 +363,11 @@
     .rewards-carousel {
       display: flex;
       gap: 12px;
-      padding: 0;
+      padding: 0 24px;
       margin: 0;
+      margin-left: -20px;
+      margin-right: -20px;
+      width: calc(100% + 48px);
       overflow-x: auto;
       overflow-y: visible;
       position: relative;
@@ -643,11 +646,17 @@
     .tutorial-overlay.is-visible {
       display: block;
     }
+    .tutorial-mask {
+      position: fixed;
+      background: rgba(13, 21, 34, 0.12);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
     .tutorial-highlight {
       position: fixed;
-      border-radius: 22px;
-      border: 2px solid rgba(255,255,255,0.9);
-      box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.55);
+      border-radius: 32px;
+      border: none;
       transition: all 220ms ease;
       pointer-events: none;
     }
@@ -662,10 +671,7 @@
       pointer-events: auto;
     }
     .tutorial-step {
-      font-size: 12px;
-      letter-spacing: 0.5px;
-      opacity: 0.8;
-      margin-bottom: 6px;
+      display: none;
     }
     .tutorial-text {
       font-size: 13px;
@@ -678,13 +684,18 @@
     }
     .tutorial-next {
       border: none;
-      background: #5d4dff;
-      color: #ffffff;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 13px;
+      background: #ffffff;
+      color: #0d6fb8;
+      border: 1px solid #d7dce5;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 14px;
       font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       cursor: pointer;
+    }
+    .tutorial-active .stamps-row .stamp-dot {
+      display: inline-flex;
     }
     .daily-info {
       background: #f0f1f5;
@@ -1431,7 +1442,7 @@
           </span>
         </div>
       </div>
-      <div class="reward-card font-sans" style="background:linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);border:0;border-radius:24px;padding:16px 18px;color:#ffffff;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
+      <div class="reward-card font-sans" id="bonus-reward-card" style="background:linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);border:0;border-radius:24px;padding:16px 18px;color:#ffffff;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="width:48px;height:48px;border-radius:14px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:#5DA20A;">
             <i class="fa-solid fa-gift" style="font-size:18px;"></i>
@@ -1548,6 +1559,10 @@
   </div>
 
   <div id="tutorial-overlay" class="tutorial-overlay" aria-hidden="true">
+    <div class="tutorial-mask" data-mask="top"></div>
+    <div class="tutorial-mask" data-mask="left"></div>
+    <div class="tutorial-mask" data-mask="right"></div>
+    <div class="tutorial-mask" data-mask="bottom"></div>
     <div class="tutorial-highlight" id="tutorial-highlight"></div>
     <div class="tutorial-card" id="tutorial-card">
       <div class="tutorial-step" id="tutorial-step">2-1</div>
@@ -2543,7 +2558,10 @@
     };
 
     const resetStamps = (options = {}) => {
-      const { rotate = true } = options;
+      const { rotate = true, force = false } = options;
+      if (!force && document.body.classList.contains('tutorial-active')) {
+        return;
+      }
       const stamps = document.querySelectorAll('.stamps-row .stamp-dot');
       const card = document.querySelector('.stamps-card');
       if (card && rotate) {
@@ -2692,11 +2710,13 @@
     startModalClose?.addEventListener('click', () => {
       startModal?.classList.remove('open');
       document.body.classList.remove('modal-open');
+      setPermissionsGranted(false);
     });
     startModal?.addEventListener('click', (event) => {
       if (event.target === startModal) {
         startModal.classList.remove('open');
         document.body.classList.remove('modal-open');
+        setPermissionsGranted(false);
       }
     });
 
@@ -3203,27 +3223,48 @@
         text: 'Tady sbíráte razítka za splnění cíle.'
       },
       {
+        id: 'bonus',
+        target: '#bonus-reward-card',
+        step: '2-3',
+        text: 'Bonusová odměna čeká pod kartou razítek.'
+      },
+      {
         id: 'reward',
         target: '#rewards-section',
-        step: '2-3',
+        step: '2-4',
         text: 'A takhle to bude vypadat, když je odměna připravená.'
       }
     ];
 
     let tutorialIndex = 0;
     const tutorialOverlay = document.getElementById('tutorial-overlay');
+    const tutorialMasks = {
+      top: document.querySelector('.tutorial-mask[data-mask="top"]'),
+      left: document.querySelector('.tutorial-mask[data-mask="left"]'),
+      right: document.querySelector('.tutorial-mask[data-mask="right"]'),
+      bottom: document.querySelector('.tutorial-mask[data-mask="bottom"]')
+    };
     const tutorialHighlight = document.getElementById('tutorial-highlight');
     const tutorialCard = document.getElementById('tutorial-card');
     const tutorialStepLabel = document.getElementById('tutorial-step');
     const tutorialText = document.getElementById('tutorial-text');
     const tutorialNext = document.getElementById('tutorial-next');
     const seedTutorialStamps = () => {
-      localStorage.setItem('manualGeneratedCount', '3');
+      localStorage.setItem('manualGeneratedCount', '0');
       localStorage.setItem('stampFillCount', '0');
       localStorage.setItem('notificationStampCount', '0');
       localStorage.setItem('permissionsBonusCount', '0');
       resetStamps({ rotate: false });
-      restoreManualStamps();
+      const tutorialDots = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
+      tutorialDots.slice(0, 3).forEach((dot) => {
+        dot.dataset.filled = 'true';
+        dot.classList.add('stamp-dot-filled');
+        if (!dot.querySelector('i')) {
+          const icon = document.createElement('i');
+          icon.className = 'fa-solid fa-check stamp-icon';
+          dot.appendChild(icon);
+        }
+      });
       updateStampReadyState();
     };
 
@@ -3232,7 +3273,7 @@
       localStorage.setItem('stampFillCount', '0');
       localStorage.setItem('notificationStampCount', '0');
       localStorage.setItem('permissionsBonusCount', '0');
-      resetStamps({ rotate: false });
+      resetStamps({ rotate: false, force: true });
       updateStampReadyState();
     };
 
@@ -3242,10 +3283,43 @@
       target.scrollIntoView({ behavior: 'auto', block: 'center' });
       const rect = target.getBoundingClientRect();
       const pad = 8;
+      const targetRadius = parseFloat(window.getComputedStyle(target).borderRadius || '0') || 0;
+      const highlightRadius = Math.max(24, targetRadius + pad);
+      tutorialHighlight.style.borderRadius = `${highlightRadius}px`;
       tutorialHighlight.style.top = `${Math.max(8, rect.top - pad)}px`;
       tutorialHighlight.style.left = `${Math.max(8, rect.left - pad)}px`;
       tutorialHighlight.style.width = `${Math.max(0, rect.width + pad * 2)}px`;
       tutorialHighlight.style.height = `${Math.max(0, rect.height + pad * 2)}px`;
+      const highlightTop = Math.max(0, rect.top - pad);
+      const highlightLeft = Math.max(0, rect.left - pad);
+      const highlightWidth = Math.max(0, rect.width + pad * 2);
+      const highlightHeight = Math.max(0, rect.height + pad * 2);
+      const highlightRight = highlightLeft + highlightWidth;
+      const highlightBottom = highlightTop + highlightHeight;
+      if (tutorialMasks.top) {
+        tutorialMasks.top.style.top = '0';
+        tutorialMasks.top.style.left = '0';
+        tutorialMasks.top.style.right = '0';
+        tutorialMasks.top.style.height = `${highlightTop}px`;
+      }
+      if (tutorialMasks.left) {
+        tutorialMasks.left.style.top = `${highlightTop}px`;
+        tutorialMasks.left.style.left = '0';
+        tutorialMasks.left.style.width = `${highlightLeft}px`;
+        tutorialMasks.left.style.height = `${highlightHeight}px`;
+      }
+      if (tutorialMasks.right) {
+        tutorialMasks.right.style.top = `${highlightTop}px`;
+        tutorialMasks.right.style.right = '0';
+        tutorialMasks.right.style.left = `${highlightRight}px`;
+        tutorialMasks.right.style.height = `${highlightHeight}px`;
+      }
+      if (tutorialMasks.bottom) {
+        tutorialMasks.bottom.style.top = `${highlightBottom}px`;
+        tutorialMasks.bottom.style.left = '0';
+        tutorialMasks.bottom.style.right = '0';
+        tutorialMasks.bottom.style.bottom = '0';
+      }
 
       const cardWidth = tutorialCard.offsetWidth || 220;
       const cardHeight = tutorialCard.offsetHeight || 110;
@@ -3278,6 +3352,7 @@
       if (!tutorialOverlay) return;
       tutorialOverlay.classList.add('is-visible');
       tutorialOverlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('tutorial-active');
       tutorialIndex = 0;
       seedTutorialStamps();
       seedTutorialRewards();
@@ -3289,6 +3364,7 @@
       tutorialOverlay.classList.remove('is-visible');
       tutorialOverlay.setAttribute('aria-hidden', 'true');
       localStorage.setItem('tutorialSeen', 'true');
+      document.body.classList.remove('tutorial-active');
       clearTutorialRewards();
       clearTutorialStamps();
       if (localStorage.getItem('openStartAfterTutorial') === 'true') {
