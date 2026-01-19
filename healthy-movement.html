@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zdravý pohyb s Maxem</title>
+  <link rel="icon" href="images/Dr.Max.svg">
   <style>
     :root {
       --gray-50: #f2f2f7;
@@ -397,6 +398,8 @@
     ctaBtn?.addEventListener('click', () => {
       localStorage.setItem('healthyMovementCompleted', 'true');
       localStorage.removeItem('suppressDrawersOnIndex');
+      localStorage.setItem('showTutorialOnLoad', 'true');
+      localStorage.setItem('openStartAfterTutorial', 'true');
       window.location.href = 'index.html?showStartModal=1';
     });
     (() => {
