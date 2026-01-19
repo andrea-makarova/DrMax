@@ -863,11 +863,19 @@
 
       document.addEventListener('touchstart', (event) => {
         if (shouldIgnore(event.target)) return;
-        if (event.touches.length !== 2) {
+        const touchCount = event.touches.length;
+        if (touchCount !== 2 && touchCount !== 1) {
           clearPressTimer();
           return;
         }
         const [t1, t2] = event.touches;
+        if (touchCount === 1) {
+          startX = t1.clientX;
+          startY = t1.clientY;
+          clearPressTimer();
+          pressTimer = setTimeout(() => openMenu(), 4000);
+          return;
+        }
         startX = (t1.clientX + t2.clientX) / 2;
         startY = (t1.clientY + t2.clientY) / 2;
         clearPressTimer();
@@ -875,8 +883,18 @@
       }, { passive: true });
       document.addEventListener('touchmove', (event) => {
         if (!pressTimer) return;
-        if (event.touches.length !== 2) {
+        const touchCount = event.touches.length;
+        if (touchCount !== 2 && touchCount !== 1) {
           clearPressTimer();
+          return;
+        }
+        if (touchCount === 1) {
+          const [t1] = event.touches;
+          const dx = Math.abs(t1.clientX - startX);
+          const dy = Math.abs(t1.clientY - startY);
+          if (dx > 12 || dy > 12) {
+            clearPressTimer();
+          }
           return;
         }
         const [t1, t2] = event.touches;
