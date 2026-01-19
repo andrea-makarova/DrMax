@@ -1375,7 +1375,7 @@
       </button>
       <h1 class="top-title">Zdravý pohyb s Maxem</h1>
       <div class="top-actions">
-        <button class="gear-btn" type="button" aria-label="Nastavení">
+        <button class="gear-btn" type="button" aria-label="Nastavení" id="settings-btn">
           <img src="images/gear-regular-full.svg" alt="">
         </button>
         <button class="menu-open-btn is-hidden" type="button" id="menu-open-btn">Menu</button>
@@ -3706,6 +3706,11 @@
     })();
 
     document.getElementById('menu-open-btn')?.addEventListener('click', () => {
+      if (typeof window.openPressMenu === 'function') {
+        window.openPressMenu();
+      }
+    });
+    document.getElementById('settings-btn')?.addEventListener('click', () => {
       if (typeof window.openPressMenu === 'function') {
         window.openPressMenu();
       }
