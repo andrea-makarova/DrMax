@@ -40,6 +40,12 @@
     .font-sans {
       font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif !important;
     }
+    body.tutorial-active {
+      overflow: hidden;
+    }
+    body.tutorial-active #rewards-section {
+      margin-bottom: 140px;
+    }
     .page {
       max-width: 1080px;
       margin: 0 auto;
@@ -657,7 +663,8 @@
       position: fixed;
       border-radius: 32px;
       border: none;
-      transition: all 220ms ease;
+      transition: all 320ms ease-out;
+      will-change: top, left, width, height, border-radius;
       pointer-events: none;
     }
     .tutorial-card {
@@ -669,6 +676,48 @@
       padding: 12px 14px;
       box-shadow: 0 10px 22px rgba(0,0,0,0.25);
       pointer-events: auto;
+    }
+    .tutorial-stepper {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 18px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      pointer-events: auto;
+      z-index: 1;
+    }
+    .tutorial-stepper__bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.18);
+    }
+    .tutorial-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #d3d7df;
+    }
+    .tutorial-dot.is-active {
+      background: #0d6fb8;
+    }
+    .tutorial-skip {
+      border: none;
+      background: #ffffff;
+      color: #0d6fb8;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(15,23,42,0.18);
+      cursor: pointer;
     }
     .tutorial-step {
       display: none;
@@ -1569,6 +1618,15 @@
       <p class="tutorial-text" id="tutorial-text">Tady vidíte svůj dnešní cíl.</p>
       <div class="tutorial-actions">
         <button class="tutorial-next" id="tutorial-next" type="button">Další</button>
+      </div>
+    </div>
+    <div class="tutorial-stepper" id="tutorial-stepper">
+      <button class="tutorial-skip" id="tutorial-skip" type="button">Přeskočit tutorial</button>
+      <div class="tutorial-stepper__bar" id="tutorial-stepper-bar">
+        <span class="tutorial-dot" data-step="0"></span>
+        <span class="tutorial-dot" data-step="1"></span>
+        <span class="tutorial-dot" data-step="2"></span>
+        <span class="tutorial-dot" data-step="3"></span>
       </div>
     </div>
   </div>
@@ -3238,6 +3296,7 @@
 
     let tutorialIndex = 0;
     const tutorialOverlay = document.getElementById('tutorial-overlay');
+    const tutorialMaskHole = document.getElementById('tutorial-mask-hole');
     const tutorialMasks = {
       top: document.querySelector('.tutorial-mask[data-mask="top"]'),
       left: document.querySelector('.tutorial-mask[data-mask="left"]'),
@@ -3249,6 +3308,8 @@
     const tutorialStepLabel = document.getElementById('tutorial-step');
     const tutorialText = document.getElementById('tutorial-text');
     const tutorialNext = document.getElementById('tutorial-next');
+    const tutorialStepper = document.getElementById('tutorial-stepper');
+    const tutorialSkip = document.getElementById('tutorial-skip');
     const seedTutorialStamps = () => {
       localStorage.setItem('manualGeneratedCount', '0');
       localStorage.setItem('stampFillCount', '0');
@@ -3320,6 +3381,15 @@
         tutorialMasks.bottom.style.right = '0';
         tutorialMasks.bottom.style.bottom = '0';
       }
+      if (tutorialMaskHole) {
+        const r = Math.min(highlightRadius, highlightWidth / 2, highlightHeight / 2);
+        tutorialMaskHole.setAttribute('x', `${highlightLeft}`);
+        tutorialMaskHole.setAttribute('y', `${highlightTop}`);
+        tutorialMaskHole.setAttribute('width', `${highlightWidth}`);
+        tutorialMaskHole.setAttribute('height', `${highlightHeight}`);
+        tutorialMaskHole.setAttribute('rx', `${r}`);
+        tutorialMaskHole.setAttribute('ry', `${r}`);
+      }
 
       const cardWidth = tutorialCard.offsetWidth || 220;
       const cardHeight = tutorialCard.offsetHeight || 110;
@@ -3345,6 +3415,9 @@
       if (tutorialNext) {
         tutorialNext.textContent = index === tutorialSteps.length - 1 ? 'Pokračovat' : 'Další';
       }
+      document.querySelectorAll('#tutorial-stepper-bar .tutorial-dot').forEach((dot, dotIndex) => {
+        dot.classList.toggle('is-active', dotIndex === index);
+      });
       positionTutorial(step);
     };
 
@@ -3353,6 +3426,7 @@
       tutorialOverlay.classList.add('is-visible');
       tutorialOverlay.setAttribute('aria-hidden', 'false');
       document.body.classList.add('tutorial-active');
+      if (tutorialStepper) tutorialStepper.style.display = 'flex';
       tutorialIndex = 0;
       seedTutorialStamps();
       seedTutorialRewards();
@@ -3363,6 +3437,7 @@
       if (!tutorialOverlay) return;
       tutorialOverlay.classList.remove('is-visible');
       tutorialOverlay.setAttribute('aria-hidden', 'true');
+      if (tutorialStepper) tutorialStepper.style.display = 'none';
       localStorage.setItem('tutorialSeen', 'true');
       document.body.classList.remove('tutorial-active');
       clearTutorialRewards();
@@ -3383,6 +3458,9 @@
         return;
       }
       showTutorialStep(tutorialIndex);
+    });
+    tutorialSkip?.addEventListener('click', () => {
+      closeTutorial();
     });
 
     window.addEventListener('resize', () => {
