@@ -1680,9 +1680,6 @@
       </button>
       <h1 class="top-title">Zdravý pohyb s Maxem</h1>
       <div class="top-actions">
-        <button class="gear-btn" type="button" aria-label="Nastavení" id="settings-btn">
-          <img src="images/gear-regular-full.svg" alt="">
-        </button>
         <button class="menu-open-btn is-hidden" type="button" id="menu-open-btn">Menu</button>
       </div>
     </div>
@@ -1710,12 +1707,12 @@
         </svg>
         <div class="progress-label">
           <div class="text-left" style="max-width: 240px;">
-            <p class="font-sans text-[22px] font-semibold leading-[26px] text-[#3a3a3c] m-0" id="daily-steps-title">Dnešní cíl</p>
+            <p class="font-sans text-[22px] font-semibold leading-[26px] text-[#3a3a3c] m-0" id="daily-steps-title">Denní cíl</p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-goal">
               Pohoda – 7&nbsp;500 kroků
             </p>
             <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-remaining" style="margin-top:6px;">
-              Ještě 5&nbsp;345 kroků k dnešnímu razítku.
+              Ještě 5&nbsp;345 kroků k dennímu razítku.
             </p>
           </div>
         </div>
@@ -1897,7 +1894,7 @@
     <div class="tutorial-highlight" id="tutorial-highlight"></div>
     <div class="tutorial-card" id="tutorial-card">
       <div class="tutorial-step" id="tutorial-step">2-1</div>
-      <p class="tutorial-text" id="tutorial-text">Tady vidíte svůj dnešní cíl.</p>
+      <p class="tutorial-text" id="tutorial-text">Tady vidíte svůj denní cíl.</p>
       <div class="tutorial-actions">
         <button class="tutorial-next" id="tutorial-next" type="button">Další</button>
       </div>
@@ -2251,7 +2248,7 @@
     const updateRemainingStamps = () => {
       const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
       const remaining = Math.max(0, 8 - filled);
-      const verb = remaining === 1 ? 'Zbývá' : 'Zbývají';
+      const verb = remaining >= 2 && remaining <= 4 ? 'Zbývají' : 'Zbývá';
       const label = getStampLabel(remaining);
       const text = `${verb} už jen ${remaining} ${label} k odměně`;
       const title = document.getElementById('stamps-remaining-title');
@@ -2971,6 +2968,7 @@
     });
     document.getElementById('reward-success-close')?.addEventListener('click', () => {
       closeBonusModal();
+      localStorage.setItem('seriesModalOpen', 'true');
       const seriesModal = document.getElementById('series-modal');
       if (seriesModal) {
         seriesModal.classList.add('is-visible');
@@ -2988,6 +2986,7 @@
       const modal = event.currentTarget;
       modal.classList.remove('is-visible');
       modal.setAttribute('aria-hidden', 'true');
+      localStorage.removeItem('seriesModalOpen');
     });
     document.getElementById('bonus-modal-overlay')?.addEventListener('click', closeBonusModal);
 
@@ -3090,14 +3089,14 @@
         goalLine.textContent = `${goalName} – ${formatSteps(targetSteps)} kroků`;
       }
       if (titleLine) {
-        titleLine.textContent = isComplete ? 'Dnešní cíl splněn' : 'Dnešní cíl';
+        titleLine.textContent = isComplete ? 'Denní cíl splněn' : 'Denní cíl';
       }
       if (remainingLine) {
         if (isComplete) {
           remainingLine.textContent = 'Pokračujeme zítra';
         } else {
           const remaining = Math.max(0, targetSteps - currentSteps);
-          remainingLine.innerHTML = `Ještě <strong>${formatSteps(remaining)}</strong> kroků k dnešnímu razítku.`;
+          remainingLine.innerHTML = `Ještě <strong>${formatSteps(remaining)}</strong> kroků k dennímu razítku.`;
         }
       }
     };
@@ -3239,7 +3238,7 @@
       const dailyProgress = document.getElementById('daily-progress');
       if (title) title.textContent = `Ujít ${formatSteps(target)} kroků`;
       if (desc) {
-        desc.textContent = `Ujděte dnes ${formatSteps(target)} kroků a získejte dnešní razítko.`;
+        desc.textContent = `Ujděte dnes ${formatSteps(target)} kroků a získejte denní razítko.`;
       }
       localStorage.setItem('dailyGoalName', getDailyGoalName(target));
       if (goalLabel) {
@@ -3604,6 +3603,13 @@
     if (localStorage.getItem('dailyCompleted') === 'true') {
       setDailyCompleteState(true);
       startDailyCountdown();
+    }
+    if (localStorage.getItem('seriesModalOpen') === 'true') {
+      const seriesModal = document.getElementById('series-modal');
+      if (seriesModal) {
+        seriesModal.classList.add('is-visible');
+        seriesModal.setAttribute('aria-hidden', 'false');
+      }
     }
 
     const stampParams = new URLSearchParams(window.location.search);
