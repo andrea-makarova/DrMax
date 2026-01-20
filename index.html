@@ -1982,7 +1982,7 @@
     if (filledCountInit === 0 && localStorage.getItem('permissionsGranted') !== 'true') {
       localStorage.removeItem('bonusRewardSaved');
     }
-    if (!localStorage.getItem('bonusRewardTitle')) {
+    if (!localStorage.getItem('bonusRewardTitle') || localStorage.getItem('bonusRewardTitle') === 'Bonus Reward') {
       localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
     }
     if (localStorage.getItem('bonusRewardStage') === 'second') {
