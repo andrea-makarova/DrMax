@@ -521,6 +521,7 @@
                 optNo: 'Ne, nepodařilo',
                 optUnsure: 'Nejsem si jistý',
                 labelSteps: 'Jakými kroky jsem postupoval/a:',
+                stepPlaceholder: 'Krok',
                 labelDifficulty: 'Jaká to byla?',
                 optEasy: 'Snadné',
                 optMedium: 'Matoucí',
@@ -529,6 +530,8 @@
                 helpExample: 'Příklad úkolu: "Přihlaste se na webové stránky."',
                 exampleSteps: ['Jsem si aplikaci otevřel', 'Kliknul jsem na ikonu profilu v rohu', 'Otevřelo se okno, ale nebyly tam nabídky přihlášení', 'Kliknul jsem na registraci a vyplnil jsem formulář', 'Po skončení registrace jsem se přihlásil'],
                 stepsError: 'Prosím vyplňte první krok alespoň 3 znaky',
+                nextBtn: 'Další',
+                submitBtn: 'Odeslat',
                 thankYou: 'To je vše, moc děkujeme!',
                 submitted: 'Vaše odpovědi byly uloženy do databáze.',
                 startOver: 'Začít znovu'
@@ -556,6 +559,7 @@
                 optNo: 'Nie, nepodarilo',
                 optUnsure: 'Nie som si istý',
                 labelSteps: 'Aké kroky som vykonala:',
+                stepPlaceholder: 'Krok',
                 labelDifficulty: 'Ako to bolo?',
                 optEasy: 'Ľahké',
                 optMedium: 'Zmätočné',
@@ -564,6 +568,8 @@
                 helpExample: 'Príklad úlohy: "Prihláste sa na webovú stránku."',
                 exampleSteps: ['Otvorila som aplikáciu', 'Klikla som na ikonu profilu v rohu', 'Otvorilo sa okno, ale neboli tu ponuky na prihlásenie', 'Klikla som na registráciu a vyplnila formulár', 'Po skončení registrácie som bola prihlásená'],
                 stepsError: 'Prosím vyplňte prvý krok aspoň 3 znaky',
+                nextBtn: 'Ďalej',
+                submitBtn: 'Odoslať',
                 thankYou: 'To je všetko, moc ďakujeme!',
                 submitted: 'Vaše odpovede boli uložené do databázy.',
                 startOver: 'Začať nanovo'
@@ -591,6 +597,7 @@
                 optNo: 'Nu, nu am reușit',
                 optUnsure: 'Nu sunt sigur',
                 labelSteps: 'Pașii pe care i-am urmat:',
+                stepPlaceholder: 'Pasul',
                 labelDifficulty: 'Cum a fost?',
                 optEasy: 'Ușor',
                 optMedium: 'Confuz',
@@ -599,6 +606,8 @@
                 helpExample: 'Exemplu de sarcină: "Autentifică-te pe site-ul web."',
                 exampleSteps: ['Am deschis aplicația', 'Am apăsat pe iconă de profil în colț', 'S-a deschis o fereastră, dar nu au existat opțiuni de autentificare', 'Am apăsat pe înregistrare și am completat formularul', 'După finalizarea înregistrării, m-am autentificat'],
                 stepsError: 'Te rog completează primul pas cu cel puțin 3 caractere',
+                nextBtn: 'Următoarea',
+                submitBtn: 'Trimite',
                 thankYou: 'Asta-i tot, vă mulțumim!',
                 submitted: 'Răspunsurile tale au fost salvate în bază de date.',
                 startOver: 'Începe din nou'
@@ -626,6 +635,7 @@
                 optNo: 'Nie, nie udało się',
                 optUnsure: 'Nie jestem pewny',
                 labelSteps: 'Jakie kroki wykonałem:',
+                stepPlaceholder: 'Krok',
                 labelDifficulty: 'Jak to było?',
                 optEasy: 'Łatwe',
                 optMedium: 'Mylące',
@@ -634,6 +644,8 @@
                 helpExample: 'Przykład zadania: "Zaloguj się na stronie internetowej."',
                 exampleSteps: ['Otworzyłem aplikację', 'Kliknąłem na ikonę profilu w rogu', 'Otworzyło się okno, ale nie było opcji logowania', 'Kliknąłem na rejestrację i wypełniłem formularz', 'Po zakończeniu rejestracji byłem zalogowany'],
                 stepsError: 'Proszę wypełnij pierwszy krok co najmniej 3 znakami',
+                nextBtn: 'Dalej',
+                submitBtn: 'Prześlij',
                 thankYou: 'To wszystko, dziękuję!',
                 submitted: 'Twoje odpowiedzi zostały zapisane w bazie danych.',
                 startOver: 'Zacznij od nowa'
@@ -661,6 +673,7 @@
                 optNo: 'No, non sono riuscito',
                 optUnsure: 'Non sono sicuro',
                 labelSteps: 'I passaggi che ho seguito:',
+                stepPlaceholder: 'Passaggio',
                 labelDifficulty: 'Com\'è stato?',
                 optEasy: 'Facile',
                 optMedium: 'Confuso',
@@ -669,6 +682,8 @@
                 helpExample: 'Esempio di compito: "Accedi al sito web."',
                 exampleSteps: ['Ho aperto l\'app', 'Ho toccato l\'icona del profilo nell\'angolo', 'Si è aperta una finestra, ma non c\'era l\'opzione di accesso', 'Ho fatto clic su registra e ho compilato il modulo', 'Dopo la registrazione ero connesso'],
                 stepsError: 'Per favore completa il primo passaggio con almeno 3 caratteri',
+                nextBtn: 'Avanti',
+                submitBtn: 'Invia',
                 thankYou: 'Questo è tutto, grazie mille!',
                 submitted: 'Le tue risposte sono state salvate nel database.',
                 startOver: 'Inizia di nuovo'
@@ -757,14 +772,15 @@
 
         function updateFormUI() {
             const t = translations[currentLang].tasks[currentTask];
+            const tLang = translations[currentLang];
             document.getElementById('taskCounter').textContent = `${currentTask + 1} / 3`;
             document.getElementById('taskTitle').textContent = t.title;
             document.getElementById('taskDesc').textContent = t.desc;
-            document.getElementById('nextBtn').textContent = currentTask === 2 ? 'Odeslat' : 'Další';
+            document.getElementById('nextBtn').textContent = currentTask === 2 ? tLang.submitBtn : tLang.nextBtn;
             document.getElementById('stepsContainer').innerHTML = [1,2,3,4,5].map(n => `
                 <div class="step-input-wrapper">
                     <span class="step-number">${n}.</span>
-                    <input type="text" class="step-input" placeholder="Krok ${n}...">
+                    <input type="text" class="step-input" placeholder="${tLang.stepPlaceholder} ${n}...">
                 </div>
             `).join('');
             document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
