@@ -1,4065 +1,925 @@
-<!doctype html>
-<html lang="cs">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Move &amp; Mind – Přehled</title>
-  <link rel="icon" href="images/Dr.Max.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/2c7f1c6cae.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <style>
-    :root {
-      --blue-25: #f5f8fd;
-      --blue-50: #e5f1fe;
-      --blue-200: #95ccfe;
-      --blue-400: #3997dd;
-      --blue-500: #0d77ba;
-      --gray-50: #f1f1f1;
-      --gray-100: #e2e2e2;
-      --gray-300: #ababab;
-      --gray-400: #919191;
-      --gray-900: #1b1b1b;
-      --green-300: #78be20;
-      --green-500: #47850a;
-      --red-500: #e4002b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--blue-25);
-      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif;
-      color: var(--gray-900);
-    }
-    .font-sans {
-      font-family: "Proxima Vara", "Proxima Nova", "Figtree", system-ui, -apple-system, sans-serif !important;
-    }
-    body.tutorial-active {
-      overflow: auto;
-    }
-    .page {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 44px 24px 140px;
-    }
-    .top-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 100;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 700;
-      color: #3a3a3c;
-      border-bottom: 1px solid #e5e5ea;
-      background: #ffffff;
-      padding: 0;
-    }
-    .back-btn {
-      position: absolute;
-      left: 14px;
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      border: none;
-      background: transparent;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      color: #3a3a3c;
-      box-shadow: none;
-    }
-    .back-btn:active { transform: translateY(1px); }
-    .top-title {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 700;
-      color: #3a3a3c;
-      line-height: 24px;
-    }
-    .top-actions {
-      position: absolute;
-      right: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .gear-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: transparent;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-    }
-    .gear-btn img {
-      width: 22px;
-      height: 22px;
-      display: block;
-      filter: brightness(0) saturate(100%) invert(62%) sepia(7%) saturate(211%) hue-rotate(201deg) brightness(95%) contrast(88%);
-    }
-    .how-works-btn {
-      background: #ffffff;
-      color: #0d77ba;
-      border: 1px solid #d7e6f6;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-    }
-    .how-works-btn:active { transform: translateY(1px); }
-    .menu-open-btn {
-      background: #ffffff;
-      color: #3a3a3c;
-      border: 1px solid #e1e5ea;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-    }
-    .permissions-toggle {
-      background: #ffffff;
-      color: #1f2937;
-      border: 1px solid #e1e5ea;
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .permissions-toggle:active { transform: translateY(1px); }
-    .generate-stamps-btn {
-      background: #ffffff;
-      color: #1f2937;
-      border: 1px solid #e1e5ea;
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .generate-stamps-btn:active { transform: translateY(1px); }
-    .lockscreen-btn {
-      background: #ffffff;
-      color: #1f2937;
-      border: 1px solid #e1e5ea;
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-      text-decoration: none;
-    }
-    .lockscreen-btn:active { transform: translateY(1px); }
-    .redeem-btn {
-      background: #ffffff;
-      color: #0d6fb8;
-      border: none;
-      border-radius: 999px;
-      padding: 10px 22px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 170px;
-      text-align: center;
-      transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-    }
-    .redeem-btn[disabled] {
-      background: #eef0f4;
-      color: #6b7280;
-      border: 1px solid #e1e5ea;
-      box-shadow: none;
-      cursor: not-allowed;
-    }
-    .btn-disabled {
-      background: #eef0f4;
-      color: #6b7280;
-      border: 1px solid #e1e5ea;
-      box-shadow: none;
-      cursor: not-allowed;
-      transition: background 220ms ease, color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-    }
-    .btn-disabled i { color: currentColor; }
-    .reward-card {
-      transition: background 260ms ease, color 260ms ease;
-      box-shadow: none;
-    }
-    .reward-card:hover { box-shadow: none; }
-    .reward-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-    }
-    .perm-cta {
-      font-size: 13px;
-      font-weight: 700;
-      color: #0d77ba;
-      text-decoration: none;
-      background: #ffffff;
-      border: 1px solid #d7e6f6;
-      border-radius: 999px;
-      padding: 10px 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 170px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-    }
-    .enable-pop {
-      animation: enablePop 650ms cubic-bezier(0.2, 0.75, 0.25, 1);
-    }
-    @keyframes enablePop {
-      0% { filter: brightness(0.97); }
-      45% { filter: brightness(1.04); }
-      100% { filter: brightness(1); }
-    }
-    .glass {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      border-radius: 24px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
-      backdrop-filter: blur(10px);
-    }
-    .card { padding: 20px; }
-    .stamps-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      min-height: 170px;
-      border: 1px solid #e5e5ea;
-      border-radius: 24px;
-      background: #ffffff;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-    }
-    .stamps-card.ready {
-      border-color: #bfe3a2;
-      box-shadow: 0 8px 18px rgba(93, 162, 10, 0.18);
-    }
-    .stamp-ready-count {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: #eaf6dc;
-      color: #2f6f0a;
-      font-size: 12px;
-      font-weight: 700;
-      margin-left: auto;
-    }
-    .claim-all-btn {
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #ffffff;
-      color: #0d77ba;
-      border: 1px solid #d7e6f6;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-    }
-    .stamps-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #3a3a3c;
-      margin: 0 10px 0 0;
-      white-space: nowrap;
-    }
-    .stamps-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px 10px;
-      width: 100%;
-      align-items: center;
-      justify-items: center;
-    }
-    .stamp-dot {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px dashed #d7dce5;
-      background: #f7f8fb;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #c0c4ce;
-      font-size: 18px;
-      position: relative;
-      overflow: visible;
-    }
-    .stamp-icon {
-      font-size: 18px;
-      color: #2f6f0a;
-    }
-    .stamp-dot-filled {
-      border-color: #5da20a;
-      border-style: solid;
-      background: linear-gradient(180deg, #eaf6dc 0%, #d8efbb 100%);
-      box-shadow: 0 6px 14px rgba(93, 162, 10, 0.25);
-      color: #2f6f0a;
-    }
-    .stamp-dot-ready {
-      border-style: solid;
-      border-color: #2f6f0a;
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(93, 162, 10, 0.18);
-    }
-    .stamp-dot-disabled {
-      border-style: solid;
-      background: #f1f2f6;
-    }
-    .stamp-gift-active {
-      border: none;
-      background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 18px rgba(93,162,10,0.25);
-    }
-    .stamp-pop {
-      animation: stampBounce 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-    }
-    .bonus-card-pop {
-      animation: bonusPop 0.9s cubic-bezier(0.25, 0.8, 0.3, 1) forwards;
-      box-shadow: none;
-    }
-    .rewards-carousel {
-      display: flex;
-      gap: 12px;
-      padding: 0 24px;
-      margin: 0;
-      margin-left: -20px;
-      margin-right: -20px;
-      width: calc(100% + 48px);
-      overflow-x: auto;
-      overflow-y: visible;
-      position: relative;
-      scroll-snap-type: x proximity;
-    }
-    .rewards-carousel::-webkit-scrollbar { display: none; }
-    .rewards-carousel.reveal-card {
-      overflow: visible !important;
-      z-index: 4;
-    }
-    .rewards-carousel.scrolling-to-start {
-      position: relative;
-      overflow: visible !important;
-    }
-    .rewards-carousel.scrolling-to-start::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(90deg, rgba(13,111,184,0.08), rgba(13,111,184,0));
-      animation: scrollSweep 1.3s ease-out;
-    }
-    .stamps-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      min-height: 170px;
-      border: 1px solid #e5e5ea;
-      border-radius: 24px;
-      background: #ffffff;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-      transform-style: preserve-3d;
-    }
-    .stamps-card.turning {
-      animation: stampTurn 0.85s ease-in-out;
-    }
-    .bonus-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10030;
-    }
-    .bonus-modal.visible {
-      display: flex;
-    }
-    .bonus-modal__overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(4px);
-    }
-    #daily-modal .bonus-modal__overlay {
-      pointer-events: none;
-    }
-    .bonus-modal__content {
-      position: relative;
-      z-index: 1;
-      max-width: 480px;
-      width: 90%;
-      border-radius: 24px;
-      padding: 28px 24px;
-      text-align: center;
-      box-shadow: 0 22px 48px rgba(15,23,42,0.18);
-      animation: modalLift 0.45s ease-out;
-    }
-    #bonus-modal {
-      align-items: stretch;
-      padding: 0;
-    }
-    #bonus-modal .bonus-modal__content {
-      width: 100%;
-      max-width: none;
-      height: 100vh;
-      border-radius: 0;
-      text-align: center;
-      animation: modalLift 0.45s ease-out;
-      background: #ffffff;
-      box-shadow: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      padding: 48px 24px calc(64px + env(safe-area-inset-bottom));
-    }
-    .reward-fullscreen {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      min-height: 100%;
-      flex: 1;
-    }
-    .reward-fullscreen h3 {
-      margin: 4px 0 0;
-      font-size: 30px;
-      line-height: 36px;
-      font-weight: 800;
-      color: #2f3a44;
-    }
-    .reward-fullscreen p {
-      margin: 0 0 8px;
-      font-size: 16px;
-      line-height: 22px;
-      color: #3b4650;
-    }
-    .reward-trophy {
-      width: 72px;
-      height: 72px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      font-size: 36px;
-      border-radius: 20px;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-    }
-    .modal-icon {
-      width: 72px;
-      height: 72px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      font-size: 36px;
-      border-radius: 20px;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-    }
-    .reward-ticket {
-      width: 100%;
-      border: 1px solid #eceff3;
-      border-radius: 16px;
-      padding: 16px 22px 16px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 10px 0 6px;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-      position: relative;
-    }
-    .reward-badge {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-      color: #ffffff;
-      font-weight: 800;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      position: absolute;
-      top: -10px;
-      left: -10px;
-    }
-    .reward-ticket-body {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-align: center;
-      width: 100%;
-      flex-wrap: nowrap;
-      justify-content: center;
-    }
-    .reward-ticket-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: #2c3640;
-      min-width: 64px;
-      text-align: center;
-      margin-left: 0;
-      white-space: nowrap;
-    }
-    .reward-ticket-text {
-      font-size: 15px;
-      font-weight: 600;
-      color: #2c3640;
-      white-space: nowrap;
-      padding-right: 6px;
-      text-align: center;
-    }
-    .reward-cta {
-      width: 100%;
-      max-width: 520px;
-      margin-top: auto;
-      border: none;
-      border-radius: 999px;
-      background: #47850a;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      height: 44px;
-      padding: 0 24px;
-      cursor: pointer;
-      box-shadow: 0 10px 18px rgba(53, 107, 9, 0.25);
-      margin-bottom: 12px;
-    }
-    .reward-success {
-      width: 100%;
-      max-width: 520px;
-      margin: 0 auto;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      text-align: center;
-      min-height: 100%;
-      flex: 1;
-    }
-    .reward-success.is-visible {
-      display: flex;
-    }
-    .reward-success-icon {
-      width: 72px;
-      height: 72px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      font-size: 36px;
-      border-radius: 20px;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-    }
-    .reward-success-title {
-      margin: 4px 0 0;
-      font-size: 26px;
-      line-height: 32px;
-      font-weight: 800;
-      color: #2f3a44;
-    }
-    .reward-success-desc {
-      margin: 0 0 4px;
-      font-size: 15px;
-      line-height: 22px;
-      color: #3b4650;
-    }
-    .reward-code-card {
-      width: 100%;
-      border: 2px solid #c7ceda;
-      border-radius: 16px;
-      padding: 16px 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      background: #ffffff;
-    }
-    .reward-code-title {
-      font-size: 14px;
-      color: #2f3a44;
-      font-weight: 600;
-    }
-    .reward-code-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: #2f3a44;
-      letter-spacing: 1px;
-    }
-    .reward-code-copy {
-      background: transparent;
-      border: none;
-      color: #0d6fb8;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    .reward-success-list {
-      margin: 6px 0 4px;
-      padding-left: 0;
-      list-style-position: inside;
-      list-style-type: disc;
-      text-align: left;
-      color: #3b4650;
-      font-size: 14px;
-      line-height: 20px;
-    }
-    .reward-success-list li {
-      margin-bottom: 6px;
-    }
-    .reward-success-cta {
-      width: 100%;
-      max-width: 520px;
-      margin-top: auto;
-      border: none;
-      border-radius: 999px;
-      background: #47850a;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      height: 44px;
-      padding: 0 24px;
-      cursor: pointer;
-      box-shadow: 0 10px 18px rgba(53, 107, 9, 0.25);
-      margin-bottom: 12px;
-    }
-    .series-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10040;
-      pointer-events: none;
-    }
-    .series-modal::before {
-      content: "";
-      position: absolute;
-      inset: 54px 0 78px;
-      background: rgba(15, 23, 42, 0.45);
-      backdrop-filter: blur(6px);
-    }
-    .series-modal.is-visible {
-      display: flex;
-    }
-    .series-card {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 24px;
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 28px 24px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(15,23,42,0.18);
-      position: relative;
-      pointer-events: auto;
-    }
-    .series-icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 12px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      font-size: 36px;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-    }
-    .series-title {
-      margin: 0 0 6px;
-      font-size: 22px;
-      line-height: 28px;
-      font-weight: 800;
-      color: #2f3a44;
-    }
-    .series-desc {
-      margin: 0;
-      font-size: 15px;
-      line-height: 22px;
-      color: #3b4650;
-    }
-    #daily-modal {
-      align-items: stretch;
-      padding: 0;
-    }
-    #daily-modal .bonus-modal__content {
-      width: 100%;
-      max-width: none;
-      height: 100%;
-      max-height: none;
-      border-radius: 0;
-      padding: 28px 24px 24px;
-      text-align: left;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      animation: drawerSlideUp 520ms ease-out both;
-      animation-delay: 0ms;
-      background: #ffffff;
-      box-shadow: none;
-      display: flex;
-      flex-direction: column;
-    }
-    #daily-modal .daily-modal-footer {
-      margin-top: auto;
-      padding-bottom: 12px;
-    }
-    .celebrate-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
-      margin: 0 auto 16px;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-      display: grid;
-      place-items: center;
-      color: #ffffff;
-      animation: iconPulse 1.4s ease-in-out infinite;
-      position: relative;
-      overflow: visible;
-    }
-    .celebrate-icon::after {
-      content: "";
-      position: absolute;
-      inset: -10px;
-      border-radius: 28px;
-      border: 2px solid rgba(255,255,255,0.35);
-      animation: iconRing 1.4s ease-in-out infinite;
-    }
-    .bonus-modal h3 {
-      margin: 0 0 8px 0;
-      font-size: 22px;
-      font-weight: 800;
-      color: #2f2f35;
-    }
-    .bonus-modal p {
-      margin: 0 0 16px 0;
-      color: #6e6e73;
-      font-size: 14px;
-      line-height: 20px;
-    }
-    .daily-modal-options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-    .daily-option {
-      padding: 16px 16px;
-      background: #ffffff;
-      border: 1px solid #eceff3;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
-      display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 14px;
-      font-size: 18px;
-      font-weight: 700;
-      color: #2c3640;
-      cursor: pointer;
-      text-align: left;
-      width: 100%;
-    }
-    .daily-option:last-child {
-      margin-bottom: 0;
-    }
-    .daily-option small {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: #5c5f6b;
-      margin-top: 6px;
-      line-height: 20px;
-    }
-    .daily-option small.daily-highlight {
-      color: #000000;
-      font-weight: 600;
-    }
-    .daily-option .radio {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid #bfc5d1;
-      margin-top: 2px;
-    }
-    .daily-option.is-selected .radio {
-      border-color: #5DA20A;
-      background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
-      box-shadow: inset 0 0 0 5px #ffffff;
-    }
-    .daily-complete-msg {
-      color: #2f6f0a;
-      font-weight: 600;
-    }
-    .daily-complete-msg span {
-      font-weight: 700;
-    }
-    .daily-complete-panel {
-      margin: -12px 24px 16px;
-      padding: 18px 16px;
-      border-radius: 20px;
-      border: 0;
-      background: linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);
-      display: none;
-      align-items: center;
-      gap: 14px;
-      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
-    }
-    .daily-complete-panel.is-visible {
-      display: flex;
-    }
-    .daily-complete-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #ffffff;
-      display: grid;
-      place-items: center;
-      flex: 0 0 auto;
-    }
-    .daily-complete-icon svg path {
-      fill: #2f6f0a;
-    }
-    .daily-complete-icon-mask {
-      width: 26px;
-      height: 26px;
-      display: block;
-      background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
-      -webkit-mask: url("images/shoe-prints-solid-full.svg") center / contain no-repeat;
-      mask: url("images/shoe-prints-solid-full.svg") center / contain no-repeat;
-    }
-    .daily-complete-text {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .daily-complete-title {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .daily-complete-subtitle {
-      color: #ffffff;
-    }
-    .daily-complete-subtitle {
-      margin: 0;
-      font-size: 14px;
-      color: #ffffff;
-    }
-    .tutorial-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 10080;
-      display: none;
-      pointer-events: none;
-      background: transparent;
-    }
-    .tutorial-overlay.is-visible {
-      display: block;
-    }
-    .tutorial-highlight {
-      position: fixed;
-      border-radius: 32px;
-      border: none;
-      box-shadow: 0 0 0 9999px rgba(13, 21, 34, 0.35);
-      transition: all 320ms ease-out;
-      will-change: top, left, width, height, border-radius;
-      pointer-events: none;
-    }
-    .tutorial-active .page {
-      padding-bottom: 300px;
-    }
-    .tutorial-card {
-      position: fixed;
-      max-width: none;
-      background: #3f4a55;
-      color: #ffffff;
-      border-radius: 12px;
-      padding: 12px 14px;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.25);
-      pointer-events: auto;
-      transition: top 320ms ease-out, left 320ms ease-out, opacity 200ms ease-out;
-      will-change: top, left;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      opacity: 0;
-    }
-    .tutorial-stepper {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 18px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      pointer-events: auto;
-      z-index: 1;
-    }
-    .tutorial-stepper__bar {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #ffffff;
-      border-radius: 999px;
-      padding: 8px 14px;
-      box-shadow: 0 8px 20px rgba(15,23,42,0.18);
-    }
-    .tutorial-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #d3d7df;
-    }
-    .tutorial-dot.is-active {
-      background: #0d6fb8;
-    }
-    .tutorial-skip {
-      border: none;
-      background: #ffffff;
-      color: #0d6fb8;
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 15px;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(15,23,42,0.18);
-      cursor: pointer;
-    }
-    .tutorial-step {
-      display: none;
-    }
-    .tutorial-text {
-      font-size: 17px;
-      line-height: 22px;
-      margin: 0;
-      text-align: left;
-      flex: 1;
-    }
-    .tutorial-actions {
-      display: flex;
-      justify-content: flex-end;
-    }
-    .tutorial-next {
-      border: none;
-      background: #ffffff;
-      color: #0d6fb8;
-      border: 1px solid #d7dce5;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-      cursor: pointer;
-    }
-    .tutorial-active .stamps-row .stamp-dot {
-      display: inline-flex;
-    }
-    .daily-info {
-      background: #f0f1f5;
-      color: #000000;
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0 14px;
-      text-align: left;
-    }
-    .daily-info-text {
-      white-space: normal;
-    }
-    .daily-info-avg {
-      display: inline-block;
-      white-space: nowrap;
-    }
-    .daily-highlight {
-      background: #f0f1f5;
-      color: #000000;
-      border-radius: 4px;
-      padding: 2px 6px;
-      display: inline-block;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .daily-info-icon img {
-      width: 34px;
-      height: 34px;
-      display: block;
-      filter: brightness(0) saturate(100%) invert(60%) sepia(71%) saturate(501%) hue-rotate(39deg) brightness(97%) contrast(92%);
-    }
-    .daily-info span {
-      font-weight: 600;
-    }
-    .daily-modal-footer {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .daily-note {
-      font-size: 14px;
-      color: #9aa0aa;
-      margin: 0;
-      text-align: center;
-    }
-    .start-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      background: rgba(13, 21, 34, 0.45);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 12000;
-    }
-    .start-modal.open { display: flex; }
-    .start-modal__sheet {
-      width: 100%;
-      max-width: 520px;
-      background: #ffffff;
-      border-radius: 24px 24px 0 0;
-      padding: 20px 22px 26px;
-      box-shadow: 0 -12px 24px rgba(0, 0, 0, 0.12);
-      animation: drawerSlideUp 520ms ease-out both;
-      animation-delay: 0ms;
-    }
-    .start-modal__close {
-      margin-left: auto;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: #f0f1f5;
-      color: #6e6e73;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      font-size: 20px;
-      line-height: 1;
-    }
-    .start-modal__title {
-      margin: 10px 0 10px;
-      font-size: 24px;
-      font-weight: 800;
-      color: #2c3640;
-      line-height: 30px;
-    }
-    .start-modal__desc {
-      margin: 0 0 16px;
-      font-size: 16px;
-      line-height: 22px;
-      font-weight: 500;
-      color: #3a3a3c;
-    }
-    .start-modal__highlight {
-      background: #f0f1f5;
-      color: #000000;
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-size: 14px;
-      line-height: 20px;
-      margin: 0 0 18px;
-    }
-    .drawer-cta {
-      width: 100%;
-      border: none;
-      border-radius: 999px;
-      background: #47850a;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      height: 44px;
-      padding: 0 24px;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
-    }
-    .start-modal__cta {
-      width: 100%;
-      border: none;
-      border-radius: 999px;
-      background: #47850a;
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      height: 44px;
-      padding: 0 24px;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(53,107,9,0.25);
-    }
-    .permission-drawer {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      background: rgba(13, 21, 34, 0.45);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 10040;
-    }
-    .permission-drawer.open { display: flex; }
-    .permission-drawer__sheet {
-      width: 100%;
-      max-width: none;
-      height: 100%;
-      background: #ffffff;
-      border-radius: 0;
-      padding: 32px 22px 32px;
-      box-shadow: none;
-      text-align: center;
-      animation: drawerSlideUp 520ms ease-out both;
-      display: flex;
-      flex-direction: column;
-    }
-    .permission-drawer__icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 20px;
-      margin: 4px auto 12px;
-      background: linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);
-      color: #ffffff;
-      display: grid;
-      place-items: center;
-      font-size: 28px;
-    }
-    .permission-drawer__title {
-      margin: 0 0 8px;
-      font-size: 24px;
-      font-weight: 800;
-      color: #2c3640;
-      line-height: 30px;
-    }
-    .permission-drawer__desc {
-      margin: 0 0 16px;
-      font-size: 16px;
-      line-height: 22px;
-      font-weight: 500;
-      color: #3a3a3c;
-    }
-    .permission-drawer__highlight {
-      margin: 0 0 18px;
-      font-size: 16px;
-      font-weight: 700;
-      color: #2c3640;
-    }
-    .permission-stamp-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px 10px;
-      justify-items: center;
-      margin: 16px 0 18px;
-    }
-    .permission-stamp {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px dashed #d7dce5;
-      background: #f7f8fb;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #c0c4ce;
-      font-size: 18px;
-    }
-    .permission-stamp.filled {
-      border-color: #5da20a;
-      border-style: solid;
-      background: linear-gradient(180deg, #eaf6dc 0%, #d8efbb 100%);
-      box-shadow: 0 6px 14px rgba(93, 162, 10, 0.25);
-      color: #2f6f0a;
-    }
-    .permission-stamp i {
-      font-size: 18px;
-      color: #2f6f0a;
-    }
-    .permission-stamp[data-stamp="8"] i {
-      color: #c0c4ce;
-    }
-    .permission-stamp.pop {
-      animation: stampBounce 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-    }
-    .permission-drawer__note {
-      margin: 0 0 18px;
-      font-size: 15px;
-      color: #5f6368;
-      font-weight: 600;
-    }
-    .permission-drawer__note {
-      margin-bottom: auto;
-    }
-    .bonus-close {
-      margin-top: 24px;
-      background: #e5f1fe;
-      color: #0d6fb8;
-      border: 1px solid #cbdcf6;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 160px;
-      box-shadow: 0 6px 16px rgba(13, 111, 184, 0.16);
-      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
-    }
-    #bonus-modal .bonus-close {
-      width: 100%;
-    }
-    .bonus-close:hover { filter: brightness(0.98); box-shadow: 0 10px 20px rgba(13, 111, 184, 0.18); }
-    .bonus-close:active { transform: translateY(1px); box-shadow: 0 6px 16px rgba(13, 111, 184, 0.16); }
-    .bonus-code {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: #f5f8fd;
-      color: #0d6fb8;
-      border: 1px solid #d7dce5;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
-    }
-    .bonus-code i { color: #0d6fb8; font-size: 14px; }
-    .confetti-piece {
-      position: fixed;
-      width: 8px;
-      height: 14px;
-      border-radius: 3px;
-      opacity: 0.95;
-      pointer-events: none;
-      animation: confettiFall 1.2s ease-out forwards;
-    }
-    .confetti-piece {
-      position: fixed;
-      width: 8px;
-      height: 14px;
-      border-radius: 3px;
-      opacity: 0.95;
-      pointer-events: none;
-      animation: confettiFall 1.2s ease-out forwards;
-    }
-    @keyframes stampBounce {
-      0% { transform: translateY(-12px) scale(0.9); box-shadow: 0 0 0 rgba(93,162,10,0); opacity: 0.85; }
-      40% { transform: translateY(8px) scale(1.15); box-shadow: 0 16px 28px rgba(93,162,10,0.32); opacity: 1; }
-      70% { transform: translateY(-6px) scale(1.02); box-shadow: 0 10px 20px rgba(93,162,10,0.24); }
-      100% { transform: translateY(0) scale(1); box-shadow: 0 8px 18px rgba(93,162,10,0.18); opacity: 1; }
-    }
-@keyframes bonusPop {
-  0% { transform: translateY(18px) scale(0.96); box-shadow: none; opacity: 0; }
-  55% { transform: translateY(-4px) scale(1.02); box-shadow: none; opacity: 1; }
-  100% { transform: translateY(0) scale(1); box-shadow: none; opacity: 1; }
-}
-    @keyframes scrollSweep {
-      0% { transform: translateX(-12%); opacity: 0.55; }
-      100% { transform: translateX(100%); opacity: 0; }
-    }
-    @keyframes stampTurn {
-      0% { transform: rotateY(0deg) scale(1); opacity: 1; }
-      40% { transform: rotateY(75deg) scale(0.96); opacity: 0.5; }
-      60% { transform: rotateY(100deg) scale(0.96); opacity: 0.4; }
-      100% { transform: rotateY(0deg) scale(1); opacity: 1; }
-    }
-    @keyframes confettiFall {
-      0% { transform: translate3d(var(--x, 0px), -10px, 0) rotate(0deg); opacity: 1; }
-      100% { transform: translate3d(var(--x, 0px), 140px, 0) rotate(420deg); opacity: 0; }
-    }
-    @keyframes modalLift {
-      0% { transform: translateY(14px) scale(0.97); opacity: 0; }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    @keyframes drawerSlideUp {
-      0% { transform: translateY(100%); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes drawerSlideDown {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100%); opacity: 0; }
-    }
-    @keyframes iconPulse {
-      0%, 100% { transform: scale(0.95); }
-      50% { transform: scale(1.06); }
-    }
-    @keyframes iconRing {
-      0% { transform: scale(0.9); opacity: 0.7; }
-      100% { transform: scale(1.1); opacity: 0; }
-    }
-    .tabbar {
-      position: fixed;
-      bottom: 0px;
-      left: 0;
-      right: 0;
-      background: #fff;
-      border-top: 1px solid #ededed;
-      display: grid;
-  grid-template-columns: repeat(5, 1fr);
-      padding: 16px 8px 16px;
-      box-shadow: 0 -10px 24px rgba(0, 0, 0, 0.05);
-      z-index: 10010;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      will-change: transform;
-    }
-    .modal-open .tabbar {
-      pointer-events: none;
-      z-index: 1;
-    }
-    .tab {
-      display: grid;
-      place-items: center;
-      gap: 2px;
-      font-size: 12px;
-      color: #8e8e93;
-      text-decoration: none;
-    }
-    .tab-icon {
-      width: 26px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .tab-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      filter: grayscale(1) brightness(0.8);
-    }
-    .tab.active { color: var(--green-500); font-weight: 700; }
-    .tab:not(.active) { color: #8e8e93; }
-    .tab.active .tab-icon img { filter: none; }
-    .section-title { font-size: 20px; font-weight: 700; margin: 0; color: var(--gray-900); }
-    .muted { color: var(--gray-400); font-size: 14px; }
-    .entry-sticky {
-      position: fixed;
-      left: 16px;
-      right: 16px;
-      bottom: 92px;
-      background: linear-gradient(151deg, #95da39 0%, #5da20a 100%);
-      border: none;
-      border-radius: 18px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-      padding: 12px 14px;
-      z-index: 18;
-      display: none;
-      align-items: center;
-      gap: 12px;
-    }
-    .entry-sticky-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: #ffffff;
-      margin: 0;
-      flex: 1;
-    }
-    .entry-sticky-btn {
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: #ffffff;
-      color: #0d77ba;
-      border: 1px solid #ffffff;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .seasonal-sticky {
-      bottom: 92px;
-    }
-    .bar {
-      height: 10px;
-      border-radius: 999px;
-      background: #f2f2f7;
-      overflow: visible;
-      position: relative;
-    }
-    .bar-dot {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: #E4002B;
-      border: 5px solid #ffffff;
-      top: 50%;
-      left: 10px;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--green-300), var(--green-500));
-    }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: var(--blue-50);
-      color: var(--gray-900);
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid var(--gray-100);
-    }
-    .challenge-tag {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-    }
-    .is-hidden { display: none !important; }
-    .challenge {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(13, 119, 186, 0.06);
-      border: 1px solid #e5f1fe;
-      color: #0d6fb8;
-      font-size: 16px;
-      line-height: 22px;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-      max-width: 520px;
-      width: 100%;
-    }
-    .challenge strong { color: #0d6fb8; }
-    .challenge button {
-      margin-top: 10px;
-      background:#47850a;
-      color:#ffffff;
-      border:1px solid #47850a;
-      border-radius:999px;
-      padding:10px 16px;
-      font-weight:700;
-      cursor:pointer;
-      box-shadow:0 6px 14px rgba(53,107,9,0.18);
-    }
-    .challenge button:active { transform: translateY(1px); }
-    .card-header-safe { position: relative; }
-    .main-half-lock {
-      position: absolute;
-      inset: 35% 0 0 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(8px);
-      pointer-events: all;
-      padding: 16px 24px 18px;
-    }
-    @media (max-width: 400px) {
-      .card-tag {
-        position: static !important;
-        margin-top: 8px !important;
-        align-self: flex-start !important;
-      }
-    }
-    @keyframes breathe {
-      0% { transform: scale(0.9); opacity: 0.7; }
-      50% { transform: scale(1.05); opacity: 1; }
-      100% { transform: scale(0.9); opacity: 0.7; }
-    }
-    .press-menu-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 18, 24, 0.4);
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 12000;
-    }
-    .press-menu-overlay.open { display: flex; }
-    .press-menu {
-      width: min(420px, calc(100% - 32px));
-      background: #ffffff;
-      border-radius: 20px 20px 16px 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 18px 30px rgba(15, 18, 24, 0.2);
-      font-family: "Proxima Vara", "Proxima Nova", sans-serif;
-    }
-    .press-menu-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      color: #3a3a3c;
-      font-weight: 700;
-      font-size: 15px;
-    }
-    .press-menu-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: #f0f1f4;
-      color: #3a3a3c;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    .press-menu-btn {
-      width: 100%;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 16px;
-      margin-top: 10px;
-      background: #f7f7fb;
-      color: #2c2c2e;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .press-menu-btn.danger {
-      background: #47850a;
-      color: #ffffff;
-      box-shadow: 0 8px 18px rgba(53, 107, 9, 0.25);
-    }
-    .menu-open-btn {
-      background: #ffffff;
-      color: #1f2937;
-      border: 1px solid #e1e5ea;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
-    }
-    .menu-open-btn:active { transform: translateY(1px); }
-    .press-menu-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 10px;
-      padding: 8px 4px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #2c2c2e;
-    }
-    .press-menu-switch {
-      position: relative;
-      width: 44px;
-      height: 24px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .press-menu-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    .press-menu-slider {
-      position: absolute;
-      inset: 0;
-      background: #d6d8de;
-      border-radius: 999px;
-      transition: background 0.2s ease;
-    }
-    .press-menu-slider::after {
-      content: "";
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      left: 3px;
-      top: 3px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
-      transition: transform 0.2s ease;
-    }
-    .press-menu-switch input:checked + .press-menu-slider {
-      background: #47850a;
-    }
-    .press-menu-switch input:checked + .press-menu-slider::after {
-      transform: translateX(20px);
-    }
-    .challenge-progress {
-      position: relative;
-      width: calc(100vw - 24px);
-      max-width: none;
-      margin: 16px 0 24px;
-      margin-left: calc(50% - 50vw + 24px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .challenge-progress .progress-shell {
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding-top: 55.3%;
-    }
-    .challenge-progress .progress-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-    .challenge-progress .progress-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    .stamps-card {
-      position: relative;
-      z-index: 2;
-    }
-    .daily-block {
-      position: relative;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Max UX Research Survey</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode.js/1.5.3/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Proxima+Nova:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Proxima Nova', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f9fafb;
+        }
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            min-width: 300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        #qrScreen .header {
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        .header p {
+            font-size: 16px;
+            color: #6b7280;
+        }
+        .intro-section {
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            padding: 20px 0;
+            margin-bottom: 28px;
+        }
+        .intro-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1f2937;
+        }
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .country-btn {
+            padding: 16px;
+            border: 2px solid #D1D5DB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .country-btn:hover {
+            background: #F3F4F6;
+        }
+        .flag {
+            font-size: 32px;
+        }
+        .requirement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .requirement-card {
+            background: white;
+            border: none;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .requirement-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .requirement-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .qr-container {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        #qrCode {
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 16px;
+        }
+        .qr-label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .qr-url {
+            font-size: 12px;
+            color: #9ca3af;
+            font-family: monospace;
+            background: white;
+            padding: 8px;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+        .instruction-box {
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .instruction-box ol {
+            margin: 0;
+            padding-left: 20px;
+            text-align: left;
+            list-style-position: outside;
+            display: block;
+        }
+        #qrScreen .instruction-box ol {
+            margin: 0 auto;
+            padding-left: 0;
+            text-align: center;
+            list-style-position: inside;
+            display: inline-block;
+        }
+        .instruction-box li {
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-align: left;
+        }
+        #qrScreen .instruction-box li {
+            text-align: center;
+            padding-left: 0;
+        }
+        .instruction-box li:last-child {
+            margin-bottom: 0;
+        }
+        .task-counter {
+            font-size: 13px;
+            color: #48860A;
+            background: #F0F8E5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .form-section {
+            margin-bottom: 24px;
+            min-height: 60px;
+        }
+        .form-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .radio-item input {
+            cursor: pointer;
+        }
+        .steps-container {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 16px;
+        }
+        .step-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .step-number {
+            font-weight: 600;
+            color: #6b7280;
+            min-width: 24px;
+        }
+        .step-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 16px;
+        }
+        .help-link {
+            color: #0055BB;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+            min-height: 44px;
+        }
+        button {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #48860A;
+            color: #F8F9EB;
+        }
+        .btn-primary:hover {
+            background: #5AA412;
+        }
+        .btn-primary:active {
+            background: #2F5A06;
+        }
+        .btn-primary:disabled {
+            background: #E8E8E0;
+            color: #9CA3AF;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: white;
+            border: 2px solid #0055BB;
+            color: #0055BB;
+        }
+        .btn-secondary:hover {
+            background: #E3F2FD;
+        }
+        .btn-secondary:active {
+            background: #0055BB;
+            color: white;
+        }
+        .btn-secondary:disabled {
+            border-color: #D1D5DB;
+            color: #9CA3AF;
+        }
+        .success-screen {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .success-icon {
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .success-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        .success-text {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .modal-example {
+            margin: 16px 0;
+            padding: 12px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .example-list {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        .error-message {
+            color: #E24B4A;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <main class="page">
-    <div class="top-nav">
-      <button class="back-btn" onclick="window.location.href='app-home.html'" aria-label="Zpět">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M14.5 5L8.5 11.5L14.5 18" stroke="#1b1b1b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-      <h1 class="top-title">Zdravý pohyb s Maxem</h1>
-      <div class="top-actions">
-        <button class="menu-open-btn is-hidden" type="button" id="menu-open-btn">Menu</button>
-      </div>
-    </div>
-    <section style="padding:20px 0px 28px;margin-bottom:24px;">
-      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;text-align:left;"></div>
-      <div class="daily-block">
-      <div class="challenge-progress is-hidden" id="daily-progress">
-        <div class="progress-shell">
-        <svg class="progress-svg" viewBox="0 0 380 210" preserveAspectRatio="xMaxYMid meet" fill="none" data-progress="64">
-          <defs>
-            <linearGradient id="arcGreen" x1="51.5829" y1="-22.8751" x2="331.322" y2="-17.3927" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#95DA39" />
-              <stop offset="1" stop-color="#5DA20A" />
-            </linearGradient>
-            <linearGradient id="arcRed" x1="0" y1="22.5" x2="45" y2="22.5" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#E4002B" />
-              <stop offset="1" stop-color="#FD5553" />
-            </linearGradient>
-          </defs>
-          <path d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="#E2E6EE" stroke-width="18" />
-          <path class="arc-progress" d="M380 198H105C53.6375 198 12 156.362 12 105C12 53.6375 53.6375 12 105 12H380" stroke="url(#arcGreen)" stroke-linecap="butt" stroke-width="18" pathLength="100" stroke-dasharray="0 100" />
-          <circle class="arc-knob" r="16" fill="#E4002B" opacity="1" stroke="white" stroke-width="4" style="filter: drop-shadow(0 4px 10px rgba(0,0,0,0.18));"></circle>
-          <text x="340" y="12" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.2)" stroke-width="0.6" paint-order="stroke" id="daily-goal-label">5000</text>
-          <text x="340" y="198" text-anchor="middle" dominant-baseline="middle" class="font-sans text-[12px]" fill="#ffffff" stroke="rgba(0,0,0,0.25)" stroke-width="0.4" paint-order="stroke">0</text>
-        </svg>
-        <div class="progress-label">
-          <div class="text-left" style="max-width: 240px;">
-            <p class="font-sans text-[22px] font-semibold leading-[26px] text-[#3a3a3c] m-0" id="daily-steps-title">Denní cíl</p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-goal">
-              Pohoda – 7&nbsp;500 kroků
-            </p>
-            <p class="font-sans text-[14px] font-normal leading-[18px] text-[#3a3a3c] m-0" id="daily-steps-remaining" style="margin-top:6px;">
-              Ještě 5&nbsp;345 kroků k dennímu razítku.
-            </p>
-          </div>
-        </div>
-        </div>
-      </div>
-      </div>
-      <article class="bg-white rounded-[32px] shadow-sm relative overflow-hidden border border-[#e5e5ea] mb-6" style="position:relative;" id="entry-permission-card">
-        <div class="flex flex-col gap-1 pl-6 pr-6 pt-6 pb-3 relative card-header-safe">
-          <p class="font-sans text-[13px] font-normal leading-[17px] text-[#8a8a93] uppercase tracking-[0.5px] mb-2">Vstupní výzva</p>
-          <p class="font-sans text-[22px] font-semibold leading-[28px] text-[#3a3a3c]">Připojit Android Health</p>
-          <p class="font-sans text-[14px] font-normal leading-[18px] text-[#8a8a93]">
-            Povolte přístup ke krokům a získejte hned 4 razítka.
-          </p>
-          <span class="tag card-tag challenge-tag" style="border:0; padding:6px 10px; display:inline-flex; align-items:center; gap:6px; background:#e8f6db; color:#2f6f0a;">
-            <i class="fa-solid fa-stamp" style="color:#2f6f0a;font-size:13px;"></i>
-            4 razítka
-          </span>
-        </div>
-        <div style="display:flex;justify-content:flex-start;padding:0 24px 18px;">
-          <button style="background:#47850a;color:#ffffff;border:1px solid #47850a;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(53,107,9,0.25);" onclick="window.location.href='permissions-android.html'">
-            <i class="fa-solid fa-check" style="font-size:14px;color:#ffffff;"></i>
-            Připojit zdravotní data
-          </button>
-        </div>
-      </article>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin:40px 4px 12px;">
-      <h2 id="stamps-remaining-title" style="margin:0;font-size:18px;font-weight:700;color:#3a3a3c;">Zbývají už jen 4 razítka k odměně</h2>
-      </div>
-      <div class="stamps-card" id="stamps-card" style="margin-top:0;">
-        <div class="stamps-row" aria-label="Průběh razítek">
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot"></span>
-          <span class="stamp-dot stamp-dot-disabled" aria-label="Odměna uzamčena">
-            <i class="fa-solid fa-gift" style="font-size:18px;color:#c0c4ce;"></i>
-          </span>
-        </div>
-      </div>
-      <div class="reward-card font-sans" id="bonus-reward-card" style="background:linear-gradient(151deg, #95DA39 0%, #5DA20A 100%);border:0;border-radius:24px;padding:16px 18px;color:#ffffff;box-shadow:0 6px 14px rgba(15,23,42,0.06);margin-top:14px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:48px;height:48px;border-radius:14px;background:#ffffff;display:flex;align-items:center;justify-content:center;color:#5DA20A;">
-            <i class="fa-solid fa-gift" style="font-size:18px;"></i>
-          </div>
-          <div>
-            <p id="bonus-reward-title" style="margin:0;font-size:16px;font-weight:700;line-height:20px;">Cílová odměna</p>
-            <p class="muted" id="bonus-reward-text" style="margin:2px 0 0;color:#ffffff;">10% sleva na produkty Dr. Max.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    
-
-
-  </main>
-
-  <div class="entry-sticky" id="entry-challenge-sticky" aria-live="polite">
-    <p class="entry-sticky-title">Synchronizujte Android Health a získáte 4 razítka.</p>
-    <a class="entry-sticky-btn" href="permissions-android.html">
-      Synchronizovat
-    </a>
-  </div>
-  <div class="entry-sticky seasonal-sticky" id="seasonal-challenge-sticky" aria-live="polite">
-    <p class="entry-sticky-title">Sezónní výzva odemčena</p>
-    <button class="entry-sticky-btn" id="seasonal-start-btn" type="button">Spustit výzvu</button>
-  </div>
-
-  <nav class="tabbar">
-    <a class="tab" href="app-home.html">
-      <div class="tab-icon"><img src="images/Home.svg" alt=""></div>
-      <span>E-shop</span>
-    </a>
-    <a class="tab" href="#">
-      <div class="tab-icon"><img src="images/Rx.svg" alt=""></div>
-      <span>Recepty</span>
-    </a>
-    <a class="tab" href="#">
-      <div class="tab-icon"><img src="images/Cart.svg" alt=""></div>
-      <span>Košík</span>
-    </a>
-    <a class="tab" href="#">
-      <div class="tab-icon"><img src="images/Purchases.svg" alt=""></div>
-      <span>Nákupy</span>
-    </a>
-    <a class="tab active" href="menu.html">
-      <div class="tab-icon"><img src="images/Menu.svg" alt=""></div>
-      <span>Menu</span>
-    </a>
-  </nav>
-
-  <div id="daily-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="daily-modal-title" aria-describedby="daily-modal-desc">
-    <div id="daily-modal-overlay" class="bonus-modal__overlay"></div>
-    <div class="bonus-modal__content glass">
-      <h3 id="daily-modal-title">Vyberte si svůj denní cíl</h3>
-      <div class="daily-info">
-        <span class="daily-info-icon" aria-hidden="true">
-          <img src="images/lightbulb-regular-full.svg" alt="">
-        </span>
-        <span class="daily-info-text">Za poslední měsíc jste nachodila průměrně <strong class="daily-info-avg">4 434 kroků</strong> za den.</span>
-      </div>
-      <div class="daily-modal-options">
-        <button class="daily-option" type="button" data-steps="4500" data-discount="5">
-          <span class="radio" aria-hidden="true"></span>
-          <span>Start – 4 500 kroků</span>
-        </button>
-        <button class="daily-option is-selected" type="button" data-steps="7500" data-discount="10">
-          <span class="radio" aria-hidden="true"></span>
-          <span>
-            Pohoda – 7 500 kroků
-            <small>Kroky se sčítají během celého dne – nemusíte je ujít najednou.</small>
-            <small class="daily-highlight">Doporučeno na základě vašeho průměru</small>
-          </span>
-        </button>
-        <button class="daily-option" type="button" data-steps="10000" data-discount="15">
-          <span class="radio" aria-hidden="true"></span>
-          <span>Výzva – 10 000 kroků</span>
-        </button>
-      </div>
-      <div class="daily-modal-footer">
-        <button id="daily-modal-apply" class="drawer-cta" type="button">Nastavit cíl</button>
-        <p class="daily-note">Cíle můžete později změnit</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="bonus-modal" class="bonus-modal" role="dialog" aria-modal="true" aria-labelledby="bonus-modal-title" aria-describedby="bonus-modal-desc">
-    <div id="bonus-modal-overlay" class="bonus-modal__overlay"></div>
-    <div class="bonus-modal__content">
-      <div class="reward-fullscreen">
-        <div class="reward-trophy modal-icon">
-          <i class="fa-solid fa-trophy" aria-hidden="true"></i>
-        </div>
-        <h3 id="bonus-modal-title">Gratulujeme!</h3>
-        <p id="bonus-modal-desc">Nasbírali jste všechna razítka a odemykáte svou odměnu.</p>
-        <div class="reward-ticket">
-          <div class="reward-badge" aria-hidden="true">%</div>
-          <div class="reward-ticket-body">
-            <div class="reward-ticket-value" id="bonus-modal-reward-value">10 %</div>
-          <div class="reward-ticket-text" id="bonus-modal-reward-text">Sleva na doplňky stravy Dr. Max</div>
-          </div>
-        </div>
-        <button id="bonus-modal-close" class="reward-cta" type="button">Vyzvednout odměnu</button>
-      </div>
-      <div class="reward-success" id="reward-success">
-        <div class="reward-success-icon modal-icon">
-          <i class="fa-solid fa-check" aria-hidden="true"></i>
-        </div>
-        <h3 class="reward-success-title">Slevový kupón je váš</h3>
-        <p class="reward-success-desc">Kupón jsme uložili do aplikace a poslali také na váš e-mail.</p>
-        <div class="reward-code-card">
-          <div class="reward-code-title">Váš slevový kód</div>
-          <div class="reward-code-value" id="reward-success-code">POHYB67</div>
-          <button class="reward-code-copy" type="button" id="reward-success-copy">Kopírovat kód</button>
-        </div>
-        <ul class="reward-success-list">
-          <li>Kód zadejte při nákupu online nebo ho ukažte v lékárně</li>
-          <li>Kupón je platný 25 dní</li>
-        </ul>
-        <button class="reward-success-cta" type="button" id="reward-success-close">Hotovo</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="series-modal" class="series-modal" aria-hidden="true">
-    <div class="series-card">
-      <div class="series-icon modal-icon" aria-hidden="true">
-        <i class="fa-solid fa-clock"></i>
-      </div>
-      <h3 class="series-title">Skvělá práce!</h3>
-      <p class="series-desc">Zvládla jste jednu celou sérii. Nová série razítek začne zítra.</p>
-    </div>
-  </div>
-
-  <div id="tutorial-overlay" class="tutorial-overlay" aria-hidden="true">
-    <div class="tutorial-highlight" id="tutorial-highlight"></div>
-    <div class="tutorial-card" id="tutorial-card">
-      <div class="tutorial-step" id="tutorial-step">2-1</div>
-      <p class="tutorial-text" id="tutorial-text">Tady vidíte svůj denní cíl.</p>
-      <div class="tutorial-actions">
-        <button class="tutorial-next" id="tutorial-next" type="button">Další</button>
-      </div>
-    </div>
-    <div class="tutorial-stepper" id="tutorial-stepper">
-      <button class="tutorial-skip" id="tutorial-skip" type="button">Přeskočit tutorial</button>
-      <div class="tutorial-stepper__bar" id="tutorial-stepper-bar">
-        <span class="tutorial-dot" data-step="0"></span>
-        <span class="tutorial-dot" data-step="1"></span>
-        <span class="tutorial-dot" data-step="2"></span>
-      </div>
-    </div>
-  </div>
-
-  <div id="start-modal" class="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-modal-title">
-    <div class="start-modal__sheet">
-      <div style="display:flex;justify-content:flex-end;">
-        <button class="start-modal__close" type="button" id="start-modal-close" aria-label="Zavřít">×</button>
-      </div>
-      <h2 class="start-modal__title" id="start-modal-title">Jste připraveni proměnit zdravý pohyb v zábavu?</h2>
-      <p class="start-modal__desc">Abychom vám mohli přičítat razítka, potřebujeme přístup ke krokům a vzdálenosti.</p>
-      <p class="start-modal__highlight">Nečteme žádné citlivé údaje a data používáme jen pro tuto funkci.</p>
-      <button class="drawer-cta start-modal__cta" type="button" onclick="window.location.href='permissions-android.html'">Jdeme na to!</button>
-    </div>
-  </div>
-
-  <div id="permission-drawer" class="permission-drawer" role="dialog" aria-modal="true" aria-labelledby="permission-drawer-title">
-    <div class="permission-drawer__sheet">
-      <div class="permission-drawer__icon" aria-hidden="true">
-        <i class="fa-solid fa-thumbs-up"></i>
-      </div>
-      <h2 class="permission-drawer__title" id="permission-drawer-title">Skvělý start!</h2>
-      <p class="permission-drawer__desc">Za to, že jste si vybrali cíl a zapojili se do hry, dostáváte rovnou 4 razítka.</p>
-      <p class="permission-drawer__highlight" id="permission-drawer-remaining">Zbývají už jen 4 razítka k odměně</p>
-      <div class="permission-stamp-grid" aria-label="Průběh">
-        <span class="permission-stamp" data-stamp="1"></span>
-        <span class="permission-stamp" data-stamp="2"></span>
-        <span class="permission-stamp" data-stamp="3"></span>
-        <span class="permission-stamp" data-stamp="4"></span>
-        <span class="permission-stamp" data-stamp="5"></span>
-        <span class="permission-stamp" data-stamp="6"></span>
-        <span class="permission-stamp" data-stamp="7"></span>
-        <span class="permission-stamp" data-stamp="8">
-          <i class="fa-solid fa-gift"></i>
-        </span>
-      </div>
-      <p class="permission-drawer__note">Další razítka získáte postupně za aktivní dny.</p>
-      <button class="drawer-cta" type="button" id="permission-drawer-cta">Jdu sbírat další razítka</button>
-    </div>
-  </div>
-  <div id="press-menu" class="press-menu-overlay" aria-hidden="true">
-    <div class="press-menu" role="dialog" aria-modal="true" aria-label="Rychlé akce">
-      <div class="press-menu-header">
-        <span>Rychlé akce</span>
-        <button class="press-menu-close" type="button" data-action="close">×</button>
-      </div>
-      <div class="press-menu-row">
-        <span>Oprávnění</span>
-        <label class="press-menu-switch">
-          <input type="checkbox" id="press-permissions-toggle">
-          <span class="press-menu-slider"></span>
-        </label>
-      </div>
-      <button class="press-menu-btn" type="button" data-action="lockscreen-stamp">Notifikace razítko</button>
-      <button class="press-menu-btn" type="button" data-action="lockscreen-reward">Notifikace odměna</button>
-      <button class="press-menu-btn danger" type="button" data-action="reset">Resetovat prototyp</button>
-    </div>
-  </div>
-
-  <script>
-    localStorage.setItem('indexVisited', 'true');
-    const bonusTitle = document.getElementById('bonus-reward-title');
-    const bonusText = document.getElementById('bonus-reward-text');
-    const filledCountInit = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-    if (localStorage.getItem('bonusRewardSaved') !== 'true') {
-      localStorage.setItem('bonusRewardStage', 'first');
-      localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
-      if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
-      localStorage.removeItem('bonusRewardSavedText');
-    }
-    if (filledCountInit === 0 && localStorage.getItem('permissionsGranted') !== 'true') {
-      localStorage.removeItem('bonusRewardSaved');
-    }
-    if (!localStorage.getItem('bonusRewardTitle') || localStorage.getItem('bonusRewardTitle') === 'Bonus Reward') {
-      localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
-    }
-    if (localStorage.getItem('bonusRewardStage') === 'second') {
-      localStorage.setItem('bonusRewardText', '15% sleva na produkty Dr. Max');
-    } else if (!localStorage.getItem('bonusRewardText')) {
-      localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-    }
-    if (bonusTitle) {
-      bonusTitle.textContent = localStorage.getItem('bonusRewardTitle') || 'Cílová odměna';
-    }
-    if (bonusText) {
-      bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
-    }
-
-    if (localStorage.getItem('prototypeSeeded') !== 'true') {
-      localStorage.setItem('prototypeSeeded', 'true');
-      localStorage.setItem('permissionsGranted', 'true');
-      localStorage.removeItem('permissionsJustGranted');
-      localStorage.setItem('manualGeneratedCount', '3');
-      localStorage.setItem('stampFillCount', '3');
-      localStorage.setItem('notificationStampCount', '0');
-      localStorage.setItem('permissionsBonusCount', '0');
-      localStorage.setItem('dailyGoalSteps', '7500');
-      localStorage.setItem('dailyGoalDiscount', '10');
-      localStorage.setItem('dailyCurrentSteps', '4578');
-      localStorage.removeItem('dailyCompleted');
-      localStorage.removeItem('dailyCompleteUntil');
-    }
-
-    const setPermissionsGranted = (next) => {
-      localStorage.setItem('permissionsGranted', next ? 'true' : 'false');
-      if (next) {
-        localStorage.setItem('permissionsJustGranted', 'true');
-      } else {
-        localStorage.removeItem('permissionsJustGranted');
-        localStorage.removeItem('openDailyOnReturn');
-      }
-      syncPermissionsState();
-    };
-
-    const generateStamps = (count = 3) => {
-      const total = Math.max(0, Number(count) || 0);
-      if (!total) return;
-      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
-      localStorage.setItem('manualGeneratedCount', String(manualCount + total));
-      localStorage.setItem('permissionsGranted', 'true');
-      syncPermissionsState();
-      document.body.dataset.suppressReady = 'true';
-      localStorage.setItem('dailyCurrentSteps', '3256');
-      updateDailyProgressTo(3256);
-      forceScrollToStampsCard();
-      addStampsSequential(total, 450);
-      setTimeout(() => {
-        document.body.dataset.suppressReady = '';
-        updateStampReadyState();
-      }, total * 450 + 200);
-    };
-
-    const menuAction = localStorage.getItem('menuAction');
-    if (menuAction) {
-      localStorage.removeItem('menuAction');
-      if (menuAction === 'generate') {
-        generateStamps(3);
-      } else if (menuAction === 'lockscreen-stamp') {
-        window.location.href = 'lockscreen-notification-stamp.html';
-      } else if (menuAction === 'lockscreen-reward') {
-        window.location.href = 'lockscreen-notification.html';
-      } else if (menuAction === 'reset') {
-        localStorage.clear();
-        window.location.href = 'app-home.html';
-      }
-    }
-
-    const suppressDrawers = localStorage.getItem('suppressDrawersOnIndex') === 'true';
-    if (suppressDrawers) {
-      localStorage.removeItem('suppressDrawersOnIndex');
-    }
-
-    // Animate arc progress when the card scrolls into view
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-    const animateArc = (svg) => {
-      const target = Math.max(0, Math.min(100, parseFloat(svg.dataset.progress || '0')));
-      const path = svg.querySelector('.arc-progress');
-      const knob = svg.querySelector('.arc-knob');
-      if (!path || !knob || svg.dataset.animated === 'true') return;
-
-      const totalLen = path.getTotalLength();
-      const duration = 2200;
-      const start = performance.now();
-
-      const step = (now) => {
-        const t = Math.min(1, (now - start) / duration);
-        const eased = easeOutCubic(t);
-        const current = target * eased;
-
-        path.setAttribute('stroke-dasharray', `${current} ${100 - current}`);
-        const point = path.getPointAtLength((current / 100) * totalLen);
-        knob.setAttribute('cx', point.x);
-        knob.setAttribute('cy', point.y);
-
-        if (t < 1) {
-          requestAnimationFrame(step);
-        } else {
-          svg.dataset.animated = 'true';
-        }
-      };
-
-      // Init at zero and start
-      path.setAttribute('stroke-dasharray', `0 100`);
-      const startPoint = path.getPointAtLength(0);
-      knob.setAttribute('cx', startPoint.x);
-      knob.setAttribute('cy', startPoint.y);
-      requestAnimationFrame(step);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateArc(entry.target);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.25, rootMargin: '0px 0px -10% 0px' }
-    );
-
-    document.querySelectorAll('svg[data-progress]').forEach((svg) => {
-      const path = svg.querySelector('.arc-progress');
-      const knob = svg.querySelector('.arc-knob');
-      if (path && knob) {
-        // Reset to zero until animated
-        path.setAttribute('stroke-dasharray', `0 100`);
-        const startPoint = path.getPointAtLength(0);
-        knob.setAttribute('cx', startPoint.x);
-        knob.setAttribute('cy', startPoint.y);
-        observer.observe(svg);
-      }
-    });
-
-    // Animate straight mobility progress
-    const animateStraight = (track) => {
-      const target = Math.max(0, Math.min(100, parseFloat(track.dataset.progress || '0')));
-      const fill = track.querySelector('.mobility-progress-fill');
-      const dot = track.querySelector('.mobility-progress-dot');
-      if (!fill || !dot || track.dataset.animated === 'true') return;
-
-      const duration = 1800;
-      const start = performance.now();
-
-      const step = (now) => {
-        const t = Math.min(1, (now - start) / duration);
-        const eased = easeOutCubic(t);
-        const current = target * eased;
-
-        fill.style.width = `${current}%`;
-        dot.style.left = `${current}%`;
-
-        if (t < 1) {
-          requestAnimationFrame(step);
-        } else {
-          track.dataset.animated = 'true';
-        }
-      };
-
-      fill.style.width = '0%';
-      dot.style.left = '0%';
-      requestAnimationFrame(step);
-    };
-
-    const straightObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateStraight(entry.target);
-            straightObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.3, rootMargin: '0px 0px -10% 0px' }
-    );
-
-    document.querySelectorAll('.mobility-progress[data-progress]').forEach((track) => {
-      const fill = track.querySelector('.mobility-progress-fill');
-      const dot = track.querySelector('.mobility-progress-dot');
-      if (fill && dot) {
-        fill.style.width = '0%';
-        dot.style.left = '0%';
-        straightObserver.observe(track);
-      }
-    });
-
-    const wireRewardActions = (root = document) => {
-      root.querySelectorAll('.copy-code').forEach((copyBtn) => {
-        if (copyBtn.dataset.wired === 'true') return;
-        copyBtn.dataset.wired = 'true';
-        copyBtn.addEventListener('click', (evt) => {
-          evt.stopPropagation();
-          const code = copyBtn.dataset.code || '';
-          if (!code) return;
-          navigator.clipboard?.writeText(code).catch(() => {});
-          copyBtn.innerHTML = '<i class="fa-solid fa-check" style="font-size:14px;color:#0d6fb8;"></i>';
-          setTimeout(() => {
-            copyBtn.innerHTML = '<i class="fa-solid fa-copy" style="font-size:14px;"></i>';
-          }, 1200);
-        });
-      });
-
-      root.querySelectorAll('.add-to-cart-btn').forEach((addBtn) => {
-        if (addBtn.dataset.wired === 'true') return;
-        addBtn.dataset.wired = 'true';
-        addBtn.addEventListener('click', (evt) => {
-          evt.stopPropagation();
-          addBtn.disabled = true;
-          addBtn.innerHTML = '<i class="fa-solid fa-check" style="color:#0d6fb8;font-size:14px;"></i> Added to cart';
-        });
-      });
-    };
-
-    wireRewardActions();
-
-    const unlockBonusReward = () => {
-      const allStamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot'));
-      if (allStamps.length === 0) return;
-      const allFilled = allStamps.every((stamp) => stamp.classList.contains('stamp-dot-filled') || stamp.classList.contains('stamp-gift-active'));
-      if (!allFilled) return;
-
-      if (document.body.dataset.bonusPending === 'true') return;
-      document.body.dataset.bonusPending = 'true';
-      const bonusTitle = document.getElementById('bonus-reward-title');
-      const bonusText = document.getElementById('bonus-reward-text');
-      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
-      if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
-      localStorage.setItem('bonusRewardStage', 'first');
-      localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
-      localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-      setTimeout(() => {
-        launchConfetti();
-        openBonusModal();
-      }, 1000);
-    };
-
-
-    function updateSeasonalVisibility() {
-      const section = document.getElementById('seasonal-section');
-      if (!section) return;
-      const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      const started = localStorage.getItem('seasonalStarted') === 'true';
-      const unlocked = started || filledCount >= 4;
-      if (unlocked) {
-        localStorage.setItem('seasonalUnlocked', 'true');
-      } else {
-        localStorage.removeItem('seasonalUnlocked');
-      }
-      section.classList.toggle('is-hidden', !unlocked);
-      updateSeasonalStickyImmediate();
-    }
-
-    const getStampLabel = (count) => {
-      if (count === 1) return 'razítko';
-      if (count >= 2 && count <= 4) return 'razítka';
-      return 'razítek';
-    };
-
-    const updateRemainingStamps = () => {
-      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      const remaining = Math.max(0, 8 - filled);
-      const verb = remaining >= 2 && remaining <= 4 ? 'Zbývají' : 'Zbývá';
-      const label = getStampLabel(remaining);
-      const text = `${verb} už jen ${remaining} ${label} k odměně`;
-      const title = document.getElementById('stamps-remaining-title');
-      if (title) title.textContent = text;
-    };
-
-    const updateStampReadyState = () => {
-      const stampsCard = document.querySelector('.stamps-card');
-      const stampCta = document.getElementById('stamp-ready-cta');
-      const claimAllBtn = document.getElementById('claim-all-stamps');
-      if (stampsCard) stampsCard.classList.remove('ready');
-      if (stampCta) {
-        stampCta.classList.add('is-hidden');
-        stampCta.disabled = true;
-      }
-      if (claimAllBtn) {
-        claimAllBtn.classList.add('is-hidden');
-        claimAllBtn.disabled = true;
-      }
-      document.querySelectorAll('.stamps-row .stamp-dot').forEach((stamp) => {
-        stamp.classList.remove('stamp-dot-ready');
-      });
-      updateRemainingStamps();
-    };
-
-    const scrollToStampsCard = () => {};
-
-    const forceScrollToStampsCard = () => {};
-
-    const addStamp = (options = {}) => {
-      const { animate = true } = options;
-      const allStamps = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
-      const baseline = Math.max(0, parseInt(document.body.dataset.stampBaseline || '0', 10));
-      const stamps = baseline > 0 ? allStamps.slice(baseline) : allStamps;
-      const next = stamps.find((stamp) => stamp && stamp.dataset.filled !== 'true');
-      if (!next) {
-        const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-        localStorage.setItem('stampFillCount', String(filledCount));
-        const gift = document.querySelector('.stamp-dot-disabled');
-        if (gift) {
-          gift.classList.add('stamp-gift-active', 'stamp-pop');
-          gift.querySelector('i')?.setAttribute('style', 'font-size:18px;color:#ffffff;');
-          setTimeout(() => gift.classList.remove('stamp-pop'), 600);
-        }
-        unlockBonusReward();
-        updateSeasonalVisibility();
-        return;
-      }
-      next.dataset.filled = 'true';
-      next.classList.add('stamp-dot-filled');
-      if (!next.querySelector('i')) {
-        const icon = document.createElement('i');
-        icon.className = 'fa-solid fa-check stamp-icon';
-        next.appendChild(icon);
-      }
-      if (animate) {
-        next.classList.add('stamp-pop');
-        setTimeout(() => next.classList.remove('stamp-pop'), 600);
-      }
-      unlockBonusReward();
-      updateSeasonalVisibility();
-      updateStampReadyState();
-      const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      localStorage.setItem('stampFillCount', String(filledCount));
-    };
-
-    const addStampsSequential = (count, delay = 450) => {
-      for (let i = 0; i < count; i += 1) {
-        setTimeout(() => addStamp(), i * delay);
-      }
-    };
-
-    const ensureMinimumStamps = (minCount) => {
-      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      const needed = Math.max(0, minCount - filled);
-      if (needed > 0) {
-        addStampsSequential(needed, 300);
-      }
-    };
-
-    const restoreBonusStamps = (count) => {
-      const filled = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      const needed = Math.max(0, count - filled);
-      for (let i = 0; i < needed; i += 1) {
-        addStamp({ animate: false });
-      }
-    };
-
-    const permissionDrawer = document.getElementById('permission-drawer');
-    const permissionDrawerCta = document.getElementById('permission-drawer-cta');
-    const openPermissionDrawer = () => {
-      if (suppressDrawers) return;
-      if (!permissionDrawer) return;
-      permissionDrawer.classList.add('open');
-      document.body.classList.add('modal-open');
-      const drawerText = document.getElementById('permission-drawer-remaining');
-      if (drawerText) {
-        drawerText.textContent = 'Zbývají už jen 4 razítka k odměně';
-      }
-      const stamps = Array.from(permissionDrawer.querySelectorAll('.permission-stamp'));
-      stamps.forEach((stamp) => {
-        stamp.classList.remove('filled', 'pop');
-        if (!stamp.querySelector('i') && stamp.dataset.stamp !== '8') {
-          stamp.innerHTML = '';
-        }
-      });
-      setTimeout(() => {
-        const toFill = stamps.filter((stamp) => stamp.dataset.stamp && Number(stamp.dataset.stamp) <= 4);
-        toFill.forEach((stamp, index) => {
-          setTimeout(() => {
-            stamp.classList.add('filled', 'pop');
-            if (!stamp.querySelector('i')) {
-              const icon = document.createElement('i');
-              icon.className = 'fa-solid fa-check';
-              stamp.appendChild(icon);
-            }
-            setTimeout(() => stamp.classList.remove('pop'), 600);
-          }, index * 280);
-        });
-      }, 420);
-    };
-    const closePermissionDrawer = () => {
-      if (!permissionDrawer) return;
-      permissionDrawer.classList.remove('open');
-      document.body.classList.remove('modal-open');
-    };
-    permissionDrawerCta?.addEventListener('click', () => {
-      document.body.dataset.suppressReady = '';
-      document.body.dataset.stampBaseline = '';
-      closePermissionDrawer();
-      if (localStorage.getItem('pendingPermissionStamps') === 'true') {
-        const currentFill = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-        const needed = Math.max(0, 4 - currentFill);
-        if (needed > 0) {
-          setTimeout(() => {
-            for (let i = 0; i < needed; i += 1) {
-              addStamp({ animate: false });
-            }
-          }, 300);
-        }
-        setTimeout(() => {
-          localStorage.removeItem('pendingPermissionStamps');
-        }, 420);
-      }
-      const dailyProgress = document.getElementById('daily-progress');
-      const savedGoal = Number(localStorage.getItem('dailyGoalSteps') || dailyProgress?.dataset.target || '5000');
-      const savedDiscount = Number(localStorage.getItem('dailyGoalDiscount') || '10');
-      applyDailyGoal(savedGoal, savedDiscount);
-      if (dailyProgress && dailyProgress.dataset.started !== 'true') {
-        startDailyChallenge(savedGoal);
-      }
-      if (dailyProgress) {
-        dailyProgress.dataset.started = 'true';
-        dailyProgress.classList.remove('is-hidden');
-      }
-      const currentSteps = 4023;
-      localStorage.setItem('dailyCurrentSteps', '4023');
-      setTimeout(() => {
-        animateDailyProgressTo(currentSteps);
-      }, 120);
-    });
-
-
-    // Convert a reward card to claimed state when its button is clicked
-    const handleRewardClaim = (btn, options = {}) => {
-      const { animate = true, track = true } = options;
-      const card = btn.closest('.reward-card');
-      if (!card || card.dataset.claimed === 'true' || btn.disabled) return;
-
-      card.dataset.claimed = 'true';
-      card.style.background = '#ffffff';
-      card.style.border = '1px solid #e5e5ea';
-      card.style.color = '#3a3a3c';
-      card.style.transition = 'all 0.35s ease';
-      if (animate) {
-        card.animate(
-          [
-            { transform: 'scale(1)', boxShadow: card.style.boxShadow || 'none' },
-            { transform: 'scale(1)', boxShadow: '0 8px 20px rgba(0,0,0,0.08)' },
-            { transform: 'scale(1)', boxShadow: '0 6px 14px rgba(0,0,0,0.06)' }
-          ],
-          { duration: 320, easing: 'ease-out' }
-        );
-      }
-
-      const actions = btn.closest('.reward-actions') || btn.parentElement;
-      if (actions) {
-        const type = card.dataset.rewardType || 'code';
-        if (type === 'product') {
-          const productName = card.dataset.productName || 'Odměna';
-          actions.innerHTML = `
-            <button class="add-to-cart-btn" style="background:#ffffff;color:#0d6fb8;border:1px solid #e5e5ea;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
-              <i class="fa-solid fa-cart-plus" style="color:#0d6fb8;font-size:14px;"></i>
-              Add to cart
-            </button>
-          `;
-        } else if (type === 'stamp') {
-          if (track) {
-            const count = parseInt(localStorage.getItem('claimedStampCount') || '0', 10);
-            localStorage.setItem('claimedStampCount', String(count + 1));
-          }
-          const stampDate = card.dataset.stampDate ? ` ${card.dataset.stampDate}` : '';
-          actions.innerHTML = `
-            <button style="background:#eaf6dc;color:#2f6f0a;border:1px solid #d5e8b2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:default;min-width:170px;text-align:center;display:inline-flex;align-items:center;gap:8px;justify-content:center;">
-              <i class="fa-solid fa-circle-check" style="font-size:14px;color:#2f6f0a;"></i>
-              Uplatněno${stampDate ? ' - ' + stampDate : ''}
-            </button>
-          `;
-        } else {
-          const code = card.dataset.rewardCode || 'THANKS10';
-          actions.innerHTML = `
-            <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
-              <span style="letter-spacing:0.6px;">${code}</span>
-            <button class="copy-code" data-code="${code}" aria-label="Kopírovat kód" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
-                <i class="fa-solid fa-copy" style="font-size:14px;"></i>
-              </button>
-            </span>
-          `;
-        }
-
-        const pill = actions.querySelector('span,button');
-        if (pill) {
-          pill.style.opacity = '0';
-          pill.style.transition = 'opacity 0.35s ease';
-          requestAnimationFrame(() => {
-            pill.style.opacity = '1';
-          });
-        }
-
-        wireRewardActions(actions);
-      }
-
-      const icon = card.querySelector('.reward-main-icon');
-      if (icon) {
-        icon.style.background = 'none';
-        icon.style.webkitTextFillColor = '#ffffff';
-        icon.style.color = '#ffffff';
-        icon.style.fontSize = '26px';
-        const iconWrap = icon.parentElement;
-        if (iconWrap) iconWrap.style.background = 'linear-gradient(180deg, #95DA39 0%, #5DA20A 100%)';
-      }
-
-      addStamp({ animate });
-      if (document.body.dataset.suppressReady === 'true') {
-        document.body.dataset.suppressReady = '';
-      }
-      updateStampReadyState();
-    };
-
-    const restoreClaimedStamps = () => {
-      if (document.body.dataset.claimsRestored === 'true') return;
-      const count = parseInt(localStorage.getItem('claimedStampCount') || '0', 10);
-      if (!count) return;
-      const cards = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]'))
-        .filter((card) => card.dataset.claimed !== 'true');
-      cards.slice(0, count).forEach((card) => {
-        const btn = card.querySelector('.redeem-btn');
-        if (btn && !btn.disabled) {
-          handleRewardClaim(btn, { animate: false, track: false });
-        }
-      });
-      document.body.dataset.claimsRestored = 'true';
-    };
-
-    const restoreNotificationStamps = () => {
-      const granted = localStorage.getItem('permissionsGranted') === 'true';
-      if (localStorage.getItem('notificationFlow') === 'true') return;
-      if (!granted || document.body.dataset.notificationStampsRestored === 'true') return;
-      const count = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
-      if (!count) return;
-      for (let i = 0; i < count; i += 1) {
-        addStamp({ animate: false });
-      }
-      document.body.dataset.notificationStampsRestored = 'true';
-    };
-
-    const runNotificationFlow = () => {
-      if (localStorage.getItem('permissionsGranted') !== 'true') return;
-      document.body.dataset.suppressReady = 'true';
-      setTimeout(() => {
-        if (localStorage.getItem('notificationStampPending') === 'true') {
-          const targetFill = parseInt(localStorage.getItem('notificationTargetFill') || '0', 10);
-          if (targetFill > 0) {
-            const currentFill = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-            const needed = Math.max(0, targetFill - currentFill);
-            if (needed > 0) {
-              for (let i = 0; i < needed - 1; i += 1) {
-                addStamp({ animate: false });
-              }
-              addStamp({ animate: true });
-            }
-            localStorage.setItem('stampFillCount', String(targetFill));
-            const goalSteps = parseInt(localStorage.getItem('dailyGoalSteps') || '0', 10);
-            if (goalSteps > 0) {
-              const prevSteps = parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10);
-              localStorage.setItem('dailyCurrentSteps', String(goalSteps));
-              updateDailyProgressTo(prevSteps);
-              if (goalSteps !== prevSteps) {
-                animateDailyProgressTo(goalSteps, 1200);
-              }
-            }
-            const nextMidnight = new Date();
-            nextMidnight.setHours(24, 0, 0, 0);
-            localStorage.setItem('dailyCompleteUntil', String(nextMidnight.getTime()));
-            localStorage.setItem('dailyCompleted', 'true');
-            setDailyCompleteState(true);
-            startDailyCountdown();
-          } else {
-            const currentFill = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-            addStampsSequential(1, 500);
-            localStorage.setItem('stampFillCount', String(currentFill + 1));
-          }
-          document.body.dataset.suppressReady = '';
-          localStorage.removeItem('notificationFlow');
-          localStorage.removeItem('notificationStampPending');
-          localStorage.removeItem('notificationTargetFill');
-        }
-      }, 400);
-    };
-
-    const addNotificationStamp = () => {
-      if (localStorage.getItem('permissionsGranted') !== 'true') return;
-      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
-      const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
-      const notificationCount = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
-      const storedFill = parseInt(localStorage.getItem('stampFillCount') || '0', 10);
-      const baseTotal = Math.max(storedFill, manualCount + bonusCount + notificationCount);
-      localStorage.setItem('notificationStampCount', String(notificationCount + 1));
-      localStorage.setItem('notificationTargetFill', String(baseTotal + 1));
-      localStorage.setItem('stampFillCount', String(baseTotal + 1));
-      localStorage.setItem('notificationFlow', 'true');
-      localStorage.setItem('notificationStampPending', 'true');
-    };
-
-    const autoClaimAvailableStamps = () => {
-      const cards = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"]'))
-        .filter((card) => card.dataset.claimed !== 'true');
-      cards.forEach((card, index) => {
-        const btn = card.querySelector('.redeem-btn');
-        if (!btn || btn.disabled) return;
-        setTimeout(() => handleRewardClaim(btn), index * 700);
-      });
-    };
-
-    document.addEventListener('click', (event) => {
-      const btn = event.target.closest('.reward-card button');
-      if (!btn) return;
-      event.preventDefault();
-      handleRewardClaim(btn);
-    });
-
-    const claimAllHandler = () => {
-      const buttons = Array.from(document.querySelectorAll('.reward-card[data-reward-type="stamp"] .redeem-btn'))
-        .filter((btn) => btn && !btn.disabled);
-      buttons.forEach((btn) => handleRewardClaim(btn));
-      updateStampReadyState();
-    };
-
-    document.getElementById('claim-all-stamps')?.addEventListener('click', claimAllHandler);
-    document.getElementById('stamp-ready-cta')?.addEventListener('click', claimAllHandler);
-
-    // Breathing coach start handler with 4-4-4-4 timing and matching bubble scales
-    const breathPhases = [
-      { label: 'Inhale', duration: 4000, scale: 1.1, transition: 4000 },
-      { label: 'Hold', duration: 4000, scale: 1.1, transition: 0 },
-      { label: 'Exhale', duration: 4000, scale: 0.9, transition: 4000 },
-      { label: 'Hold', duration: 4000, scale: 0.9, transition: 0 }
-    ];
-    let breathTimeout;
-    let breathSessionInterval;
-    let totalDuration = 60000; // default 1 min
-    let selectedDuration = 1;
-    let isQuickMode = false;
-    const breathBtn = document.getElementById('breathing-start');
-    const breathBubble = document.getElementById('breathing-bubble');
-    const breathLabel = document.getElementById('breathing-label');
-    const breathStatus = document.getElementById('breathing-status');
-    const breathCounter = document.getElementById('breathing-counter');
-
-    const setBubbleScale = (scale, ms) => {
-      if (!breathBubble) return;
-      breathBubble.style.transition = `transform ${ms}ms ease-in-out`;
-      breathBubble.style.transform = `scale(${scale})`;
-    };
-
-    const renderRestControls = () => {
-      const controls = document.getElementById('breath-controls');
-      if (!controls) return;
-      controls.innerHTML = `
-        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-          <button class="breath-duration" data-duration="1" style="background:#ffffff;color:#1d73c5;border:1px solid #d7dce5;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">1 min</button>
-          <button class="breath-duration" data-duration="5" style="background:#ffffff;color:#1d73c5;border:1px solid #d7dce5;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">5 min</button>
-          <button class="breath-duration" data-duration="10" style="background:#ffffff;color:#1d73c5;border:1px solid #d7dce5;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">10 min</button>
-        </div>
-        <div style="display:flex;justify-content:center;margin-top:8px;gap:8px;flex-wrap:wrap;">
-          <button id="breathing-quick" style="background:#1d73c5;color:#ffffff;border:1px solid #1d73c5;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
-            <i class="fa-solid fa-bolt" style="font-size:13px;color:#ffffff;"></i>
-            Quick start
-          </button>
-        </div>
-      `;
-      const durationBtns = Array.from(controls.querySelectorAll('.breath-duration'));
-      const highlight = (activeBtn) => {
-        durationBtns.forEach((b) => {
-          const isActive = b === activeBtn;
-          b.style.background = isActive ? '#1d73c5' : '#ffffff';
-          b.style.color = isActive ? '#ffffff' : '#1d73c5';
-          b.style.borderColor = isActive ? '#1d73c5' : '#d7dce5';
-          const icon = b.querySelector('i');
-          if (icon) icon.style.color = b.style.color;
-        });
-      };
-      durationBtns.forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const mins = parseInt(btn.dataset.duration || '1', 10);
-          selectedDuration = Math.max(1, mins);
-          highlight(btn);
-        });
-      });
-      highlight(durationBtns[0]);
-      const quickBtn = document.getElementById('breathing-quick');
-      if (quickBtn) {
-        quickBtn.addEventListener('click', () => {
-          isQuickMode = true;
-          totalDuration = Number.POSITIVE_INFINITY;
-          startBreathing();
-        });
-      }
-      // Allow tapping a duration to start as well if desired
-      durationBtns.forEach((btn) => {
-        btn.addEventListener('dblclick', () => {
-          const mins = parseInt(btn.dataset.duration || '1', 10);
-          selectedDuration = Math.max(1, mins);
-          highlight(btn);
-          isQuickMode = false;
-          totalDuration = selectedDuration * 60000;
-          startBreathing();
-        });
-      });
-    };
-
-    const renderActiveControls = () => {
-      const controls = document.getElementById('breath-controls');
-      if (!controls) return;
-      controls.innerHTML = `
-        <span id="breathing-duration-display" style="font-size:14px;font-weight:700;color:#3a3a3c;">${isQuickMode ? 'On-going' : `${Math.round(totalDuration / 1000)}s remaining`}</span>
-        <button id="breathing-stop" style="background:#e4002b;color:#fff;border:1px solid #e4002b;border-radius:999px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;">Stop</button>
-      `;
-      const stop = document.getElementById('breathing-stop');
-      if (stop) stop.addEventListener('click', resetBreathing);
-    };
-
-    const startBreathing = () => {
-      let phaseIndex = 0;
-      setBubbleScale(0.9, 0);
-      const sessionStart = performance.now();
-      const sessionEnd = isQuickMode ? Number.POSITIVE_INFINITY : sessionStart + totalDuration;
-      renderActiveControls();
-      const runPhase = () => {
-        const elapsed = performance.now() - sessionStart;
-        if (!isQuickMode && elapsed >= totalDuration) {
-          clearTimeout(breathTimeout);
-          clearInterval(breathSessionInterval);
-          if (breathLabel) breathLabel.textContent = 'Done';
-          if (breathCounter) breathCounter.textContent = '';
-          setBubbleScale(0.9, 300);
-          return;
-        }
-        const phase = breathPhases[phaseIndex % breathPhases.length];
-        setBubbleScale(phase.scale, phase.transition);
-        if (breathLabel) breathLabel.textContent = phase.label;
-        const seconds = phase.duration / 1000;
-        let remaining = seconds;
-        if (breathStatus) breathStatus.textContent = `${phase.label} (${seconds}s)`;
-        if (breathCounter) breathCounter.textContent = remaining.toString();
-
-        const tick = () => {
-          remaining -= 1;
-          if (remaining > 0) {
-            if (breathCounter) breathCounter.textContent = remaining.toString();
-            setTimeout(tick, 1000);
-          }
-        };
-        setTimeout(tick, 1000);
-
-        breathTimeout = setTimeout(() => {
-          phaseIndex += 1;
-          runPhase();
-        }, phase.duration);
-      };
-      clearTimeout(breathTimeout);
-      clearInterval(breathSessionInterval);
-      const disp = document.getElementById('breathing-duration-display');
-      const display = () => {
-        if (isQuickMode) {
-          if (disp) disp.textContent = 'On-going';
-          return;
-        }
-        const remainingMs = sessionEnd - performance.now();
-        const remainingSec = Math.max(0, Math.ceil(remainingMs / 1000));
-        if (disp) {
-          const mins = Math.floor(remainingSec / 60);
-          const secs = remainingSec % 60;
-          disp.textContent = mins > 0 ? `${mins}:${secs.toString().padStart(2, '0')} remaining` : `${secs}s remaining`;
-        }
-      };
-      display();
-      breathSessionInterval = setInterval(display, 1000);
-      const stopBtn = document.getElementById('breathing-stop');
-      if (stopBtn) stopBtn.style.display = 'inline-flex';
-      const controls = document.getElementById('breath-controls');
-      if (controls) controls.classList.add('breathing-active');
-      runPhase();
-    };
-
-    const resetBreathing = () => {
-      clearTimeout(breathTimeout);
-      clearInterval(breathSessionInterval);
-      setBubbleScale(0.9, 300);
-      if (breathLabel) breathLabel.textContent = 'Tap start';
-      if (breathCounter) breathCounter.textContent = '4';
-      isQuickMode = false;
-      renderRestControls();
-    };
-
-    renderRestControls();
-
-    const launchConfetti = () => {
-      const colors = ['#95DA39', '#5DA20A', '#E4002B', '#3997dd'];
-      for (let i = 0; i < 28; i += 1) {
-        const piece = document.createElement('div');
-        piece.className = 'confetti-piece';
-        piece.style.background = colors[i % colors.length];
-        const startX = Math.random() * window.innerWidth;
-        piece.style.left = `${startX}px`;
-        piece.style.top = `${window.scrollY + 20}px`;
-        piece.style.setProperty('--x', `${(Math.random() - 0.5) * 120}px`);
-        piece.style.animationDelay = `${Math.random() * 0.1}s`;
-        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-        document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 1300);
-      }
-    };
-
-    function scrollCarouselToStart(carousel) {
-      if (!carousel) return;
-      if (Math.abs(carousel.scrollLeft) < 1) return;
-      const prevSnap = carousel.style.scrollSnapType;
-      carousel.style.scrollSnapType = 'none';
-      carousel.classList.add('scrolling-to-start');
-      carousel.scrollTo({ left: 0, behavior: 'smooth' });
-      setTimeout(() => {
-        carousel.style.scrollSnapType = prevSnap;
-        carousel.classList.remove('scrolling-to-start');
-      }, 900);
-    }
-
-    const addBonusCard = (withAnimation = true) => {
-      const rewardsSection = document.getElementById('rewards-section');
-      if (rewardsSection) rewardsSection.classList.remove('is-hidden');
-      const carousel = document.querySelector('.rewards-carousel');
-      if (!carousel || carousel.dataset.bonusAdded === 'true') return;
-      carousel.dataset.bonusAdded = 'true';
-      localStorage.setItem('bonusRewardSaved', 'true');
-      carousel.querySelector('.reward-empty')?.classList.add('is-hidden');
-      document.body.dataset.bonusPending = 'done';
-
-      const card = document.createElement('div');
-      card.className = 'reward-card font-sans';
-      card.dataset.rewardType = 'code';
-      card.dataset.rewardCode = 'MOVE10';
-      card.style.cssText = 'max-width:220px; background:#ffffff; border:1px solid #e5e5ea; border-radius:24px; padding:22px 18px; color:#3a3a3c; box-shadow:none; margin-bottom:10px; position:relative; z-index:5;';
-      card.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-          <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);display:flex;align-items:center;justify-content:center;">
-            <i class="fa-solid fa-gift reward-main-icon" style="font-size:24px;color:#ffffff;"></i>
-          </div>
-        </div>
-        <div style="text-align:center; margin-bottom:18px;">
-          <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">Cílová odměna</p>
-          <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px; color:#6e6e73;">10% sleva na produkty Dr. Max.</p>
-        </div>
-        <div style="display:flex;justify-content:center;margin-bottom:10px;">
-          <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
-            <span style="letter-spacing:0.6px;">MOVE10</span>
-            <button class="copy-code" data-code="MOVE10" aria-label="Kopírovat kód" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
-              <i class="fa-solid fa-copy" style="font-size:14px;"></i>
-            </button>
-          </span>
-        </div>
-        <p style="margin:0; font-size:13px; font-weight:600; color:#6e6e73; text-align:center;">Platí ještě 25 dní</p>
-      `;
-
-      if (carousel.firstElementChild) {
-        carousel.insertBefore(card, carousel.firstElementChild);
-      } else {
-        carousel.appendChild(card);
-      }
-      requestAnimationFrame(() => scrollCarouselToStart(carousel));
-      if (withAnimation) {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(16px) scale(0.97)';
-        carousel.classList.add('reveal-card');
-        requestAnimationFrame(() => {
-          card.classList.add('bonus-card-pop', 'bonus-card-highlight');
-          card.style.opacity = '';
-          card.style.transform = '';
-          setTimeout(() => {
-            card.classList.remove('bonus-card-highlight');
-            carousel.classList.remove('reveal-card');
-          }, 1400);
-        });
-      }
-      wireRewardActions(carousel);
-    };
-
-    const resetStamps = (options = {}) => {
-      const { rotate = true, force = false } = options;
-      if (!force && document.body.classList.contains('tutorial-active')) {
-        return;
-      }
-      const stamps = document.querySelectorAll('.stamps-row .stamp-dot');
-      const card = document.querySelector('.stamps-card');
-      if (card && rotate) {
-        card.classList.remove('turning');
-        void card.offsetWidth;
-        card.classList.add('turning');
-      }
-      setTimeout(() => {
-        stamps.forEach((stamp) => {
-          stamp.dataset.filled = '';
-          stamp.classList.remove('stamp-dot-filled', 'stamp-gift-active', 'stamp-pop');
-          if (!stamp.classList.contains('stamp-dot-disabled')) {
-            stamp.querySelectorAll('i').forEach((icon) => icon.remove());
-          } else {
-            const giftIcon = stamp.querySelector('i');
-            if (giftIcon) giftIcon.setAttribute('style', 'font-size:18px;color:#c0c4ce;');
-          }
-        });
-        updateSeasonalVisibility();
-        updateStampReadyState();
-        localStorage.setItem('stampFillCount', '0');
-      }, 320);
-    };
-
-    const openBonusModal = () => {
-      const modal = document.getElementById('bonus-modal');
-      if (!modal || modal.dataset.open === 'true') return;
-      const bonusDesc = document.getElementById('bonus-modal-desc');
-      const rewardValue = document.getElementById('bonus-modal-reward-value');
-      const rewardTextEl = document.getElementById('bonus-modal-reward-text');
-      const rewardText = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
-      const rewardSuccess = document.getElementById('reward-success');
-      const rewardCodeEl = document.getElementById('reward-success-code');
-      const rewardFull = modal.querySelector('.reward-fullscreen');
-      if (bonusDesc) {
-        bonusDesc.textContent = 'Nasbírali jste všechna razítka a odemykáte svou odměnu.';
-      }
-      if (rewardTextEl) {
-        const cleaned = rewardText.replace(/\.$/, '').replace(/\d+\s*%\s*/i, '').trim();
-        rewardTextEl.textContent = cleaned;
-      }
-      if (rewardValue) {
-        const match = rewardText.match(/(\d+)\s*%/);
-        rewardValue.textContent = match ? `${match[1]} %` : '10 %';
-      }
-      if (rewardCodeEl) {
-        rewardCodeEl.textContent = localStorage.getItem('bonusRewardCode') || 'POHYB67';
-      }
-      if (rewardFull) rewardFull.style.display = 'flex';
-      if (rewardSuccess) rewardSuccess.classList.remove('is-visible');
-      modal.dataset.open = 'true';
-      modal.classList.add('visible');
-      document.body.classList.add('modal-open');
-    };
-
-    const closeBonusModal = () => {
-      const modal = document.getElementById('bonus-modal');
-      if (!modal || modal.dataset.open !== 'true') return;
-      modal.dataset.open = 'false';
-      modal.classList.remove('visible');
-      document.body.classList.remove('modal-open');
-      const bonusTitle = document.getElementById('bonus-reward-title');
-      const bonusText = document.getElementById('bonus-reward-text');
-      const currentStage = localStorage.getItem('bonusRewardStage') || 'first';
-      const currentRewardText = currentStage === 'second'
-        ? '15% sleva na produkty Dr. Max'
-        : '10% sleva na produkty Dr. Max.';
-      localStorage.setItem('bonusRewardSavedText', currentRewardText);
-      if (currentStage !== 'second') {
-        localStorage.setItem('bonusRewardStage', 'second');
-        localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
-        localStorage.setItem('bonusRewardText', '15% sleva na produkty Dr. Max');
-      }
-      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
-      if (bonusText) {
-        bonusText.textContent = localStorage.getItem('bonusRewardText') || '10% sleva na produkty Dr. Max.';
-      }
-      setTimeout(() => addBonusCard(true), 800);
-      localStorage.removeItem('manualGeneratedCount');
-      localStorage.removeItem('notificationStampCount');
-      localStorage.removeItem('claimedStampCount');
-      localStorage.removeItem('permissionsBonusCount');
-      localStorage.removeItem('permissionsBonusApplied');
-      document.body.dataset.stampBaseline = '';
-      document.body.dataset.claimsRestored = '';
-      document.body.dataset.notificationStampsRestored = '';
-      resetStamps();
-    };
-
-    document.getElementById('bonus-modal-close')?.addEventListener('click', () => {
-      const modal = document.getElementById('bonus-modal');
-      const rewardSuccess = document.getElementById('reward-success');
-      const rewardFull = modal?.querySelector('.reward-fullscreen');
-      if (rewardFull) rewardFull.style.display = 'none';
-      if (rewardSuccess) rewardSuccess.classList.add('is-visible');
-    });
-    document.getElementById('reward-success-close')?.addEventListener('click', () => {
-      closeBonusModal();
-      localStorage.setItem('seriesModalOpen', 'true');
-      const seriesModal = document.getElementById('series-modal');
-      if (seriesModal) {
-        seriesModal.classList.add('is-visible');
-        seriesModal.setAttribute('aria-hidden', 'false');
-      }
-    });
-    document.getElementById('reward-success-copy')?.addEventListener('click', () => {
-      const code = document.getElementById('reward-success-code')?.textContent || '';
-      if (code) {
-        navigator.clipboard?.writeText(code);
-      }
-    });
-    document.getElementById('series-modal')?.addEventListener('click', (event) => {
-      if (event.target.id !== 'series-modal') return;
-      const modal = event.currentTarget;
-      modal.classList.remove('is-visible');
-      modal.setAttribute('aria-hidden', 'true');
-      localStorage.removeItem('seriesModalOpen');
-    });
-    document.getElementById('bonus-modal-overlay')?.addEventListener('click', closeBonusModal);
-
-    const restoreManualStamps = () => {
-      if (localStorage.getItem('permissionsGranted') !== 'true') return;
-      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
-      const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
-      const notificationCount = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
-      const storedFill = parseInt(localStorage.getItem('stampFillCount') || '0', 10);
-      const notificationPending = localStorage.getItem('notificationFlow') === 'true'
-        || localStorage.getItem('notificationStampPending') === 'true';
-      const effectiveNotificationCount = notificationPending
-        ? Math.max(0, notificationCount - 1)
-        : notificationCount;
-      const totalWithNotification = manualCount + bonusCount + effectiveNotificationCount;
-      const targetTotal = Math.max(totalWithNotification, storedFill);
-      if (!targetTotal) return;
-      const existing = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-      const needed = Math.max(0, targetTotal - existing);
-      if (needed > 0) {
-        for (let i = 0; i < needed; i += 1) {
-          addStamp({ animate: false });
-        }
-      }
-    };
-
-    const formatSteps = (value) => Number(value || 0).toLocaleString('en-US');
-
-    const openDailyModal = () => {
-      if (suppressDrawers) return;
-      const modal = document.getElementById('daily-modal');
-      if (!modal || modal.dataset.open === 'true') return;
-      modal.dataset.open = 'true';
-      modal.classList.add('visible');
-      modal.style.display = 'flex';
-      document.body.classList.add('modal-open');
-    };
-
-    const closeDailyModal = () => {
-      const modal = document.getElementById('daily-modal');
-      if (!modal) return;
-      modal.dataset.open = 'false';
-      modal.classList.remove('visible');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-    };
-
-    // Daily goal drawer has no dismiss action.
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('showDailyModal') === '1') {
-      if (!suppressDrawers) {
-        requestAnimationFrame(() => openDailyModal());
-      }
-      urlParams.delete('showDailyModal');
-      const next = `${window.location.pathname}${urlParams.toString() ? `?${urlParams}` : ''}`;
-      window.history.replaceState({}, '', next);
-    }
-    const startModal = document.getElementById('start-modal');
-    const startModalClose = document.getElementById('start-modal-close');
-    if (urlParams.get('showStartModal') === '1') {
-      if (localStorage.getItem('showTutorialOnLoad') === 'true' && localStorage.getItem('tutorialSeen') !== 'true') {
-        localStorage.setItem('openStartAfterTutorial', 'true');
-      } else if (!suppressDrawers) {
-        requestAnimationFrame(() => {
-          startModal?.classList.add('open');
-          document.body.classList.add('modal-open');
-        });
-      }
-      urlParams.delete('showStartModal');
-      const next = `${window.location.pathname}${urlParams.toString() ? `?${urlParams}` : ''}`;
-      window.history.replaceState({}, '', next);
-    }
-    startModalClose?.addEventListener('click', () => {
-      startModal?.classList.remove('open');
-      document.body.classList.remove('modal-open');
-      setPermissionsGranted(false);
-    });
-    startModal?.addEventListener('click', (event) => {
-      if (event.target === startModal) {
-        startModal.classList.remove('open');
-        document.body.classList.remove('modal-open');
-        setPermissionsGranted(false);
-      }
-    });
-
-    const getDailyGoalName = (target) => {
-      if (target <= 4500) return 'Start';
-      if (target <= 7500) return 'Pohoda';
-      return 'Výzva';
-    };
-
-    const updateDailyText = (currentSteps, targetSteps) => {
-      const goalLine = document.getElementById('daily-steps-goal');
-      const remainingLine = document.getElementById('daily-steps-remaining');
-      const titleLine = document.getElementById('daily-steps-title');
-      const goalName = localStorage.getItem('dailyGoalName') || getDailyGoalName(targetSteps);
-      const isComplete = currentSteps >= targetSteps || localStorage.getItem('dailyCompleted') === 'true';
-      if (goalLine) {
-        goalLine.textContent = `${goalName} – ${formatSteps(targetSteps)} kroků`;
-      }
-      if (titleLine) {
-        titleLine.textContent = isComplete ? 'Denní cíl splněn' : 'Denní cíl';
-      }
-      if (remainingLine) {
-        if (isComplete) {
-          remainingLine.textContent = 'Pokračujeme zítra';
-        } else {
-          const remaining = Math.max(0, targetSteps - currentSteps);
-          remainingLine.innerHTML = `Ještě <strong>${formatSteps(remaining)}</strong> kroků k dennímu razítku.`;
-        }
-      }
-    };
-
-    const getGoalLabelThreshold = () => {
-      const svg = document.querySelector('#daily-progress svg[data-progress]');
-      const arc = document.querySelector('#daily-progress .arc-progress');
-      const label = document.getElementById('daily-goal-label');
-      if (!svg || !arc || !label) return 100;
-      if (svg.dataset.goalThreshold) {
-        return parseFloat(svg.dataset.goalThreshold);
-      }
-      const targetX = parseFloat(label.getAttribute('x') || '0');
-      const targetY = parseFloat(label.getAttribute('y') || '0');
-      const totalLen = arc.getTotalLength();
-      let bestLen = 0;
-      let bestDist = Number.POSITIVE_INFINITY;
-      const steps = 200;
-      for (let i = 0; i <= steps; i += 1) {
-        const len = (totalLen * i) / steps;
-        const point = arc.getPointAtLength(len);
-        const dx = point.x - targetX;
-        const dy = point.y - targetY;
-        const dist = Math.hypot(dx, dy);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestLen = len;
-        }
-      }
-      const threshold = (bestLen / totalLen) * 100;
-      svg.dataset.goalThreshold = threshold.toFixed(2);
-      return threshold;
-    };
-
-    const updateGoalLabelColor = (percent) => {
-      const label = document.getElementById('daily-goal-label');
-      if (!label) return;
-      const threshold = getGoalLabelThreshold();
-      if (percent >= threshold) {
-        label.setAttribute('fill', '#ffffff');
-        label.setAttribute('stroke', 'rgba(0,0,0,0.2)');
-        label.setAttribute('stroke-width', '0.6');
-        label.setAttribute('paint-order', 'stroke');
-      } else {
-        label.setAttribute('fill', '#1b1b1b');
-        label.setAttribute('stroke', 'none');
-      }
-    };
-
-    function updateDailyProgressTo(steps) {
-      const dailyProgress = document.getElementById('daily-progress');
-      const targetSteps = Number(dailyProgress?.dataset.target || localStorage.getItem('dailyGoalSteps') || '5000');
-      const clamped = Math.max(0, Math.min(steps, targetSteps));
-      const percent = targetSteps ? (clamped / targetSteps) * 100 : 0;
-      const stepsLabel = document.getElementById('daily-steps-count');
-      if (stepsLabel) {
-        stepsLabel.textContent = `${formatSteps(clamped)} / ${formatSteps(targetSteps)}`;
-      }
-      updateDailyText(clamped, targetSteps);
-      const svg = document.querySelector('#daily-progress svg[data-progress]');
-      const arc = document.querySelector('#daily-progress .arc-progress');
-      const dot = document.querySelector('#daily-progress .arc-knob');
-      if (svg) {
-        svg.dataset.progress = `${percent}`;
-        svg.dataset.animated = 'true';
-      }
-      if (arc && dot) {
-        arc.setAttribute('stroke-dasharray', `${percent} ${100 - percent}`);
-        const totalLen = arc.getTotalLength();
-        const point = arc.getPointAtLength((percent / 100) * totalLen);
-        dot.setAttribute('cx', point.x);
-        dot.setAttribute('cy', point.y);
-        dot.style.opacity = percent >= 100 ? '0' : '1';
-      }
-      updateGoalLabelColor(percent);
-    }
-
-    let dailyCountdownTimer = null;
-    const setDailyCompleteState = (active) => {
-      const desc = document.getElementById('daily-desc');
-      const completeMsg = document.getElementById('daily-complete-msg');
-      const completePanel = document.getElementById('daily-complete-panel');
-      const dailyProgress = document.getElementById('daily-progress');
-      const completeSteps = document.getElementById('daily-complete-steps');
-      if (!desc || !completeMsg) return;
-      if (!desc.dataset.defaultText) {
-        desc.dataset.defaultText = desc.textContent || '';
-      }
-      if (active) {
-        desc.classList.add('is-hidden');
-        completeMsg.classList.add('is-hidden');
-        completePanel?.classList.add('is-visible');
-        dailyProgress?.classList.add('is-hidden');
-        completeSteps?.classList.remove('is-hidden');
-      } else {
-        desc.textContent = desc.dataset.defaultText || desc.textContent;
-        desc.classList.remove('is-hidden');
-        completeMsg.classList.add('is-hidden');
-        completePanel?.classList.remove('is-visible');
-        completeSteps?.classList.add('is-hidden');
-      }
-    };
-
-    const updateDailyCountdown = () => {
-      const countdown = document.getElementById('daily-countdown');
-      const until = parseInt(localStorage.getItem('dailyCompleteUntil') || '0', 10);
-      if (!countdown || !until) return;
-      const now = Date.now();
-      if (until <= now) {
-        localStorage.removeItem('dailyCompleteUntil');
-        localStorage.removeItem('dailyCompleted');
-        setDailyCompleteState(false);
-        if (dailyCountdownTimer) {
-          clearInterval(dailyCountdownTimer);
-          dailyCountdownTimer = null;
-        }
-        return;
-      }
-      const diff = until - now;
-      const hours = Math.floor(diff / 3600000);
-      const minutes = Math.floor((diff % 3600000) / 60000);
-      countdown.textContent = `${hours} h ${String(minutes).padStart(2, '0')} min`;
-    };
-
-    const startDailyCountdown = () => {
-      if (dailyCountdownTimer) {
-        clearInterval(dailyCountdownTimer);
-      }
-      updateDailyCountdown();
-      dailyCountdownTimer = setInterval(updateDailyCountdown, 60000);
-    };
-
-    const applyDailyGoal = (steps, discount) => {
-      const target = Number(steps) || 5000;
-      const discountValue = Number(discount) || 10;
-      const title = document.getElementById('daily-title');
-      const desc = document.getElementById('daily-desc');
-      const goalLabel = document.getElementById('daily-goal-label');
-      const dailyProgress = document.getElementById('daily-progress');
-      if (title) title.textContent = `Ujít ${formatSteps(target)} kroků`;
-      if (desc) {
-        desc.textContent = `Ujděte dnes ${formatSteps(target)} kroků a získejte denní razítko.`;
-      }
-      localStorage.setItem('dailyGoalName', getDailyGoalName(target));
-      if (goalLabel) {
-        goalLabel.textContent = `${target}`;
-      }
-      if (dailyProgress) {
-        dailyProgress.dataset.target = `${target}`;
-      }
-      localStorage.setItem('dailyGoalSteps', String(target));
-      localStorage.setItem('dailyGoalDiscount', String(discountValue));
-      if (dailyProgress && localStorage.getItem('permissionsGranted') === 'true') {
-        dailyProgress.dataset.started = 'true';
-        dailyProgress.classList.remove('is-hidden');
-      }
-      updateDailyProgressTo(parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10));
-    };
-
-    let selectedDailyOption = document.querySelector('#daily-modal .daily-option.is-selected');
-    document.querySelectorAll('#daily-modal .daily-option').forEach((option) => {
-      option.addEventListener('click', () => {
-        document.querySelectorAll('#daily-modal .daily-option').forEach((btn) => btn.classList.remove('is-selected'));
-        option.classList.add('is-selected');
-        selectedDailyOption = option;
-      });
-    });
-
-    const handleDailyApply = () => {
-      const option = selectedDailyOption || document.querySelector('#daily-modal .daily-option');
-      if (!option) return;
-      const steps = option.dataset.steps || '5000';
-      const discount = option.dataset.discount || '10';
-      localStorage.setItem('dailyCurrentSteps', '0');
-      applyDailyGoal(steps, discount);
-      closeDailyModal();
-      startDailyChallenge(Number(steps));
-      if (localStorage.getItem('pendingPermissionStamps') === 'true') {
-        openPermissionDrawer();
-      }
-    };
-    document.getElementById('daily-modal-apply')?.addEventListener('click', handleDailyApply);
-    window.handleDailyApply = handleDailyApply;
-
-    let lastPermissionsState = null;
-    document.querySelectorAll('.rewards-carousel .reward-card').forEach((card) => {
-      const actions = card.querySelector('.reward-actions');
-      if (actions && !card.dataset.inactiveActions) {
-        card.dataset.inactiveActions = actions.innerHTML;
-      }
-    });
-    const rewardsCarousel = document.querySelector('.rewards-carousel');
-    const seedTutorialRewards = () => {
-      if (!rewardsCarousel) return;
-      if (rewardsCarousel.querySelector('[data-tutorial-reward="true"]')) return;
-      const rewards = [
-        { title: 'Sleva 5 %', desc: 'Na vybrané produkty', code: 'MOVE5' },
-        { title: 'Sleva 10 %', desc: 'Na Dr. Max produkty', code: 'MOVE10' },
-        { title: 'Doprava zdarma', desc: 'Na celý nákup', code: 'FREESHIP' }
-      ];
-      rewardsCarousel.querySelector('.reward-empty')?.classList.add('is-hidden');
-      rewards.forEach((reward) => {
-        const card = document.createElement('div');
-        card.className = 'reward-card font-sans';
-        card.dataset.rewardType = 'code';
-        card.dataset.rewardCode = reward.code;
-        card.dataset.tutorialReward = 'true';
-        card.style.cssText = 'max-width:220px; background:#ffffff; border:1px solid #e5e5ea; border-radius:24px; padding:22px 18px; color:#3a3a3c; box-shadow:none; margin-bottom:10px; position:relative; z-index:5;';
-        card.innerHTML = `
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(180deg, #95DA39 0%, #5DA20A 100%);display:flex;align-items:center;justify-content:center;">
-              <i class="fa-solid fa-gift reward-main-icon" style="font-size:24px;color:#ffffff;"></i>
+    <div id="countryScreen" class="screen active">
+        <div class="container">
+            <div style="margin-bottom: 24px;">
+                <img src="Logo-drmax.svg" alt="Dr. Max" style="height: 48px;">
             </div>
-          </div>
-          <div style="text-align:center; margin-bottom:18px;">
-            <p class="reward-title" style="margin:0 0 2px 0; font-size:18px; font-weight:700; line-height:22px;">${reward.title}</p>
-            <p class="reward-description" style="margin:0; font-size:14px; font-weight:600; line-height:18px; color:#6e6e73;">${reward.desc}</p>
-          </div>
-          <div style="display:flex;justify-content:center;margin-bottom:10px;">
-            <span class="claim-code-pill" style="display:inline-flex;align-items:center;gap:10px; background:#ffffff; color:#0d6fb8; border:1px solid #e5e5ea; border-radius:999px; padding:10px 18px; font-size:14px; font-weight:700;min-width:170px;justify-content:center;">
-              <span style="letter-spacing:0.6px;">${reward.code}</span>
-              <button class="copy-code" data-code="${reward.code}" aria-label="Kopírovat kód" style="background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#0d6fb8;">
-                <i class="fa-solid fa-copy" style="font-size:14px;"></i>
-              </button>
-            </span>
-          </div>
-          <p style="margin:0; font-size:13px; font-weight:600; color:#6e6e73; text-align:center;">Platí ještě 25 dní</p>
-        `;
-        rewardsCarousel.appendChild(card);
-      });
-      wireRewardActions(rewardsCarousel);
-    };
-    const clearTutorialRewards = () => {
-      if (!rewardsCarousel) return;
-      rewardsCarousel.querySelectorAll('[data-tutorial-reward="true"]').forEach((card) => card.remove());
-      const hasRewards = rewardsCarousel.querySelector('.reward-card');
-      if (!hasRewards) {
-        rewardsCarousel.querySelector('.reward-empty')?.classList.remove('is-hidden');
-      }
-    };
+            
+            <h2 style="font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 16px;">Hello! You have been invited to participate in a UX research test</h2>
+            
+            <div class="intro-section">
+                <div class="intro-text" id="introText">We're conducting a research study on the Dr. Max online pharmacy to understand how users search and purchase products. Your feedback helps us improve the experience. The test takes about <strong>15 minutes</strong> and is <strong>completely anonymous</strong>.</div>
+            </div>
+            
+            <div style="margin-bottom: 20px; font-size: 16px; font-weight: 600; color: #1f2937;">To continue, please select your country:</div>
+            <div class="country-grid" id="countryGrid"></div>
+        </div>
+    </div>
 
-    const applyPermissionsState = (granted) => {
-      const justGranted = localStorage.getItem('permissionsJustGranted') === 'true';
-      const storedFillCount = parseInt(localStorage.getItem('stampFillCount') || '0', 10);
-      const manualCount = parseInt(localStorage.getItem('manualGeneratedCount') || '0', 10);
-      const notificationCount = parseInt(localStorage.getItem('notificationStampCount') || '0', 10);
-      const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
-      const hasExistingStamps = storedFillCount > 0 || manualCount > 0 || notificationCount > 0 || bonusCount > 0;
-      const isFreshGrant = justGranted && !hasExistingStamps;
-      const permissionCard = document.getElementById('entry-permission-card');
-      const permissionToggle = document.getElementById('permissions-toggle');
-      const sticky = document.getElementById('entry-challenge-sticky');
-      const entryCard = document.getElementById('entry-permission-card');
+    <div id="requirementsScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h1 id="reqTitle">Co budete potřebovat</h1>
+                <p id="reqSubtitle">Příprava na test</p>
+            </div>
+            <div class="requirement-grid">
+                <div class="requirement-card">
+                    <div class="requirement-icon">📱</div>
+                    <div class="requirement-label" id="reqMobile">Mobilní telefon</div>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">💻</div>
+                    <div class="requirement-label" id="reqComputer">Počítač</div>
+                </div>
+                <div class="requirement-card">
+                    <div class="requirement-icon">⏱️</div>
+                    <div class="requirement-label" id="reqTime">15 minut</div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToScreen('countryScreen')">Zpět</button>
+                <button class="btn-primary" onclick="goToScreen('qrScreen');">Pokračovat</button>
+            </div>
+        </div>
+    </div>
 
-      if (permissionCard) {
-        permissionCard.style.display = granted ? 'none' : '';
-      }
-      if (permissionToggle) {
-        permissionToggle.textContent = granted ? 'Oprávnění: Zapnuto' : 'Oprávnění: Vypnuto';
-      }
-      const dailyCard = document.getElementById('main-challenge-card');
-      if (dailyCard) {
-        dailyCard.style.display = granted ? '' : 'none';
-      }
-      const dailyProgress = document.getElementById('daily-progress');
-      if (dailyProgress) {
-        const started = dailyProgress.dataset.started === 'true';
-        dailyProgress.classList.toggle('is-hidden', !granted || !started);
-      }
-      const seasonalProgress = document.getElementById('seasonal-progress');
-      if (seasonalProgress) {
-        const started = seasonalProgress.dataset.started === 'true';
-        seasonalProgress.classList.toggle('is-hidden', !started);
-      }
-      if (sticky && granted) {
-        sticky.style.display = 'none';
-      }
+    <div id="qrScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h1 id="qrTitle">Příprava</h1>
+                <p id="qrSubtitle">Na mobilu naskenuj fotoaparátem:</p>
+            </div>
+            <div class="instruction-box" id="instructionsBox">
+                <ol id="instructionsList" style="margin: 0; padding-left: 20px;"></ol>
+            </div>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToScreen('requirementsScreen')">Zpět</button>
+                <button class="btn-primary" onclick="goToFormScreen()">Začít test</button>
+            </div>
+        </div>
+    </div>
 
-      const setButtonState = (btn, enabled) => {
-        if (!btn) return;
-        btn.disabled = !enabled;
-        btn.classList.toggle('btn-disabled', !enabled);
-        if (enabled) {
-          btn.style.background = '#47850a';
-          btn.style.color = '#ffffff';
-          btn.style.border = '1px solid #47850a';
-          btn.style.boxShadow = '0 8px 18px rgba(53,107,9,0.25)';
-          btn.style.cursor = 'pointer';
-        } else {
-          btn.style.background = '';
-          btn.style.color = '';
-          btn.style.border = '';
-          btn.style.boxShadow = '';
-          btn.style.cursor = '';
-        }
-        btn.querySelectorAll('i').forEach((icon) => {
-          icon.style.color = enabled ? '#ffffff' : 'currentColor';
-        });
-      };
+    <div id="formScreen" class="screen">
+        <div class="container">
+            <div class="task-counter" id="taskCounter">1 / 3</div>
+            <h1 id="taskTitle" style="font-size: 28px; font-weight: 700; color: #1f2937; margin-bottom: 8px;">Úkol 1</h1>
+            <p id="taskDesc" style="font-size: 16px; color: #6b7280; margin-bottom: 24px;">Task description</p>
+            
+            <div class="form-section">
+                <label class="form-label" id="labelCompleted">Podařilo se mi úkol dokončit?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="completed" value="yes"><span id="optYes">Ano, podařilo</span></label>
+                    <label class="radio-item"><input type="radio" name="completed" value="no"><span id="optNo">Ne, nepodařilo</span></label>
+                    <label class="radio-item"><input type="radio" name="completed" value="unsure"><span id="optUnsure">Nejsem si jistý</span></label>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <label class="form-label">
+                    <span id="labelSteps">Jakými kroky jsem postupoval/a:</span>
+                    <a class="help-link" onclick="showHelp()" style="margin-left: auto; margin-right: 0;">Jak vyplnit?</a>
+                </label>
+                <div class="steps-container" id="stepsContainer"></div>
+                <div class="error-message" id="stepsError">Please fill in at least one step</div>
+            </div>
+            
+            <div class="form-section">
+                <label class="form-label" id="labelDifficulty">Jaká to byla?</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="difficulty" value="easy"><span id="optEasy">Snadné</span></label>
+                    <label class="radio-item"><input type="radio" name="difficulty" value="medium"><span id="optMedium">Matoucí</span></label>
+                    <label class="radio-item"><input type="radio" name="difficulty" value="difficult"><span id="optDifficult">Dlouhé</span></label>
+                    <label class="radio-item"><input type="radio" name="difficulty" value="fast"><span id="optFast">Rychlé</span></label>
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-secondary" onclick="goToScreen('qrScreen');">Zpět</button>
+                <button class="btn-primary" id="nextBtn" onclick="nextTask()" disabled>Další</button>
+            </div>
+        </div>
+    </div>
 
-      document.querySelectorAll('.challenge-btn').forEach((btn) => {
-        setButtonState(btn, granted);
-        if (granted && lastPermissionsState === false) {
-          btn.classList.remove('enable-pop');
-          void btn.offsetWidth;
-          btn.classList.add('enable-pop');
-        }
-      });
+    <div id="successScreen" class="screen">
+        <div class="container success-screen">
+            <div class="success-icon">
+                <img src="Check.svg" alt="Success" style="width: 100px; height: 100px;">
+            </div>
+            <div class="success-title" id="successTitle">Test completed!</div>
+            <p class="success-text" id="successText">Thank you for participating in our Dr. Max research study. Your feedback helps us improve the online pharmacy experience.</p>
+            <button class="btn-primary" id="startOverBtn" onclick="goToScreen('countryScreen')">Start Over</button>
+        </div>
+    </div>
 
-      if (!granted) {
-        rewardsCarousel?.querySelectorAll('.reward-card[data-reward-type="code"]').forEach((card) => card.remove());
-        rewardsCarousel?.querySelector('.reward-empty')?.classList.remove('is-hidden');
-        rewardsCarousel?.removeAttribute('data-bonus-added');
-        rewardsCarousel?.removeAttribute('data-bonusAdded');
-        rewardsCarousel?.removeAttribute('data-bonusadded');
-        rewardsCarousel?.dataset && (rewardsCarousel.dataset.bonusAdded = '');
-        document.body.dataset.bonusPending = '';
-        localStorage.removeItem('bonusRewardSaved');
-        localStorage.removeItem('bonusRewardSavedText');
-        localStorage.removeItem('bonusRewardStage');
-      }
-      if (!granted) {
-        localStorage.removeItem('seasonalUnlocked');
-        localStorage.removeItem('seasonalStarted');
-        localStorage.removeItem('claimedStampCount');
-        localStorage.removeItem('notificationStampCount');
-        localStorage.removeItem('permissionsBonusApplied');
-        localStorage.removeItem('permissionsBonusCount');
-        localStorage.removeItem('manualGeneratedCount');
-        localStorage.removeItem('bonusRewardStage');
-        localStorage.setItem('stampFillCount', '0');
-        document.body.dataset.suppressReady = '';
-        document.body.dataset.stampBaseline = '';
-        document.body.dataset.claimsRestored = '';
-        document.body.dataset.notificationStampsRestored = '';
-        const seasonalSection = document.getElementById('seasonal-section');
-        if (seasonalSection) {
-          seasonalSection.classList.add('is-hidden');
-        }
-        if (seasonalSticky) {
-          seasonalSticky.style.display = 'none';
-          seasonalSticky.classList.remove('is-hidden');
-        }
-        resetStamps({ rotate: false });
-      }
-      updateStampReadyState();
-      if (granted) {
-        if (isFreshGrant) {
-          document.body.dataset.suppressReady = 'true';
-          document.body.dataset.stampBaseline = '';
-          localStorage.setItem('permissionsBonusApplied', 'true');
-          localStorage.setItem('permissionsBonusCount', '4');
-          resetStamps({ rotate: false });
-          localStorage.removeItem('claimedStampCount');
-          document.body.dataset.claimsRestored = '';
-          document.body.dataset.notificationStampsRestored = '';
-          localStorage.setItem('pendingPermissionStamps', 'true');
-          document.body.dataset.suppressReady = '';
-          requestAnimationFrame(() => openDailyModal());
-          setTimeout(() => {
-            if (localStorage.getItem('notificationStampPending') === 'true') {
-              setTimeout(() => forceScrollToStampsCard(), 80);
-              setTimeout(() => {
-                addStamp();
-                localStorage.removeItem('notificationStampPending');
-              }, 300);
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="helpTitle">Jak vyplnit kroky</h2>
+            <div class="modal-example"><strong id="helpExample">Příklad úkolu: "Přihlaste se na webové stránky."</strong></div>
+            <div style="margin-top: 16px;">
+                <p style="font-size: 14px; margin-bottom: 12px; font-weight: 500;"><strong id="helpStepsLabel">Jakými kroky jsem postupoval/a:</strong></p>
+                <ol class="example-list" id="helpStepsList"><li>Otevřel jsem aplikaci</li></ol>
+            </div>
+            <button class="btn-primary" style="margin-top: 24px;" onclick="closeHelp()">Zavřít</button>
+        </div>
+    </div>
+
+    <script>
+        const FIREBASE_URL = 'https://search-b530a-default-rtdb.europe-west1.firebasedatabase.app/responses.json';
+        let currentLang = 'cs';
+        let currentTask = 0;
+        let formData = {};
+
+        const countries = [
+            { code: 'sk', name: 'Slovensko', flag: '🇸🇰' },
+            { code: 'cs', name: 'Česká republika', flag: '🇨🇿' },
+            { code: 'ro', name: 'România', flag: '🇷🇴' },
+            { code: 'pl', name: 'Polska', flag: '🇵🇱' },
+            { code: 'it', name: 'Italia', flag: '🇮🇹' }
+        ];
+
+        const translations = {
+            cs: {
+                introTitle: 'Odkud jste?',
+                introText: 'Provádíme výzkum lékárny Dr. Max online, abychom porozuměli tomu, jak uživatelé hledají a kupují produkty. Vaše zpětná vazba nám pomáhá zlepšit zkušenost. Test trvá přibližně 15 minut a je zcela anonymní.',
+                reqTitle: 'Co budete potřebovat',
+                reqSubtitle: 'Příprava na test',
+                reqMobile: 'Mobilní telefon',
+                reqComputer: 'Počítač',
+                reqTime: '15 minut',
+                prepTitle: 'Příprava',
+                prepSubtitle: 'Na mobilu naskenuj fotoaparátem:',
+                qrLabel: 'QR kód vytvořený pro:',
+                qrInstructions: ['Na mobile si naskenuj QR kód, nechaj načítať stránku a pokračuj na ďalší bod.', 'Po kliknutí na tlačítko "začít test" sa to zobrazia pokyny k úlohe', 'Na mobile sa pokús úlohu vyriešiť', 'Po vyriešení zapíš na počítači výsledok', 'Pokračuj na ďalšiu úlohu'],
+                instructions: ['Na počítači si přečteš zadání úkolu', 'Na mobilu se pokusíš úkol vyřešit', 'Na počítači zapíšeš výsledek', 'Pokračuješ na další úkol'],
+                tasks: [
+                    { title: 'Search and add product to cart', desc: 'Pomocí hledání najdi Ibalgin 200mg a přidej dva do košíku' },
+                    { title: 'Browse product information', desc: 'Najděte informace o produktech z řady "Vichy Liftactiv"' },
+                    { title: 'Find program information', desc: 'Najděte informace o Benefitních poukazech. Použijte hledání.' }
+                ],
+                labelCompleted: 'Podařilo se mi úkol dokončit?',
+                optYes: 'Ano, podařilo',
+                optNo: 'Ne, nepodařilo',
+                optUnsure: 'Nejsem si jistý',
+                labelSteps: 'Jakými kroky jsem postupoval/a:',
+                stepPlaceholder: 'Krok',
+                labelDifficulty: 'Jaká to byla?',
+                optEasy: 'Snadné',
+                optMedium: 'Matoucí',
+                optDifficult: 'Dlouhé',
+                optFast: 'Rychlé',
+                helpExample: 'Příklad úkolu: "Přihlaste se na webové stránky."',
+                exampleSteps: ['Jsem si aplikaci otevřel', 'Kliknul jsem na ikonu profilu v rohu', 'Otevřelo se okno, ale nebyly tam nabídky přihlášení', 'Kliknul jsem na registraci a vyplnil jsem formulář', 'Po skončení registrace jsem se přihlásil'],
+                stepsError: 'Prosím vyplňte první krok alespoň 3 znaky',
+                nextBtn: 'Další',
+                submitBtn: 'Odeslat',
+                thankYou: 'To je vše, moc děkujeme!',
+                submitted: 'Vaše odpovědi byly uloženy do databáze.',
+                startOver: 'Začít znovu'
+            },
+            sk: {
+                introTitle: 'Kde ste z?',
+                introText: 'Robíme výskum o online lekárni Dr. Max, aby sme pochopili, ako používatelia hľadajú a kupujú produkty. Vaša spätná väzba nám pomáha zlepšiť skúsenosť. Test trvá približne 15 minút a je úplne anonymný.',
+                reqTitle: 'Čo budete potrebovať',
+                reqSubtitle: 'Príprava na test',
+                reqMobile: 'Mobilný telefón',
+                reqComputer: 'Počítač',
+                reqTime: '15 minút',
+                prepTitle: 'Príprava',
+                prepSubtitle: 'Na mobile naskenuj fotoaparátem:',
+                qrLabel: 'QR kód vytvorený pre:',
+                qrInstructions: ['Na mobile si naskenuj QR kód, nechaj načítať stránku a pokračuj na ďalší bod.', 'Po kliknutí na tlačítko "začať test" sa to zobrazia pokyny k úlohe', 'Na mobile sa pokúš úlohu vyriešiť', 'Po vyriešení zapíš na počítači výsledok', 'Pokračuj na ďalšiu úlohu'],
+                instructions: ['Na počítači si prečítaj pokyny úlohy', 'Na mobile sa pokus úlohu vyriešiť', 'Na počítači zapíš výsledok', 'Pokračuj na ďalšiu úlohu'],
+                tasks: [
+                    { title: 'Hľadaj a pridaj produkt do košíka', desc: 'Pomocou vyhľadávania nájdi Ibalgin 200mg a pridaj dva do košíka' },
+                    { title: 'Prehliadaj informácie o produkte', desc: 'Nájdi informácie o produktoch z rady "Vichy Liftactiv"' },
+                    { title: 'Nájdi informácie o programe', desc: 'Nájdi informácie o Benefitných poukazech. Použi hľadání.' }
+                ],
+                labelCompleted: 'Podarilo sa mi úlohu dokončiť?',
+                optYes: 'Áno, podarilo',
+                optNo: 'Nie, nepodarilo',
+                optUnsure: 'Nie som si istý',
+                labelSteps: 'Aké kroky som vykonala:',
+                stepPlaceholder: 'Krok',
+                labelDifficulty: 'Ako to bolo?',
+                optEasy: 'Ľahké',
+                optMedium: 'Zmätočné',
+                optDifficult: 'Dlhé',
+                optFast: 'Rýchle',
+                helpExample: 'Príklad úlohy: "Prihláste sa na webovú stránku."',
+                exampleSteps: ['Otvorila som aplikáciu', 'Klikla som na ikonu profilu v rohu', 'Otvorilo sa okno, ale neboli tu ponuky na prihlásenie', 'Klikla som na registráciu a vyplnila formulár', 'Po skončení registrácie som bola prihlásená'],
+                stepsError: 'Prosím vyplňte prvý krok aspoň 3 znaky',
+                nextBtn: 'Ďalej',
+                submitBtn: 'Odoslať',
+                thankYou: 'To je všetko, moc ďakujeme!',
+                submitted: 'Vaše odpovede boli uložené do databázy.',
+                startOver: 'Začať nanovo'
+            },
+            ro: {
+                introTitle: 'De unde ești?',
+                introText: 'Realizăm o cercetare cu privire la farmacie online Dr. Max pentru a înțelege cum utilizatorii caută și cumpără produse. Feedback-ul dvs. ne ajută să îmbunătățim experiența. Testul durează aproximativ 15 minute și este complet anonim.',
+                reqTitle: 'Ce vei avea nevoie',
+                reqSubtitle: 'Pregătire pentru test',
+                reqMobile: 'Telefon mobil',
+                reqComputer: 'Calculator',
+                reqTime: '15 minute',
+                prepTitle: 'Pregătire',
+                prepSubtitle: 'Pe telefon scaneaza cu camera foto:',
+                qrLabel: 'Cod QR generat pentru:',
+                qrInstructions: ['Pe telefon scaneaza codul QR, asteapta sa se incarce pagina si continua la pasul urmator.', 'Dupa ce dai click pe butonul "incepe testul" se vor afisa instructiunile pentru sarcina', 'Pe telefon incearca sa rezolvi sarcina', 'Dupa ce ai rezolvat rescrie rezultatul pe computer', 'Continua la sarcina urmatoare'],
+                instructions: ['Pe calculator citește instrucțiunile sarcinii', 'Pe telefon încearcă să rezolvi sarcina', 'Pe calculator notează rezultatul', 'Continuă la următoarea sarcină'],
+                tasks: [
+                    { title: 'Caută și adaugă produs în coș', desc: 'Folosind căutarea, găsește Ibalgin 200mg și adaugă doi în coș' },
+                    { title: 'Explorează informații produs', desc: 'Găsește informații despre produsele din linia "Vichy Liftactiv"' },
+                    { title: 'Găsește informații program', desc: 'Găsește informații despre voucherele Benefitare. Folosește căutarea.' }
+                ],
+                labelCompleted: 'Am reușit să termin sarcina?',
+                optYes: 'Da, am reușit',
+                optNo: 'Nu, nu am reușit',
+                optUnsure: 'Nu sunt sigur',
+                labelSteps: 'Pașii pe care i-am urmat:',
+                stepPlaceholder: 'Pasul',
+                labelDifficulty: 'Cum a fost?',
+                optEasy: 'Ușor',
+                optMedium: 'Confuz',
+                optDifficult: 'Lung',
+                optFast: 'Rapid',
+                helpExample: 'Exemplu de sarcină: "Autentifică-te pe site-ul web."',
+                exampleSteps: ['Am deschis aplicația', 'Am apăsat pe iconă de profil în colț', 'S-a deschis o fereastră, dar nu au existat opțiuni de autentificare', 'Am apăsat pe înregistrare și am completat formularul', 'După finalizarea înregistrării, m-am autentificat'],
+                stepsError: 'Te rog completează primul pas cu cel puțin 3 caractere',
+                nextBtn: 'Următoarea',
+                submitBtn: 'Trimite',
+                thankYou: 'Asta-i tot, vă mulțumim!',
+                submitted: 'Răspunsurile tale au fost salvate în bază de date.',
+                startOver: 'Începe din nou'
+            },
+            pl: {
+                introTitle: 'Skąd jesteś?',
+                introText: 'Prowadzimy badania dotyczące apteki internetowej Dr. Max, aby zrozumieć, jak użytkownicy szukają i kupują produkty. Twoja opinia pomaga nam poprawiać doświadczenie. Test trwa około 15 minut i jest całkowicie anonimowy.',
+                reqTitle: 'Co będziesz potrzebować',
+                reqSubtitle: 'Przygotowanie do testu',
+                reqMobile: 'Telefon komórkowy',
+                reqComputer: 'Komputer',
+                reqTime: '15 minut',
+                prepTitle: 'Przygotowanie',
+                prepSubtitle: 'Na telefonie zeskanuj kamerą:',
+                qrLabel: 'Kod QR wygenerowany dla:',
+                qrInstructions: ['Na telefonie zeskanuj kod QR, poczekaj na załadowanie strony i przejdź do następnego punktu.', 'Po kliknięciu na przycisk "zacznij test" pojawią się instrukcje do zadania', 'Na telefonie spróbuj rozwiązać zadanie', 'Po rozwiązaniu wpisz rezultat na komputerze', 'Przejdź do następnego zadania'],
+                instructions: ['Na komputerze przeczytaj polecenie zadania', 'Na telefonie spróbuj rozwiązać zadanie', 'Na komputerze zapisz wynik', 'Przejdź do następnego zadania'],
+                tasks: [
+                    { title: 'Szukaj i dodaj produkt do koszyka', desc: 'Korzystając z wyszukiwania, znajdź Ibalgin 200mg i dodaj dwa do koszyka' },
+                    { title: 'Przeglądaj informacje produktu', desc: 'Znajdź informacje o produktach z linii "Vichy Liftactiv"' },
+                    { title: 'Znajdź informacje programu', desc: 'Znajdź informacje o voucherach promocyjnych. Użyj wyszukiwania.' }
+                ],
+                labelCompleted: 'Czy udało mi się ukończyć zadanie?',
+                optYes: 'Tak, udało się',
+                optNo: 'Nie, nie udało się',
+                optUnsure: 'Nie jestem pewny',
+                labelSteps: 'Jakie kroki wykonałem:',
+                stepPlaceholder: 'Krok',
+                labelDifficulty: 'Jak to było?',
+                optEasy: 'Łatwe',
+                optMedium: 'Mylące',
+                optDifficult: 'Długie',
+                optFast: 'Szybkie',
+                helpExample: 'Przykład zadania: "Zaloguj się na stronie internetowej."',
+                exampleSteps: ['Otworzyłem aplikację', 'Kliknąłem na ikonę profilu w rogu', 'Otworzyło się okno, ale nie było opcji logowania', 'Kliknąłem na rejestrację i wypełniłem formularz', 'Po zakończeniu rejestracji byłem zalogowany'],
+                stepsError: 'Proszę wypełnij pierwszy krok co najmniej 3 znakami',
+                nextBtn: 'Dalej',
+                submitBtn: 'Prześlij',
+                thankYou: 'To wszystko, dziękuję!',
+                submitted: 'Twoje odpowiedzi zostały zapisane w bazie danych.',
+                startOver: 'Zacznij od nowa'
+            },
+            it: {
+                introTitle: 'Da dove vieni?',
+                introText: 'Stiamo conducendo una ricerca sulla farmacia online Dr. Max per capire come gli utenti cercano e acquistano prodotti. I tuoi commenti ci aiutano a migliorare l\'esperienza. Il test dura circa 15 minuti ed è completamente anonimo.',
+                reqTitle: 'Di cosa avrai bisogno',
+                reqSubtitle: 'Preparazione per il test',
+                reqMobile: 'Telefono cellulare',
+                reqComputer: 'Computer',
+                reqTime: '15 minuti',
+                prepTitle: 'Preparazione',
+                prepSubtitle: 'Sul cellulare scannerizza con la fotocamera:',
+                qrLabel: 'Codice QR generato per:',
+                qrInstructions: ['Sul cellulare scansiona il codice QR, attendi che la pagina si carichi e procedi al punto successivo.', 'Dopo aver fatto clic sul pulsante "inizia il test" compariranno le istruzioni per il compito', 'Sul cellulare prova a completare il compito', 'Dopo aver risolto scrivi il risultato sul computer', 'Procedi al compito successivo'],
+                instructions: ['Sul computer leggi le istruzioni del compito', 'Sul cellulare prova a completare il compito', 'Sul computer scrivi il risultato', 'Procedi al compito successivo'],
+                tasks: [
+                    { title: 'Cerca e aggiungi prodotto al carrello', desc: 'Usando la ricerca, trova Ibalgin 200mg e aggiungi due al carrello' },
+                    { title: 'Esplora informazioni prodotto', desc: 'Trova informazioni sui prodotti della linea "Vichy Liftactiv"' },
+                    { title: 'Trova informazioni programma', desc: 'Trova informazioni sui buoni vantaggi. Usa la ricerca.' }
+                ],
+                labelCompleted: 'Sono riuscito a completare il compito?',
+                optYes: 'Sì, sono riuscito',
+                optNo: 'No, non sono riuscito',
+                optUnsure: 'Non sono sicuro',
+                labelSteps: 'I passaggi che ho seguito:',
+                stepPlaceholder: 'Passaggio',
+                labelDifficulty: 'Com\'è stato?',
+                optEasy: 'Facile',
+                optMedium: 'Confuso',
+                optDifficult: 'Lungo',
+                optFast: 'Veloce',
+                helpExample: 'Esempio di compito: "Accedi al sito web."',
+                exampleSteps: ['Ho aperto l\'app', 'Ho toccato l\'icona del profilo nell\'angolo', 'Si è aperta una finestra, ma non c\'era l\'opzione di accesso', 'Ho fatto clic su registra e ho compilato il modulo', 'Dopo la registrazione ero connesso'],
+                stepsError: 'Per favore completa il primo passaggio con almeno 3 caratteri',
+                nextBtn: 'Avanti',
+                submitBtn: 'Invia',
+                thankYou: 'Questo è tutto, grazie mille!',
+                submitted: 'Le tue risposte sono state salvate nel database.',
+                startOver: 'Inizia di nuovo'
             }
-          }, 2600);
-        } else {
-          const bonusCount = parseInt(localStorage.getItem('permissionsBonusCount') || '0', 10);
-          if (bonusCount > 0) {
-            restoreBonusStamps(bonusCount);
-            restoreNotificationStamps();
-          } else {
-            restoreClaimedStamps();
-            autoClaimAvailableStamps();
-            restoreNotificationStamps();
-          }
+        };
+
+        function initUI() {
+            const grid = document.getElementById('countryGrid');
+            grid.innerHTML = countries.map(c => `
+                <button class="country-btn" onclick="selectCountry('${c.code}')">
+                    <span class="flag">${c.flag}</span>
+                    <span>${c.name}</span>
+                </button>
+            `).join('');
         }
-        localStorage.removeItem('permissionsJustGranted');
-      } else {
-        localStorage.removeItem('permissionsJustGranted');
-      }
-      lastPermissionsState = granted;
-    };
 
-    const sticky = document.getElementById('entry-challenge-sticky');
-    const entryCard = document.getElementById('entry-permission-card');
-    const seasonalSticky = document.getElementById('seasonal-challenge-sticky');
-    const seasonalSection = document.getElementById('seasonal-section');
-    const setStickyVisible = (visible) => {
-      if (!sticky) return;
-      sticky.style.display = visible ? 'flex' : 'none';
-    };
-    const setSeasonalStickyVisible = (visible) => {
-      if (!seasonalSticky) return;
-      seasonalSticky.style.display = visible ? 'flex' : 'none';
-    };
-
-    const updateStickyImmediate = () => {
-      if (!sticky || !entryCard) return;
-      const rect = entryCard.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      setStickyVisible(!inView);
-    };
-    const updateSeasonalStickyImmediate = () => {
-      if (!seasonalSticky || !seasonalSection) return;
-      if (localStorage.getItem('seasonalStarted') === 'true') {
-        setSeasonalStickyVisible(false);
-        return;
-      }
-      seasonalSticky.classList.remove('is-hidden');
-      if (seasonalSection.classList.contains('is-hidden')) {
-        setSeasonalStickyVisible(false);
-        return;
-      }
-      const rect = seasonalSection.getBoundingClientRect();
-      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      setSeasonalStickyVisible(!inView);
-    };
-
-    let stickyObserver = null;
-    if (entryCard && sticky) {
-      stickyObserver = new IntersectionObserver((entries) => {
-        const granted = localStorage.getItem('permissionsGranted') === 'true';
-        if (granted) {
-          setStickyVisible(false);
-          return;
+        function selectCountry(lang) {
+            currentLang = lang;
+            currentTask = 0;
+            formData = {};
+            // Update URL with language parameter
+            window.history.replaceState({}, '', `?lang=${lang}`);
+            updateLanguage();
+            goToScreen('requirementsScreen');
         }
-        setStickyVisible(!entries[0].isIntersecting);
-      }, { threshold: 0.15 });
-      stickyObserver.observe(entryCard);
-    }
-    let seasonalObserver = null;
-    if (seasonalSection && seasonalSticky) {
-      seasonalObserver = new IntersectionObserver((entries) => {
-        if (localStorage.getItem('seasonalStarted') === 'true') {
-          setSeasonalStickyVisible(false);
-          return;
+
+        function updateLanguage() {
+            const t = translations[currentLang] || translations.cs;
+            let introTextContent = t.introText;
+            // Add bold formatting to duration and anonymity keywords based on language
+            if (currentLang === 'cs') {
+                introTextContent = introTextContent.replace('15 minut', '<strong>15 minut</strong>')
+                    .replace('zcela anonymní', '<strong>zcela anonymní</strong>');
+            } else if (currentLang === 'sk') {
+                introTextContent = introTextContent.replace('15 minút', '<strong>15 minút</strong>')
+                    .replace('úplne anonymný', '<strong>úplne anonymný</strong>');
+            } else if (currentLang === 'ro') {
+                introTextContent = introTextContent.replace('15 minute', '<strong>15 minute</strong>')
+                    .replace('complet anonim', '<strong>complet anonim</strong>');
+            } else if (currentLang === 'pl') {
+                introTextContent = introTextContent.replace('15 minut', '<strong>15 minut</strong>')
+                    .replace('całkowicie anonimowy', '<strong>całkowicie anonimowy</strong>');
+            } else if (currentLang === 'it') {
+                introTextContent = introTextContent.replace('15 minuti', '<strong>15 minuti</strong>')
+                    .replace('completamente anonimo', '<strong>completamente anonimo</strong>');
+            }
+            document.getElementById('introText').innerHTML = introTextContent;
+            document.getElementById('reqTitle').textContent = t.reqTitle;
+            document.getElementById('reqSubtitle').textContent = t.reqSubtitle;
+            document.getElementById('reqMobile').textContent = t.reqMobile;
+            document.getElementById('reqComputer').textContent = t.reqComputer;
+            document.getElementById('reqTime').textContent = t.reqTime;
+            document.getElementById('qrTitle').textContent = t.prepTitle;
+            document.getElementById('qrSubtitle').textContent = t.prepSubtitle;
+            const instructions = t.qrInstructions || t.instructions;
+            let instructionsHTML = `<li style="margin-bottom: 12px;">${instructions[0]}</li>`;
+            instructionsHTML += `<li style="margin: 24px auto; display: flex; justify-content: center; list-style: none; text-indent: 0;">
+                    <img id="qrImage" src="qr-code-${currentLang}.png" alt="QR Code" style="max-width: 200px; width: 100%; border: 2px solid #48860A; border-radius: 8px; padding: 12px; background: white;">
+                </li>`;
+            for (let i = 1; i < instructions.length; i++) {
+                const marginBottom = i === instructions.length - 1 ? '0' : '12px';
+                instructionsHTML += `<li style="margin-bottom: ${marginBottom};">${instructions[i]}</li>`;
+            }
+            document.getElementById('instructionsList').innerHTML = instructionsHTML;
+            document.getElementById('labelCompleted').textContent = t.labelCompleted;
+            document.getElementById('optYes').textContent = t.optYes;
+            document.getElementById('optNo').textContent = t.optNo;
+            document.getElementById('optUnsure').textContent = t.optUnsure;
+            document.getElementById('labelSteps').textContent = t.labelSteps;
+            document.getElementById('labelDifficulty').textContent = t.labelDifficulty;
+            document.getElementById('optEasy').textContent = t.optEasy;
+            document.getElementById('optMedium').textContent = t.optMedium;
+            document.getElementById('optDifficult').textContent = t.optDifficult;
+            document.getElementById('optFast').textContent = t.optFast;
+            document.getElementById('helpExample').textContent = t.helpExample;
+            document.getElementById('helpStepsLabel').textContent = t.labelSteps;
+            document.getElementById('helpStepsList').innerHTML = t.exampleSteps.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('stepsError').textContent = t.stepsError;
         }
-        if (seasonalSection.classList.contains('is-hidden')) {
-          setSeasonalStickyVisible(false);
-          return;
+
+        function goToFormScreen() {
+            currentTask = 0;
+            goToScreen('formScreen');
+            updateFormUI();
         }
-        setSeasonalStickyVisible(!entries[0].isIntersecting);
-      }, { threshold: 0.15 });
-      seasonalObserver.observe(seasonalSection);
-    }
 
-    const permissionsToggle = document.getElementById('permissions-toggle');
-    const syncPermissionsState = () => {
-      const granted = localStorage.getItem('permissionsGranted') === 'true';
-      applyPermissionsState(granted);
-      if (!granted) {
-        updateStickyImmediate();
-      } else {
-        setStickyVisible(false);
-      }
-      updateSeasonalStickyImmediate();
-    };
-
-    permissionsToggle?.addEventListener('click', () => {
-      const granted = localStorage.getItem('permissionsGranted') === 'true';
-      if (granted) return;
-      localStorage.setItem('permissionsGranted', 'true');
-      localStorage.setItem('permissionsJustGranted', 'true');
-      syncPermissionsState();
-    });
-
-    syncPermissionsState();
-
-    if (localStorage.getItem('openDailyOnReturn') === 'true') {
-      localStorage.removeItem('openDailyOnReturn');
-      requestAnimationFrame(() => openDailyModal());
-    }
-
-    if (localStorage.getItem('permissionsGranted') === 'true') {
-      const dailyProgress = document.getElementById('daily-progress');
-      const savedSteps = parseInt(localStorage.getItem('dailyCurrentSteps') || '0', 10);
-      const savedGoal = parseInt(localStorage.getItem('dailyGoalSteps') || '0', 10);
-      const savedDiscount = parseInt(localStorage.getItem('dailyGoalDiscount') || '0', 10);
-      if (savedGoal) {
-        applyDailyGoal(savedGoal, savedDiscount || 10);
-      }
-      if (dailyProgress) {
-        dailyProgress.dataset.started = 'true';
-        dailyProgress.classList.remove('is-hidden');
-        if (savedGoal) {
-          dailyProgress.dataset.target = `${savedGoal}`;
+        function updateFormUI() {
+            const t = translations[currentLang].tasks[currentTask];
+            const tLang = translations[currentLang];
+            document.getElementById('taskCounter').textContent = `${currentTask + 1} / 3`;
+            document.getElementById('taskTitle').textContent = t.title;
+            document.getElementById('taskDesc').textContent = t.desc;
+            document.getElementById('nextBtn').textContent = currentTask === 2 ? tLang.submitBtn : tLang.nextBtn;
+            document.getElementById('stepsContainer').innerHTML = [1,2,3,4,5].map(n => `
+                <div class="step-input-wrapper">
+                    <span class="step-number">${n}.</span>
+                    <input type="text" class="step-input" placeholder="${tLang.stepPlaceholder} ${n}...">
+                </div>
+            `).join('');
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('stepsError').classList.remove('show');
         }
-        updateDailyProgressTo(savedSteps || 0);
-      }
-      if (savedGoal && savedSteps >= savedGoal) {
-        localStorage.setItem('dailyCompleted', 'true');
-        if (!localStorage.getItem('dailyCompleteUntil')) {
-          const nextMidnight = new Date();
-          nextMidnight.setHours(24, 0, 0, 0);
-          localStorage.setItem('dailyCompleteUntil', String(nextMidnight.getTime()));
+
+        function validateFormComplete() {
+            const completedChecked = document.querySelector('input[name="completed"]:checked');
+            const difficultyChecked = document.querySelector('input[name="difficulty"]:checked');
+            const firstStep = document.querySelector('.step-input');
+            const firstStepLength = firstStep ? firstStep.value.trim().length : 0;
+            
+            return completedChecked && difficultyChecked && firstStepLength >= 3;
         }
-        setDailyCompleteState(true);
-        startDailyCountdown();
-      }
-    }
-    if (localStorage.getItem('dailyCompleted') === 'true') {
-      setDailyCompleteState(true);
-      startDailyCountdown();
-    }
-    if (localStorage.getItem('seriesModalOpen') === 'true') {
-      const seriesModal = document.getElementById('series-modal');
-      if (seriesModal) {
-        seriesModal.classList.add('is-visible');
-        seriesModal.setAttribute('aria-hidden', 'false');
-      }
-    }
 
-    const stampParams = new URLSearchParams(window.location.search);
-    updateSeasonalVisibility();
-    updateStampReadyState();
-    updateSeasonalStickyImmediate();
-    restoreManualStamps();
-    if (stampParams.get('addStamp') === '1') {
-      addNotificationStamp();
-      stampParams.delete('addStamp');
-      const hash = window.location.hash || '';
-      const next = `${window.location.pathname}${stampParams.toString() ? `?${stampParams}` : ''}${hash}`;
-      window.history.replaceState({}, '', next);
-    }
-
-    if (localStorage.getItem('notificationFlow') === 'true') {
-      runNotificationFlow();
-    }
-    const filledCount = document.querySelectorAll('.stamps-row .stamp-dot-filled').length;
-    if (localStorage.getItem('bonusRewardSaved') !== 'true' && filledCount === 0) {
-      localStorage.setItem('bonusRewardStage', 'first');
-      localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-      if (bonusTitle) bonusTitle.textContent = 'Cílová odměna';
-      if (bonusText) bonusText.textContent = '10% sleva na produkty Dr. Max.';
-    }
-    if (localStorage.getItem('bonusRewardSaved') === 'true') {
-      addBonusCard(false);
-    }
-
-    document.getElementById('generate-stamps')?.addEventListener('click', () => {
-      generateStamps(3);
-    });
-
-    const tutorialSteps = [
-      {
-        id: 'daily',
-        target: '#daily-progress .progress-shell',
-        step: '2-1',
-        text: 'Takhle vypadá váš denní cíl.'
-      },
-      {
-        id: 'stamps',
-        target: '#stamps-card',
-        step: '2-2',
-        text: 'Tady sbíráte razítka za splnění cíle.'
-      },
-      {
-        id: 'bonus',
-        target: '#bonus-reward-card',
-        step: '2-3',
-        text: 'Tady uvidíte odměnu, kterou získáte po nasbírání všech razítek.'
-      }
-    ];
-
-    let tutorialIndex = 0;
-    let tutorialScrollTimer = null;
-    const tutorialOverlay = document.getElementById('tutorial-overlay');
-    const tutorialHighlight = document.getElementById('tutorial-highlight');
-    const tutorialCard = document.getElementById('tutorial-card');
-    const tutorialStepLabel = document.getElementById('tutorial-step');
-    const tutorialText = document.getElementById('tutorial-text');
-    const tutorialNext = document.getElementById('tutorial-next');
-    const tutorialStepper = document.getElementById('tutorial-stepper');
-    const tutorialSkip = document.getElementById('tutorial-skip');
-    const seedTutorialStamps = () => {
-      localStorage.setItem('manualGeneratedCount', '0');
-      localStorage.setItem('stampFillCount', '0');
-      localStorage.setItem('notificationStampCount', '0');
-      localStorage.setItem('permissionsBonusCount', '0');
-      resetStamps({ rotate: false });
-      const tutorialDots = Array.from(document.querySelectorAll('.stamps-row .stamp-dot:not(.stamp-dot-disabled)'));
-      tutorialDots.slice(0, 3).forEach((dot) => {
-        dot.dataset.filled = 'true';
-        dot.classList.add('stamp-dot-filled');
-        if (!dot.querySelector('i')) {
-          const icon = document.createElement('i');
-          icon.className = 'fa-solid fa-check stamp-icon';
-          dot.appendChild(icon);
-        }
-      });
-      updateStampReadyState();
-    };
-
-    const clearTutorialStamps = () => {
-      localStorage.setItem('manualGeneratedCount', '0');
-      localStorage.setItem('stampFillCount', '0');
-      localStorage.setItem('notificationStampCount', '0');
-      localStorage.setItem('permissionsBonusCount', '0');
-      resetStamps({ rotate: false, force: true });
-      updateStampReadyState();
-    };
-
-    const positionTutorial = (step) => {
-      const target = document.querySelector(step.target);
-      if (!target || !tutorialHighlight || !tutorialCard) return;
-      const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const applyPosition = () => {
-        const rect = target.getBoundingClientRect();
-        const pad = step.id === 'stamps' ? 8 : 8;
-        const targetRadius = parseFloat(window.getComputedStyle(target).borderRadius || '0') || 0;
-        const highlightRadius = Math.max(24, targetRadius + pad);
-        tutorialHighlight.style.borderRadius = `${highlightRadius}px`;
-        const extraOffset = 0;
-        const desiredTop = Math.max(0, rect.top - pad - extraOffset);
-        tutorialHighlight.style.top = `${desiredTop}px`;
-        tutorialHighlight.style.left = `${Math.max(0, rect.left - pad)}px`;
-        tutorialHighlight.style.width = `${Math.max(0, rect.width + pad * 2)}px`;
-        tutorialHighlight.style.height = `${Math.max(0, rect.height + pad * 2)}px`;
-
-        const cardWidth = Math.max(0, window.innerWidth - 24);
-        tutorialCard.style.width = `${cardWidth}px`;
-        const cardHeight = tutorialCard.offsetHeight || 110;
-        let cardTop = rect.bottom + pad + 12;
-        if (cardTop < 12) cardTop = 12;
-        let cardLeft = 12;
-        tutorialCard.style.top = `${cardTop}px`;
-        tutorialCard.style.left = `${cardLeft}px`;
-        tutorialCard.style.opacity = '1';
-      };
-
-      clearTimeout(tutorialScrollTimer);
-      if (tutorialHighlight) tutorialHighlight.style.opacity = '0';
-      if (tutorialCard) tutorialCard.style.opacity = '0';
-      target.scrollIntoView({ behavior: prefersReduce ? 'auto' : 'smooth', block: 'center' });
-      let lastScrollTop = window.scrollY;
-      const settle = () => {
-        const moved = Math.abs(window.scrollY - lastScrollTop) > 4;
-        lastScrollTop = window.scrollY;
-        applyPosition();
-        if (tutorialHighlight) tutorialHighlight.style.opacity = '1';
-        if (moved && !prefersReduce) {
-          tutorialScrollTimer = setTimeout(settle, 180);
-        }
-      };
-      tutorialScrollTimer = setTimeout(settle, prefersReduce ? 0 : 260);
-    };
-
-    const showTutorialStep = (index) => {
-      const step = tutorialSteps[index];
-      if (!step) return;
-      if (tutorialStepLabel) tutorialStepLabel.textContent = step.step;
-      if (tutorialText) tutorialText.textContent = step.text;
-      if (tutorialNext) {
-        tutorialNext.textContent = index === tutorialSteps.length - 1 ? 'Pokračovat' : 'Další';
-      }
-      document.querySelectorAll('#tutorial-stepper-bar .tutorial-dot').forEach((dot, dotIndex) => {
-        dot.classList.toggle('is-active', dotIndex === index);
-      });
-      positionTutorial(step);
-    };
-
-    const openTutorial = () => {
-      if (!tutorialOverlay) return;
-      tutorialOverlay.classList.add('is-visible');
-      tutorialOverlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('tutorial-active');
-      if (tutorialStepper) tutorialStepper.style.display = 'flex';
-      tutorialIndex = 0;
-      seedTutorialStamps();
-      seedTutorialRewards();
-      showTutorialStep(tutorialIndex);
-    };
-
-    const closeTutorial = () => {
-      if (!tutorialOverlay) return;
-      tutorialOverlay.classList.remove('is-visible');
-      tutorialOverlay.setAttribute('aria-hidden', 'true');
-      if (tutorialStepper) tutorialStepper.style.display = 'none';
-      localStorage.setItem('tutorialSeen', 'true');
-      document.body.classList.remove('tutorial-active');
-      clearTutorialRewards();
-      clearTutorialStamps();
-      if (localStorage.getItem('openStartAfterTutorial') === 'true') {
-        localStorage.removeItem('openStartAfterTutorial');
-        if (!suppressDrawers) {
-          startModal?.classList.add('open');
-          document.body.classList.add('modal-open');
-        }
-      }
-    };
-
-    tutorialNext?.addEventListener('click', () => {
-      tutorialIndex += 1;
-      if (tutorialIndex >= tutorialSteps.length) {
-        closeTutorial();
-        return;
-      }
-      showTutorialStep(tutorialIndex);
-    });
-    tutorialSkip?.addEventListener('click', () => {
-      closeTutorial();
-    });
-
-    window.addEventListener('resize', () => {
-      if (!tutorialOverlay?.classList.contains('is-visible')) return;
-      showTutorialStep(tutorialIndex);
-    });
-
-    window.addEventListener('load', () => {
-      if (localStorage.getItem('tutorialSeen') === 'true') return;
-      if (localStorage.getItem('showTutorialOnLoad') !== 'true') return;
-      if (document.querySelector('.bonus-modal.visible') || document.querySelector('.start-modal.open') || document.querySelector('.permission-drawer.open')) {
-        return;
-      }
-      localStorage.removeItem('showTutorialOnLoad');
-      setTimeout(openTutorial, 300);
-    });
-
-    const startDailyChallenge = (targetOverride) => {
-      const targetSteps = Number(targetOverride)
-        || Number(localStorage.getItem('dailyGoalSteps') || '0')
-        || Number(document.getElementById('daily-progress')?.dataset.target || '5000');
-      const dailyProgress = document.getElementById('daily-progress');
-      const goalLabel = document.getElementById('daily-goal-label');
-      if (dailyProgress) {
-        dailyProgress.dataset.started = 'true';
-        dailyProgress.dataset.target = `${targetSteps}`;
-        dailyProgress.classList.remove('is-hidden');
-      }
-      const dailyBtn = document.getElementById('daily-start-btn');
-      if (dailyBtn) {
-        dailyBtn.remove();
-      }
-      updateDailyText(0, targetSteps);
-      const stepsLabel = document.getElementById('daily-steps-count');
-      if (stepsLabel) {
-        stepsLabel.textContent = `0 / ${formatSteps(targetSteps)}`;
-      }
-      if (goalLabel) {
-        goalLabel.textContent = `${targetSteps}`;
-      }
-      const svg = document.querySelector('#daily-progress svg[data-progress]');
-      const arc = document.querySelector('#daily-progress .arc-progress');
-      const dot = document.querySelector('#daily-progress .arc-knob');
-      if (svg) {
-        svg.dataset.progress = '0';
-        svg.dataset.animated = 'true';
-      }
-      if (arc && dot) {
-        arc.setAttribute('stroke-dasharray', '5 95');
-        dot.setAttribute('cx', '340');
-        dot.setAttribute('cy', '198');
-        dot.style.opacity = '1';
-      }
-      updateGoalLabelColor(0);
-    };
-
-    const animateDailyProgressTo = (steps, duration) => {
-      const dailyProgress = document.getElementById('daily-progress');
-      const targetSteps = Number(dailyProgress?.dataset.target || localStorage.getItem('dailyGoalSteps') || '5000');
-      const startLabel = document.getElementById('daily-steps-count');
-      const svg = document.querySelector('#daily-progress svg[data-progress]');
-      const arc = document.querySelector('#daily-progress .arc-progress');
-      const dot = document.querySelector('#daily-progress .arc-knob');
-      if (!svg || !arc || !dot) {
-        updateDailyProgressTo(steps);
-        return;
-      }
-      const startPercent = parseFloat(svg.dataset.progress || '0');
-      const target = Math.max(0, Math.min(steps, targetSteps));
-      const endPercent = targetSteps ? (target / targetSteps) * 100 : 0;
-      const currentSteps = Math.round((startPercent / 100) * targetSteps);
-      const deltaSteps = Math.abs(target - currentSteps);
-      const computedDuration = Math.min(2400, Math.max(600, deltaSteps * 0.25));
-      const finalDuration = duration ?? computedDuration;
-      const start = performance.now();
-      const totalLen = arc.getTotalLength();
-      const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-
-      const tick = (now) => {
-        const t = Math.min(1, (now - start) / finalDuration);
-        const eased = easeOut(t);
-        const current = startPercent + (endPercent - startPercent) * eased;
-        svg.dataset.progress = `${current}`;
-        arc.setAttribute('stroke-dasharray', `${current} ${100 - current}`);
-        const point = arc.getPointAtLength((current / 100) * totalLen);
-        dot.setAttribute('cx', point.x);
-        dot.setAttribute('cy', point.y);
-        dot.style.opacity = current >= 100 ? '0' : '1';
-        if (startLabel) {
-          const stepsNow = Math.round((current / 100) * targetSteps);
-          startLabel.textContent = `${formatSteps(stepsNow)} / ${formatSteps(targetSteps)}`;
-        }
-        updateDailyText(Math.round((current / 100) * targetSteps), targetSteps);
-        if (t < 1) {
-          requestAnimationFrame(tick);
-        } else {
-          updateDailyProgressTo(target);
-          localStorage.setItem('dailyCurrentSteps', String(target));
-        }
-        updateGoalLabelColor(current);
-      };
-      requestAnimationFrame(tick);
-    };
-
-    document.getElementById('daily-start-btn')?.addEventListener('click', (event) => {
-      event.preventDefault();
-      openDailyModal();
-    });
-
-    const startSeasonalChallenge = () => {
-      const seasonalBtn = document.getElementById('seasonal-start-card');
-      const seasonalProgress = document.getElementById('seasonal-progress');
-      const seasonalLabel = document.getElementById('seasonal-progress-label');
-      const seasonalPercent = document.getElementById('seasonal-progress-percent');
-      const seasonalFill = document.getElementById('seasonal-progress-fill');
-      if (seasonalProgress) {
-        seasonalProgress.dataset.started = 'true';
-        seasonalProgress.classList.remove('is-hidden');
-      }
-      if (seasonalLabel) seasonalLabel.textContent = '0 / 25 km';
-      if (seasonalPercent) seasonalPercent.textContent = '0%';
-      if (seasonalFill) seasonalFill.style.width = '0%';
-      if (seasonalBtn) {
-        seasonalBtn.remove();
-      }
-      localStorage.setItem('seasonalStarted', 'true');
-      setSeasonalStickyVisible(false);
-      if (seasonalSticky) {
-        seasonalSticky.classList.add('is-hidden');
-      }
-    };
-
-    document.getElementById('seasonal-start-btn')?.addEventListener('click', startSeasonalChallenge);
-    document.getElementById('seasonal-start-card')?.addEventListener('click', startSeasonalChallenge);
-
-    (() => {
-      const overlay = document.getElementById('press-menu');
-      const menu = overlay?.querySelector('.press-menu');
-      const permissionsToggle = document.getElementById('press-permissions-toggle');
-      if (!overlay || !menu) return;
-      let pressTimer = null;
-      let startX = 0;
-      let startY = 0;
-
-      const openMenu = () => {
-        overlay.classList.add('open');
-        overlay.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-        if (permissionsToggle) {
-          permissionsToggle.checked = localStorage.getItem('permissionsGranted') === 'true';
-        }
-      };
-      const closeMenu = () => {
-        overlay.classList.remove('open');
-        overlay.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-      };
-      window.openPressMenu = openMenu;
-      const clearPressTimer = () => {
-        if (pressTimer) {
-          clearTimeout(pressTimer);
-          pressTimer = null;
-        }
-      };
-      const shouldIgnore = (target) => target.closest('button, a, input, textarea, select, .press-menu');
-
-      document.addEventListener('touchstart', (event) => {
-        if (shouldIgnore(event.target)) return;
-        const touchCount = event.touches.length;
-        if (touchCount !== 2 && touchCount !== 1) {
-          clearPressTimer();
-          return;
-        }
-        const [t1, t2] = event.touches;
-        if (touchCount === 1) {
-          startX = t1.clientX;
-          startY = t1.clientY;
-          clearPressTimer();
-          pressTimer = setTimeout(() => openMenu(), 4000);
-          return;
-        }
-        startX = (t1.clientX + t2.clientX) / 2;
-        startY = (t1.clientY + t2.clientY) / 2;
-        clearPressTimer();
-        pressTimer = setTimeout(() => openMenu(), 3000);
-      }, { passive: true });
-      document.addEventListener('touchmove', (event) => {
-        if (!pressTimer) return;
-        const touchCount = event.touches.length;
-        if (touchCount !== 2 && touchCount !== 1) {
-          clearPressTimer();
-          return;
-        }
-        if (touchCount === 1) {
-          const [t1] = event.touches;
-          const dx = Math.abs(t1.clientX - startX);
-          const dy = Math.abs(t1.clientY - startY);
-          if (dx > 12 || dy > 12) {
-            clearPressTimer();
-          }
-          return;
-        }
-        const [t1, t2] = event.touches;
-        const x = (t1.clientX + t2.clientX) / 2;
-        const y = (t1.clientY + t2.clientY) / 2;
-        const dx = Math.abs(x - startX);
-        const dy = Math.abs(y - startY);
-        if (dx > 12 || dy > 12) {
-          clearPressTimer();
-        }
-      }, { passive: true });
-      document.addEventListener('touchend', clearPressTimer);
-      document.addEventListener('touchcancel', clearPressTimer);
-      overlay.addEventListener('click', (event) => {
-        if (event.target === overlay) closeMenu();
-      });
-      overlay.querySelectorAll('[data-action]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          const action = btn.dataset.action;
-          closeMenu();
-          if (action === 'close') return;
-          if (action === 'reset') {
-            localStorage.clear();
-            localStorage.setItem('bonusRewardStage', 'first');
-            localStorage.setItem('bonusRewardTitle', 'Cílová odměna');
-            localStorage.setItem('bonusRewardText', '10% sleva na produkty Dr. Max.');
-            window.location.href = 'app-home.html';
-            return;
-          }
-          if (action === 'lockscreen-stamp') {
-            window.location.href = 'lockscreen-notification-stamp.html';
-            return;
-          }
-          if (action === 'lockscreen-reward') {
-            window.location.href = 'lockscreen-notification.html';
-            return;
-          }
-          if (action === 'generate') {
-            generateStamps(3);
-            return;
-          }
+        document.addEventListener('change', () => {
+            document.getElementById('nextBtn').disabled = !validateFormComplete();
         });
-      });
-      permissionsToggle?.addEventListener('change', () => {
-        setPermissionsGranted(permissionsToggle.checked);
-      });
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape') closeMenu();
-      });
-    })();
 
-    document.getElementById('menu-open-btn')?.addEventListener('click', () => {
-      if (typeof window.openPressMenu === 'function') {
-        window.openPressMenu();
-      }
-    });
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('step-input')) {
+                document.getElementById('stepsError').classList.remove('show');
+                document.getElementById('nextBtn').disabled = !validateFormComplete();
+            }
+        });
 
-  </script>
+        function nextTask() {
+            const steps = Array.from(document.querySelectorAll('.step-input')).map(i => i.value).filter(v => v);
+            const firstStep = document.querySelector('.step-input').value.trim();
+            const completed = document.querySelector('input[name="completed"]:checked')?.value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
+            
+            // Validate first step has at least 3 characters
+            if (firstStep.length < 3) {
+                document.getElementById('stepsError').classList.add('show');
+                return;
+            }
+            
+            document.getElementById('stepsError').classList.remove('show');
+            formData[`task_${currentTask}_completed`] = completed;
+            formData[`task_${currentTask}_steps`] = steps;
+            formData[`task_${currentTask}_difficulty`] = difficulty;
 
-  <script src="https://kit.fontawesome.com/2c7f1c6cae.js" crossorigin="anonymous"></script>
+            if (currentTask < 2) {
+                currentTask++;
+                updateFormUI();
+            } else {
+                submitForm();
+            }
+        }
+
+        async function submitForm() {
+            const steps = Array.from(document.querySelectorAll('.step-input')).map(i => i.value).filter(v => v);
+            const completed = document.querySelector('input[name="completed"]:checked')?.value;
+            const difficulty = document.querySelector('input[name="difficulty"]:checked')?.value;
+            formData[`task_${currentTask}_completed`] = completed;
+            formData[`task_${currentTask}_steps`] = steps;
+            formData[`task_${currentTask}_difficulty`] = difficulty;
+
+            const data = {
+                timestamp: new Date().toLocaleString(),
+                language: currentLang,
+                country: currentLang,
+                task_0_completed: formData.task_0_completed || '',
+                task_0_steps: (formData.task_0_steps || []).join(' | '),
+                task_0_difficulty: formData.task_0_difficulty || '',
+                task_1_completed: formData.task_1_completed || '',
+                task_1_steps: (formData.task_1_steps || []).join(' | '),
+                task_1_difficulty: formData.task_1_difficulty || '',
+                task_2_completed: formData.task_2_completed || '',
+                task_2_steps: (formData.task_2_steps || []).join(' | '),
+                task_2_difficulty: formData.task_2_difficulty || ''
+            };
+
+            try {
+                await fetch(FIREBASE_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            } catch (e) {
+                console.error(e);
+            }
+
+            goToScreen('successScreen');
+        }
+
+        function setThankYouLanguage() {
+            const t = translations[currentLang] || translations.cs;
+            document.getElementById('successTitle').textContent = t.thankYou;
+            document.getElementById('successText').textContent = t.submitted;
+            document.getElementById('startOverBtn').textContent = t.startOver;
+        }
+
+        function goToScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if (id === 'countryScreen') {
+                setEnglishWelcome();
+            }
+            if (id === 'successScreen') {
+                setThankYouLanguage();
+            }
+        }
+
+        function setEnglishWelcome() {
+            document.getElementById('introText').innerHTML = 'We\'re conducting a research study on the Dr. Max online pharmacy to understand how users search and purchase products. Your feedback helps us improve the experience. The test takes about <strong>15 minutes</strong> and is <strong>completely anonymous</strong>.';
+            // Reset URL to remove language parameter
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+
+        function showHelp() {
+            document.getElementById('helpModal').classList.add('active');
+        }
+
+        function closeHelp() {
+            document.getElementById('helpModal').classList.remove('active');
+        }
+
+        window.addEventListener('load', () => {
+            initUI();
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+            if (lang && translations[lang]) {
+                currentLang = lang;
+                updateLanguage();
+                generateQRCode();
+                goToScreen('formScreen');
+                updateFormUI();
+            }
+        });
+    </script>
 </body>
 </html>
